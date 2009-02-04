@@ -1,0 +1,4 @@
+1.将包含KeygoeSwitch_Data.MDF和KeygoeSwitch_Log.LDF的文件夹“数据库” 拷贝到  C:\DJKeygoe
+2.打开SQL查询分析器
+3.执行下面命令
+sp_attach_single_file_db @dbname = 'KeygoeSwitch',@physname = 'C:\DJKeygoe\数据库\KeygoeSwitch_Data.MDF'

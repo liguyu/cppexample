@@ -1,0 +1,432 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\KeySwitch.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\icon1.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 KeySwitch"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "KeySwitch 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2007",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_KEYSWITCH_DIALOG DIALOGEX 0, 0, 688, 443
+STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "KeySwitch"
+MENU IDR_MENU1
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    CONTROL         "List1",IDC_LIST_STATUS,"SysListView32",LVS_REPORT | 
+                    LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,6,7,452,322,
+                    WS_EX_CLIENTEDGE
+    LISTBOX         IDC_LIST1,477,7,204,318,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,561,327,13,28,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    PUSHBUTTON      "数据效验",IDC_BUTTON1,547,371,62,14
+    LISTBOX         IDC_DSP,69,174,108,9,LBS_NOINTEGRALHEIGHT | NOT 
+                    WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "DspIndex:",IDC_STATIC,6,172,41,13,NOT WS_VISIBLE
+    LISTBOX         IDC_TRUNK,6,333,533,30,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    LISTBOX         IDC_VOICE,6,365,534,28,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LISTBOX         IDC_VOIP,6,397,537,26,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Voip Index:",IDC_STATIC,6,340,65,10,NOT WS_VISIBLE
+    PUSHBUTTON      "清除",IDC_BUTTON2,613,371,55,15
+    PUSHBUTTON      "Export",IDC_BUTTON3,613,391,56,15
+    PUSHBUTTON      "CloseAll",IDC_BUTTON4,548,389,58,15
+    PUSHBUTTON      "Button5",IDC_BUTTON5,547,413,48,14
+END
+
+IDD_IN_LINE_SET DIALOG DISCARDABLE  0, 0, 317, 205
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "内线设置"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "确 定",IDOK,202,177,50,14
+    PUSHBUTTON      "取 消",IDCANCEL,260,176,50,14
+    GROUPBOX        "内线设置：",IDC_STATIC,7,7,303,159
+    LTEXT           "全局编号：",IDC_STATIC,20,26,41,8
+    LTEXT           "内线号码：",IDC_STATIC,20,42,40,8
+    LTEXT           "是否启用：",IDC_STATIC,20,57,41,8
+    LTEXT           "开通长途：",IDC_STATIC,156,57,41,8
+    LTEXT           "姓名：",IDC_STATIC,20,74,25,8
+    LTEXT           "IP地址：",IDC_STATIC,156,74,32,8
+    LTEXT           "备注：",IDC_STATIC,20,91,25,8
+    EDITTEXT        IDC_LINE_NO,62,24,80,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PHONE_NUMBER,62,40,80,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_ENABLE,62,55,81,37,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_ENABLE_LONG,197,55,81,37,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_USER_NAME,62,73,80,12,ES_AUTOHSCROLL
+    CONTROL         "IPAddress1",IDC_IPADDRESS,"SysIPAddress32",WS_TABSTOP,
+                    197,73,80,12
+    CONTROL         "",IDC_MEMO,"RICHEDIT",ES_AUTOHSCROLL | WS_BORDER | 
+                    WS_TABSTOP,62,91,215,38
+    LTEXT           "缩位拨号代码：",IDC_STATIC,22,135,57,8
+    EDITTEXT        IDC_QUICK_DIAL,79,133,30,14,ES_AUTOHSCROLL
+    LTEXT           "--->转向分机号码：",IDC_STATIC,113,136,67,8
+    EDITTEXT        IDC_TARGET_USER,179,133,97,14,ES_AUTOHSCROLL
+END
+
+IDD_OUT_LINE_SET DIALOG DISCARDABLE  0, 0, 312, 179
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "确  定",IDOK,188,148,50,14
+    PUSHBUTTON      "取  消",IDCANCEL,244,148,50,14
+    GROUPBOX        "外线设置：",IDC_STATIC,7,7,287,135
+    LTEXT           "全局编号：",IDC_STATIC,20,26,41,8
+    LTEXT           "外线号码：",IDC_STATIC,20,41,41,8
+    LTEXT           "备注：",IDC_STATIC,20,69,25,8
+    EDITTEXT        IDC_OUT_LINE_NO,61,24,80,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_OUT_PHONE_NUMBER,61,39,80,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_OUT_MEMO,"RICHEDIT",ES_AUTOHSCROLL | WS_BORDER | 
+                    WS_TABSTOP,61,68,215,24
+    LTEXT           "是否启用：",IDC_STATIC,19,54,41,8
+    COMBOBOX        IDC_ENABLE,61,53,81,37,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_VOIP_SET DIALOG DISCARDABLE  0, 0, 235, 154
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "VOIP设置"
+FONT 10, "System"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,122,130,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,177,130,50,14
+    GROUPBOX        "VOIP设置:",IDC_STATIC,7,7,221,120
+    LTEXT           "全局编号：",IDC_STATIC,20,25,41,8
+    EDITTEXT        IDC_VOIP_NO,62,23,84,12,ES_AUTOHSCROLL
+    LTEXT           "服务器IP:",IDC_STATIC,20,44,34,8
+    CONTROL         "IPAddress1",IDC_VOIP_IP,"SysIPAddress32",WS_TABSTOP,62,
+                    42,84,12
+    LTEXT           "端口号：",IDC_STATIC,20,62,33,8
+    EDITTEXT        IDC_VOIP_PORT,62,61,84,12,ES_AUTOHSCROLL
+    LTEXT           "用户名：",IDC_STATIC,20,83,33,8
+    EDITTEXT        IDC_VOIP_USER,62,81,84,12,ES_AUTOHSCROLL
+    LTEXT           "密码：",IDC_STATIC,20,103,25,8
+    EDITTEXT        IDC_VOIP_PASS,62,100,84,12,ES_AUTOHSCROLL
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "KeySwitch Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "KeySwitch\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2007\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "KeySwitch.EXE\0"
+            VALUE "ProductName", "KeySwitch 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_KEYSWITCH_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 681
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 436
+        HORZGUIDE, 123
+    END
+
+    IDD_IN_LINE_SET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 310
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 198
+    END
+
+    IDD_OUT_LINE_SET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 305
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 172
+    END
+
+    IDD_VOIP_SET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU DISCARDABLE 
+BEGIN
+    POPUP "系统管理"
+    BEGIN
+        MENUITEM "启动服务",                    IDR_START_SERVICE
+        MENUITEM SEPARATOR
+        MENUITEM "退出系统",                    IDR_EXIT_SYS
+        MENUITEM SEPARATOR
+        MENUITEM "输出调试信息",                IDR_DEBUG
+    END
+    POPUP "系统查询"
+    BEGIN
+        MENUITEM "通话查询",                    IDR_CALL_QUERY
+        MENUITEM SEPARATOR
+        MENUITEM "关于....",                    IDR_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_IN_LINE_SET DLGINIT
+BEGIN
+    IDC_ENABLE, 0x403, 5, 0
+0xf4c6, 0xc3d3, "\000" 
+    IDC_ENABLE, 0x403, 5, 0
+0xfbbd, 0xb9d6, "\000" 
+    IDC_ENABLE_LONG, 0x403, 5, 0
+0xaabf, 0xa8cd, "\000" 
+    IDC_ENABLE_LONG, 0x403, 5, 0
+0xfbbd, 0xb9d6, "\000" 
+    0
+END
+
+IDD_OUT_LINE_SET DLGINIT
+BEGIN
+    IDC_ENABLE, 0x403, 5, 0
+0xf4c6, 0xc3d3, "\000" 
+    IDC_ENABLE, 0x403, 5, 0
+0xfbbd, 0xb9d6, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 KeySwitch(&A)..."
+    IDS_DB_ERROR            "系统连接数据库失败！请检查数据库连接！"
+    IDS_SYS_ERROR           "系统错误！请与管理员联系！"
+    IDS_VOC_FREE            "空闲"
+    IDS_VOC_OFFHOOK         "摘机"
+    IDS_VOC_WAIT_DIAL       "等待拨号"
+    IDS_VOC_DTMF_INPUT      "正在收号"
+    IDS_VOC_CALL_OUT        "呼出中"
+    IDS_VOC_CALL_OUT_FAILE  "呼叫失败"
+    IDS_VOC_CALL_OUT_SUCCESS "呼叫成功"
+    IDS_VOC_CONNECTED       "通话中"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_VOC_CONNECT_DTMF    "通话中用户按键"
+    IDS_VOC_ONHOOK          "挂机"
+    IDS_VOC_FLASH           "拍叉簧"
+    IDS_VOC_FLASH_WAIT_DIA  "拍叉簧等待拨号"
+    IDS_VOC_FLASH_CONNECT   "拍叉簧连接"
+    IDS_VOC_CALL_IN         "有电话呼入"
+    IDS_VOC_RINGING         "振铃中"
+    IDS_VOC_RING_TIMEOUT    "振铃超时"
+    IDS_VOC_FETCH_DIAL      "抢接拨号"
+    IDS_VOC_FETCH_CONNECT   "抢接连接"
+    IDS_VOIP_FREE           "空闲"
+    IDS_VOIP_CALL_IN        "有电话呼入"
+    IDS_VOC_WAIT_CONNECT    "内线连接中"
+    IDS_VOIP_CALL_OUT_FAILE "内线呼叫失败"
+    IDS_VOIP_CALL_OUT_SUCCESS "内线呼叫成功"
+    IDS_VOIP_CONNECTED      "通话中"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_VOIP_CONNECT_DTMF   "通话中用户按键"
+    IDS_VOIP_ONHOOK         "挂机"
+    IDS_VOIP_CALL_VOIP      "有电话呼出"
+    IDS_VOIP_CALL_VOIP_FAILE "呼叫外线失败"
+    IDS_VOIP_CALL_VOIP_SUCCESS "呼叫外线成功"
+    IDS_APP_TITLE           "   IP电话交换系统"
+    IDS_TRUNK_COUNT         "外线接口数量："
+    IDS_TRUNK_COUNT_VALUE   "          "
+    IDS_USER_COUNT          "内线接口数量："
+    IDS_USER_COUNT_VALUE    "          "
+    IDS_VOIP_COUNT          "VOIP接口数量："
+    IDS_VOIP_COUNT_VALUE    "          "
+    IDS_SYS_STATUS          "系统状态："
+    IDS_SYS_STATUS_VALUE    "正在初始化"
+    IDS_VOC_WAIT_OPEN       "等待打开"
+    IDS_VOIP_WAIT_OPEN      "等待打开"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_VOC_FLASH_WAIT_DIAL "排叉簧拨号"
+    IDS_VOC_WAIT_WORK       "初始化"
+    IDS_VOIP_WAIT_WORK      "初始化"
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\KeySwitch.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
