@@ -10,7 +10,7 @@
 
 /*È«¾Ö³£Á¿¶¨Òå*************************************************************/
 #define SYSTEM_INI_FILE		"\\KeygoeSwitch.ini"
-#define APPLICATION_ID		88
+#define APPLICATION_ID		12
 #define DEBUG_TYPE			0
 #define ID_TIME             1002				/*É¨Ãè¸÷Í¨µÀDTMFÂë¶¨Ê±Æ÷±àÂë*/	
 #define MAX_DSP_COUNT		3					/*×î¶àÖ§³Ö256¸öDSP---ÕıÊ½·¢²¼Ê±ºò½øĞĞµ÷Õû*/
@@ -156,6 +156,7 @@ typedef struct
 	bool			fEnabled;					/*Í¨µÀÊÇ·ñÆôÓÃ*/
 	bool			fEnabledCallLong;			/*ÊÇ·ñÔÊĞíºô½Ğ³¤Í¾*/
 	char			fDtmfBuff[20];				/*dtmf»º³åÇø*/
+	int				fDtmfCount;					/*µ±Ç°Í¨µÀDTMFÂë³¤¶È*/
 	CTime			fDtmfRefreshTime;			/*dtmf»º³åÇø×îĞÂ¸üĞÂÊ±¼ä*/
 	int				fDtmfNeedLen;				/*Dtmf´¥·¢Á÷³ÌĞèÒªµÄ³¤¶È*/
 	VOICE_STATUS	fTurnStatusCode;			/*Dtmf´¥·¢ºó£¬Ìø×ªµÄ×´Ì¬Âë*/
@@ -202,6 +203,7 @@ typedef struct
 	VOIP_STATUS		fStatusCode;				/*µ±Ç°×´Ì¬Âë*/
 	bool			fEnabled;					/*Í¨µÀÊÇ·ñÆôÓÃ*/
 	char			fDtmfBuff[20];				/*dtmf»º³åÇø*/
+	int				fDtmfCount;					/*µ±Ç°Í¨µÀDTMFÂë³¤¶È*/
 	CTime			fDtmfRefreshTime;			/*dtmf»º³åÇø×îĞÂ¸üĞÂÊ±¼ä*/
 	int				fDtmfNeedLen;				/*Dtmf´¥·¢Á÷³ÌĞèÒªµÄ³¤¶È*/
 	VOIP_STATUS		fTurnStatusCode;			/*Dtmf´¥·¢ºó£¬Ìø×ªµÄ×´Ì¬Âë*/
@@ -238,6 +240,7 @@ typedef struct
 	bool			fEnabled;					/*Í¨µÀÊÇ·ñÆôÓÃ*/
 	bool			fEnabledCallLong;			/*ÊÇ·ñÔÊĞíºô½Ğ³¤Í¾*/
 	char			fDtmfBuff[20];				/*dtmf»º³åÇø*/
+	int				fDtmfCount;					/*µ±Ç°Í¨µÀDTMFÂë³¤¶È*/
 	CTime			fDtmfRefreshTime;			/*dtmf»º³åÇø×îĞÂ¸üĞÂÊ±¼ä*/
 	int				fDtmfNeedLen;				/*Dtmf´¥·¢Á÷³ÌĞèÒªµÄ³¤¶È*/
 	VOICE_STATUS	fTurnStatusCode;			/*Dtmf´¥·¢ºó£¬Ìø×ªµÄ×´Ì¬Âë*/
@@ -355,6 +358,7 @@ long	FindChannelNoByPhoneNumber(char	*	mPhoneNumber);				/*¸ù¾İµç»°ºÅÂë²éÕÒËùÔÚµ
 void	UserDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt);			/*ÄÚÏß¹¤×÷º¯Êı*/
 void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt);			/*ÍâÏß¹¤×÷º¯Êı*/
 void	InsertDtmfToDevice(long mDspNo,long mIndex,DEVICE_TYPE mDeviceType,char * pDtmf);	/*¸üĞÂdtmf»º³åÇø*/
+void	InsertDtmfToDeviceLmy(long mDspNo,long mIndex,DEVICE_TYPE mDeviceType,char TmpDtmf);  /*lmy¸ü¸Ä*/
 bool	CallUser(long mDspNo,long mIndex);								/*ÊµÏÖÄÚÏßºô½ĞÄÚÏß*/		
 long	FindTargetIndexByChannelNo(long	mChannelNo);					/*¸ù¾İÈ«¾ÖÉè±¸±àºÅ£¬²éÕÒËûËùÔÚµÄindexÊı×éËùÔÚµÄÏÂ±ê*/
 void	CallTrunk(long mDspNo,long mIndex,bool isCallLong);				/*ÍâÏßºô½Ğ´¦Àí*/
@@ -379,6 +383,8 @@ long    FindChannelNoBySpeedDial(char * mSpeedDial);					/*¸ù¾İËÙ²¦ºÅ²éÕÒËùÔÚµÄÉ
 void	CallTrunkByVoip(long mDspNo,long mIndex);								/*ÀûÓÃIPºô½ĞÍâÏß*/
 bool	SetUserDeviceParam(DeviceID_t *pUserDevice,DeviceID_t *pVoiceDevice);    /*ÉèÖÃuserÉè±¸param*/
 bool	PlayFileCircly(DeviceID_t *pDevice,DJ_S8 *pFileName,bool isStop);					/*ÎÄ¼ş·ÅÒô*/
+char    My_GetDtmfCode ( Acs_Evt_t *pAcsEvt );							/*·Å»ØDTMFÂë*/
+
 
 /*************************************************************************************/
 void	DebugOutput();				//µ÷ÊÔº¯Êı£¬ÏÔÊ¾ËùÓĞµÄÄÚ´æ±äÁ¿

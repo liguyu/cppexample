@@ -1,9 +1,9 @@
-// Created by Microsoft (R) C/C++ Compiler Version 12.00.9782.0 (de63d30d).
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.9782.0 (2e2cafcd).
 //
-// e:\ÖÐÈí\keyswitch20080304-sip2-2-0\debug\msado15.tlh
+// d:\cppexample\keyswitch20080304-sip2-2-0\debug\msado15.tlh
 //
 // C++ source equivalent of Win32 type library C:\Program Files\Common Files\System\ado\msado15.dll
-// compiler-generated file created 02/04/09 at 19:57:29 - DO NOT EDIT!
+// compiler-generated file created 02/05/09 at 10:17:24 - DO NOT EDIT!
 
 #pragma once
 #pragma pack(push, 8)
@@ -3028,6 +3028,6 @@ Parameter;
 // Wrapper method implementations
 //
 
-#include "e:\ÖÐÈí\keyswitch20080304-sip2-2-0\debug\msado15.tli"
+#include "d:\cppexample\keyswitch20080304-sip2-2-0\debug\msado15.tli"
 
 #pragma pack(pop)

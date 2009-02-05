@@ -123,8 +123,10 @@ bool InitSystem()
 	}
 	/*连接XMS中的流程模块服务器*/ 
 	pAppID=APPLICATION_ID;
-	mDebugOn=0;		/*采用调式模式初始化底层*/
-	rtCode=XMS_acsOpenStream(&pFlowHandle,&pServerID,pAppID,32,32,mDebugOn,NULL);	
+	mDebugOn=1;		/*采用调式模式初始化底层*/
+
+	rtCode=XMS_acsOpenStream(&pFlowHandle,&pServerID,pAppID,32,32,mDebugOn,NULL);
+	
 	if(rtCode==-ACSERR_BADPARAMETER)
 	{
 		sprintf ( MsgStr, "初始化时参数非法!" );
@@ -562,11 +564,12 @@ DJ_Void XMSEventHandler(DJ_U32 esrParam)
 	DJ_S32					mDeviceNumber;			/*本次获取的设备总数*/
 
 	pEvt=(Acs_Evt_t *)esrParam;
-	/*char	mTemp[100];
+
+/*	char	mTemp[100];
 	itoa(pEvt->m_s32EventType,mTemp,10);
 	strcat(mTemp," Event");
 	AddMsg(mTemp);
-	*/
+*/
 	switch(pEvt->m_s32EventType)
 	{
 	case XMS_EVT_QUERY_DEVICE:							/*获取设备列表事件*/
@@ -637,6 +640,15 @@ DJ_Void XMSEventHandler(DJ_U32 esrParam)
 		{
 			Acs_GeneralProc_Data *pGeneralData = NULL;
 			pGeneralData=(Acs_GeneralProc_Data *)FetchEventData(pEvt);
+			
+			char	mInfo[200]={0};
+			sprintf(mInfo,"Dsp:%d Ch:%d LineState:%d",
+				pEvt->m_DeviceID.m_s8ModuleID,
+				pEvt->m_DeviceID.m_s16ChannelID,
+				pGeneralData->m_s32DeviceState);
+
+			AddMsg(mInfo);
+
 			ProcessDeviceStatusEvt(&pEvt->m_DeviceID,pGeneralData->m_s32DeviceState);
 		}
 		break;
@@ -1125,6 +1137,7 @@ bool	OpenDeviceSuccess(DJ_S32 mDspID,DeviceID_t	*pDeviceID)
 			{
 					aryDspData[mDspNo].pVoiceDevice[mDeviceIndex].fDeviceID.m_CallID=pDeviceID->m_CallID;	/*底层必须的设置，不可缺少*/
 					aryDspData[mDspNo].pVoiceDevice[mDeviceIndex].fIsOpen=true;
+					aryDspData[mDspNo].pVoiceDevice[mDeviceIndex].fDtmfCount = 0;
 					mOpenVoiceCount=mOpenVoiceCount+1;
 					aryDspData[mDspNo].pVoiceDevice[mDeviceIndex].fStatusCode=VOC_WAIT_WORK;
 			}
@@ -1142,6 +1155,7 @@ bool	OpenDeviceSuccess(DJ_S32 mDspID,DeviceID_t	*pDeviceID)
 				mDeviceIndex=aryTrunkIndex[mTrunkIndex].fIndex;
 				aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fDeviceID.m_CallID=pDeviceID->m_CallID;	/*底层必须的设置，不可缺少*/
 				aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fIsOpen=true;
+				aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fDtmfCount=0;
 				aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fStatusCode=VOC_WAIT_WORK;
 				mOpenTrunkCount=mOpenTrunkCount+1;
 				/*内线子类型的判断*/
@@ -1164,6 +1178,7 @@ bool	OpenDeviceSuccess(DJ_S32 mDspID,DeviceID_t	*pDeviceID)
 			/*底层必须的设置，不可缺少*/
 			aryDspData[mDspNo].pVoipDevice[mDeviceIndex].fDeviceID.m_CallID=pDeviceID->m_CallID;	
 			aryDspData[mDspNo].pVoipDevice[mDeviceIndex].fIsOpen=true;
+			aryDspData[mDspNo].pVoipDevice[mDeviceIndex].fDtmfCount=0;
 			aryDspData[mDspNo].pVoipDevice[mDeviceIndex].fStatusCode=VOIP_WAIT_WORK;
 			mOpenVoipCount=mOpenVoipCount+1;
 			DrawOneItem(mDspNo,aryVoipIndex[mVoipIndex].fChannelID_t,DEVICE_VOIP);
@@ -1315,7 +1330,7 @@ bool	LinkInitVoice()
 					strcat(mInfo," link-->");
 					itoa(j,mTemp,10);
 					strcat(mInfo,mTemp);
-					//AddMsg(mInfo);
+					AddMsg(mInfo);
 					if(mVoiceIndex!=-1)
 					{
 						
@@ -3070,9 +3085,6 @@ bool	SetTrunkLineInitParameter(DeviceID_t *pTrunkDevice,DeviceID_t *pVoiceDevice
 	DJ_S16		m16ParamSize;
 	void		*pTrunkParam=NULL;
 
-	/*设置GTD(通用音频检测)工作参数*/
-	//if(!SetVoiceGTD(pVoiceDevice))	return false;
-
 	/*设置外线工作参数*/
 	m16ParamType=ANALOGTRUNK_PARAM_UNIPARAM;
 	m16ParamSize=sizeof(CmdParamData_AnalogTrunk_t);
@@ -3082,13 +3094,18 @@ bool	SetTrunkLineInitParameter(DeviceID_t *pTrunkDevice,DeviceID_t *pVoiceDevice
 //	mTrunkParam.m_u8CallInRingCount=2;											/*响铃次数*/
 //	mTrunkParam.m_u8DialtoneDetect=XMS_ANALOG_TRUNK_DIALTONE_DETECT;			/*检测信号音*/
 //	mTrunkParam.m_u8CallOutMethod=XMS_ANALOG_TRUNK_CALLOUT_APP_FULLCONTROL;
-	mTrunkParam.m_u16CallInRingCount = 2; //ring count before CallIn event
-	mTrunkParam.m_u16CallInRingTimeOut = 45;//Unit:ms Ring TimeOut,when ring timed out ,state changed to DCS_Free
+	mTrunkParam.m_u16CallInRingCount = 3; //ring count before CallIn event
+	mTrunkParam.m_u16CallInRingTimeOut = 60000;//Unit:ms Ring TimeOut,when ring timed out ,state changed to DCS_Free
 
 	pTrunkParam=(void *) &mTrunkParam;
 
 	rtCode=XMS_ctsSetParam(pFlowHandle,pTrunkDevice,m16ParamType,m16ParamSize,(void *)pTrunkParam);
 	if(rtCode<0)	return false;
+
+	/*设置GTD(通用音频检测)工作参数*/
+	if(!SetVoiceGTD(pVoiceDevice))	return false;
+
+
 	return true;
 }
 
@@ -3111,6 +3128,8 @@ bool	SetVoiceGTD(DeviceID_t *pVoiceDevice)
 	mVoiceParam.m_VocGtdControl.m_u8MR2BEnable = 1;
 	mVoiceParam.m_VocGtdControl.m_u8GTDEnable = 1;
 	mVoiceParam.m_VocGtdControl.m_u8FSKEnable = 1;
+
+	mVoiceParam.m_VocGtdControl.m_u8EXTEnable = 0x2;		// Enable PVD Detect
 
 	strcpy((char *)&mVoiceParam.m_VocGtdControl.m_u8GTDID[0],("GHIJK"));
 	m16ParamType=VOC_PARAM_UNIPARAM;
@@ -3718,7 +3737,9 @@ void	UserDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 	long		mLinkDspNo;
 	long		mLinkDeviceIndex;
 	long		mLinkChannelNo;
-
+	char		tempMsg[100];
+	
+	strcpy(tempMsg,"");
 	mDspNo=pDevice->m_s8ModuleID;
 	mChannelID=pDevice->m_s16ChannelID;
 	mIndex=FindIndexByChannelID(mDspNo,mChannelID,DEVICE_TRUNK);
@@ -3733,7 +3754,7 @@ void	UserDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 	case	XMS_EVT_CLEARCALL:					
 		/*拆线事件*/
 		{
-			DisplayEvt(pEvt);
+			AddMsg("UserDeviceWork()===>拆线事件");
 			ResetUserDevice(pDevice,pEvt);
 			return;
 		}
@@ -4334,13 +4355,14 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 	if(mIndex==-1) return;
 	mDeviceIndex=aryTrunkIndex[mIndex].fIndex;
 	if(aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fIsOpen==false) return;
+	
+
 	switch(pEvt->m_s32EventType)
 	{
 	case	XMS_EVT_CLEARCALL:					
 		/*拆线事件*/
 		{
-			DisplayEvt(pEvt);
-
+			AddMsg("TrunkDeviceWork()===>拆线事件");
 			ResetTrunkDevice(pDevice,pEvt);
 			return;
 		}
@@ -4354,9 +4376,6 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 		}
 		break;
 	case	XMS_EVT_CAS_MFC_END:
-		{
-
-		}
 		break;
 	case	XMS_EVT_DEV_TIMER:
 		{
@@ -4426,6 +4445,7 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 	}
 		break;
 	case	XMS_EVT_CALLIN:
+		AddMsg("TrunkDeviceWork()===>呼入事件");
 		/*呼入事件*/
 		{
 			Acs_CallControl_Data	*pControlData=NULL;
@@ -4489,10 +4509,12 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 		}
 		break;
 	case	XMS_EVT_ANSWERCALL:
+		AddMsg("TrunkDeviceWork()===>外线应答成功");
 		/*外线应答成功*/
 		{
 			if(aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fStatusCode==VOC_ANSWER_CALL)
 			{
+			
 				ControlPlay_t			mControlPlay;
 				mControlPlay.m_u16ControlType=XMS_STOP_PLAY;
 				/*正常的接续*/
@@ -4513,10 +4535,10 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 		break;
 	case	XMS_EVT_CALLOUT:
 		/*呼出事件*/
+		AddMsg("TrunkDeviceWork()===>呼出事件");
 		{
 			Acs_CallControl_Data		*pControlData=NULL;
 			pControlData=(Acs_CallControl_Data *)FetchEventData(pEvt);
-			DisplayEvt(pEvt);
 			if(pControlData->m_s32AcsEvtState==1)
 			{
 				/*外呼成功，不用处理*/
@@ -4569,6 +4591,7 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 		/*建立连接事件*/
 		break;
 	case	XMS_EVT_PLAY:
+		AddMsg("TrunkDeviceWork()===XMS_EVT_PLAY放音事件");
 		/*放音事件*/
 		{
 			/*播放欢迎提示语音完毕后的处理*/
@@ -4603,6 +4626,8 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 		/*解除连接事件*/
 		break;
 	case	XMS_EVT_SENDIODATA:
+		AddMsg("TrunkDeviceWork()===XMS_EVT_SENDIODATA事件");
+
 		/*发送数据事件*/
 		{
 			Acs_IO_Data	 *pSendData;
@@ -4655,16 +4680,18 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 		}
 		break;
 	case	XMS_EVT_RECVIODATA:
+		AddMsg("TrunkDeviceWork()===XMS_EVT_RECVIODATA事件");
 		/*接收数据事件，由于采用模拟信令，因此，对于一些事件的返回，是采用dtmf流实现。*/
 		{
 			Acs_IO_Data		*pDtmfData=NULL;
 			char			*pDtmfBuff;
+			char			tempDtmf;
 
 			pDtmfData=(Acs_IO_Data *)FetchEventData(pEvt);
+			
 			if(pDtmfData->m_u16IoType==XMS_IO_TYPE_GTG && pDtmfData->m_u16IoDataLen>0)
 			{
 				pDtmfBuff=(char *)FetchIOData(pEvt);
-				//AddMsg(pDtmfBuff);
 /*				if(*pDtmfBuff=='I' || *pDtmfBuff=='J' || *pDtmfBuff=='K' ||
 					*pDtmfBuff=='i' || *pDtmfBuff=='j' || *pDtmfBuff=='k' )
 				{
@@ -4701,6 +4728,8 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 					&& pDtmfData->m_u16IoDataLen>0)
 				{
 					pDtmfBuff=(char *)FetchIOData(pEvt);
+					AddMsg(pDtmfBuff);
+
 					if(aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fIsLinkVoice==false)
 					{
 						SetLink(&aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fDeviceID,
@@ -4708,6 +4737,7 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 						aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fIsLinkVoice=true;
 					}
 					PlayTone(&aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fLinkVoiceDeviceID,STOP_TONE);
+					//InsertDtmfToDeviceLmy(mDspNo,mDeviceIndex,DEVICE_TRUNK,tempDtmf);
 					InsertDtmfToDevice(mDspNo,mDeviceIndex,DEVICE_TRUNK,pDtmfBuff);
 					if(strcmp(aryDspData[mDspNo].pTrunkDevice[mDeviceIndex].fDtmfBuff,"0")==0)
 					{
@@ -4749,14 +4779,37 @@ void	TrunkDeviceWork(DeviceID_t	*pDevice,Acs_Evt_t	*pEvt)
 	}
 }
 
+/***********************************************************************
+功能：将dtmf码加入到某个通道的dtmf缓冲区
+***********************************************************************/
+void	InsertDtmfToDeviceLmy(long mDspNo,long mIndex,DEVICE_TYPE mDeviceType,char TmpDtmf)
+{
+	int fDtmfCount = aryDspData[mDspNo].pTrunkDevice[mIndex].fDtmfCount;
+	if ( fDtmfCount < (20-1) )
+	{
+		aryDspData[mDspNo].pTrunkDevice[mIndex].fDtmfBuff[fDtmfCount] = TmpDtmf; 
+		aryDspData[mDspNo].pTrunkDevice[mIndex].fDtmfBuff[fDtmfCount+1] = 0; 
+		aryDspData[mDspNo].pTrunkDevice[mIndex].fDtmfCount++;
+	}
+	DrawOneItem(mDspNo,aryDspData[mDspNo].pTrunkDevice[mIndex].fDeviceID.m_s16ChannelID,DEVICE_TRUNK);
+	return;
+}
 
 /***********************************************************************
 功能：将dtmf码加入到某个通道的dtmf缓冲区
 ***********************************************************************/
 void	InsertDtmfToDevice(long mDspNo,long mIndex,DEVICE_TYPE mDeviceType,char * pDtmf)
 {
-	strcat(aryDspData[mDspNo].pTrunkDevice[mIndex].fDtmfBuff,pDtmf);
-//	AddMsg(pDtmf);
+
+	
+	AddMsg("InsertDtmfToDevice()..........");
+	char tempStr[2];
+	tempStr[0]=pDtmf[0];
+	tempStr[1]=0;
+	AddMsg(tempStr);
+
+	strcat(aryDspData[mDspNo].pTrunkDevice[mIndex].fDtmfBuff,tempStr);
+
 	DrawOneItem(mDspNo,aryDspData[mDspNo].pTrunkDevice[mIndex].fDeviceID.m_s16ChannelID,DEVICE_TRUNK);
 	return;
 }
@@ -5645,6 +5698,7 @@ void	CallUserByTrunk(long mDspNo,long mIndex)
 	mTargetChannelNo=FindChannelNoByPhoneNumber(mTargetNumber);
 	if(mTargetChannelNo<0)
 	{
+		AddMsg("呼叫的号码不存在");
 		/*呼叫的号码不存在*/
 		if(aryDspData[mDspNo].pTrunkDevice[mIndex].fIsLinkVoice==false)
 		{
@@ -6543,4 +6597,28 @@ bool	PlayFileCircly(DeviceID_t *pDevice,DJ_S8 *pFileName,bool isStop)					/*文件
 	if(rtCode<0)	return false;
 	return true;
 
+}
+//返回DTMF码
+char My_GetDtmfCode ( Acs_Evt_t *pAcsEvt )
+{
+	Acs_IO_Data				*pIOData = NULL;
+	char   sbuffer[200];
+	char		*p;
+	
+	memset(sbuffer,0,sizeof(sbuffer));
+	if ( pAcsEvt->m_s32EventType == XMS_EVT_RECVIODATA )	/*IO Data Event*/
+	{
+		pIOData = (Acs_IO_Data *)FetchEventData(pAcsEvt);
+		
+		if ( ( pIOData->m_u16IoType== XMS_IO_TYPE_DTMF ) 
+			&& ( pIOData->m_u16IoDataLen > 0 ) )
+		{
+			p = (char *)FetchIOData(pAcsEvt);
+			sprintf(sbuffer,"Recevice DTMF： %s",p);
+			AddMsg(sbuffer);			
+			return *p;
+		}
+	}
+	
+	return -1;	// not a good DTMF
 }
