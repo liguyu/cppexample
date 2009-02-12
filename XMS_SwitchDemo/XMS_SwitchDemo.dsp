@@ -171,7 +171,7 @@ SOURCE=.\res\XMS_SwitchDemo.rc2
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Lib\DJAcsAPI.lib
+SOURCE=C:\DJKeygoe\Lib\DJAcsAPI.lib
 # End Source File
 # End Group
 # Begin Source File

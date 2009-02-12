@@ -1248,7 +1248,10 @@ int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID
 }
 void	My_DualLink ( DeviceID_t *pDev1, DeviceID_t *pDev2 )
 {
-	XMS_ctsLinkDevice ( g_acsHandle, pDev1, pDev2, NULL ); 
+	int retCode = XMS_ctsLinkDevice ( g_acsHandle, pDev1, pDev2, NULL ); 
+	char tempStr[10];
+	sprintf(tempStr,"retCode: %d",retCode);
+	AddMsg(tempStr);
 	XMS_ctsLinkDevice ( g_acsHandle, pDev2, pDev1, NULL ); 
 }
 void SetGtD_AnalogTrunk(DeviceID_t* pDevId)

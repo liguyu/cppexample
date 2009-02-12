@@ -6,19 +6,20 @@
 --------------------Configuration: KeySwitch - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPEF.tmp" with contents
+Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPAF.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/KeySwitch.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\cppexample\KeySwitch20080304-SIP2-2-0\PublicDef.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSPEF.tmp" 
-Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPF0.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSPAF.tmp" 
+Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPB0.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/KeySwitch.pdb" /debug /machine:I386 /out:"Debug/KeySwitch.exe" /pdbtype:sept 
 ".\Debug\CAS_Common_Cfg.obj"
 ".\Debug\cinlineset.obj"
 ".\Debug\DBProcess.obj"
 ".\Debug\KeySwitch.obj"
+".\Debug\KeySwitch_String.obj"
 ".\Debug\KeySwitchDlg.obj"
 ".\Debug\outlinesetdlg.obj"
 ".\Debug\PublicDef.obj"
@@ -28,13 +29,14 @@ Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPF0.tmp" with contents
 "C:\DJKeygoe\Lib\DJAcsAPI.lib"
 "C:\DJKeygoe\Lib\DJITPCom.lib"
 ]
-Creating command line "link.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSPF0.tmp"
+Creating command line "link.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSPB0.tmp"
 <h3>Output Window</h3>
 Compiling...
 PublicDef.cpp
-D:\cppexample\KeySwitch20080304-SIP2-2-0\PublicDef.cpp(4688) : warning C4101: 'tempDtmf' : unreferenced local variable
+D:\cppexample\KeySwitch20080304-SIP2-2-0\PublicDef.cpp(561) : warning C4101: 'tempStr' : unreferenced local variable
+D:\cppexample\KeySwitch20080304-SIP2-2-0\PublicDef.cpp(4705) : warning C4101: 'tempDtmf' : unreferenced local variable
 Linking...
-Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPF1.tmp" with contents
+Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPB1.tmp" with contents
 [
 /nologo /o"Debug/KeySwitch.bsc" 
 ".\Debug\StdAfx.sbr"
@@ -42,18 +44,19 @@ Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSPF1.tmp" with contents
 ".\Debug\cinlineset.sbr"
 ".\Debug\DBProcess.sbr"
 ".\Debug\KeySwitch.sbr"
+".\Debug\KeySwitch_String.sbr"
 ".\Debug\KeySwitchDlg.sbr"
 ".\Debug\outlinesetdlg.sbr"
 ".\Debug\PublicDef.sbr"
 ".\Debug\VoipSetDlg.sbr"]
-Creating command line "bscmake.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSPF1.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSPB1.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-KeySwitch.exe - 0 error(s), 1 warning(s)
+KeySwitch.exe - 0 error(s), 2 warning(s)
 </pre>
 </body>
 </html>
