@@ -1556,7 +1556,7 @@ void OpenDeviceSuccess(DeviceID_t *pDevice)
 		int iAIndex = pDevice->m_s16ChannelID - g_AllDeviceRes[pDevice->m_s8ModuleID].lVOIPNum;
 		if( iAIndex >= 0 )
 		{
-			for(int i = 1; i < g_AllDeviceRes[pDevice->m_s8ModuleID].lInterfNum; ++i)// i = 0 or 16 已停用
+			for(int i = 0; i < g_AllDeviceRes[pDevice->m_s8ModuleID].lInterfNum; ++i)// i = 0 or 16 已停用
 			{
 				if( g_AllDeviceRes[pDevice->m_s8ModuleID].pInterf[i].iAIndex == iAIndex )
 				{

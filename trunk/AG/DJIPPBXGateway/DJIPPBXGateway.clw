@@ -13,9 +13,9 @@ Class2=CDJIPPBXGatewayDlg
 Class3=CAboutDlg
 
 ResourceCount=4
-Resource1=IDD_DJIPPBXGATEWAY_DIALOG
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_ABOUTBOX
+Resource3=IDD_DJIPPBXGATEWAY_DIALOG
 Class4=CPlayDlg
 Resource4=IDD_DIALOG_PLAY
 
