@@ -155,11 +155,11 @@ typedef struct
 	VOICE_STATUS	fStatusCode;				/*当前状态码*/
 	bool			fEnabled;					/*通道是否启用*/
 	bool			fEnabledCallLong;			/*是否允许呼叫长途*/
-	char			fDtmfBuff[20];				/*dtmf缓冲区*/
-	int				fDtmfCount;					/*当前通道DTMF码长度*/
-	CTime			fDtmfRefreshTime;			/*dtmf缓冲区最新更新时间*/
-	int				fDtmfNeedLen;				/*Dtmf触发流程需要的长度*/
-	VOICE_STATUS	fTurnStatusCode;			/*Dtmf触发后，跳转的状态码*/
+	char			fDtmfBuff[20];				/*DTMF缓冲区*/
+	int				fDtmfCount;					/*DTMF码长度*/
+	CTime			fDtmfRefreshTime;			/*DTMF缓冲区最新更新时间*/
+	int				fDtmfNeedLen;				/*DTMF触发流程需要的长度*/
+	VOICE_STATUS	fTurnStatusCode;			/*DTMF触发后，跳转的状态码*/
 	VOICE_STATUS	fDtmfTimeOutStatusCode;		/*DTMF超时所需要跳转的状态*/
 	long			fLinkTrunkChannelNo;		/*关联的设备全局号*/
 	LINK_TYPE		fLinkTrunkType;				/*关联类型*/
@@ -239,11 +239,11 @@ typedef struct
 	VOICE_STATUS	fStatusCode;				/*当前状态码*/
 	bool			fEnabled;					/*通道是否启用*/
 	bool			fEnabledCallLong;			/*是否允许呼叫长途*/
-	char			fDtmfBuff[20];				/*dtmf缓冲区*/
-	int				fDtmfCount;					/*当前通道DTMF码长度*/
-	CTime			fDtmfRefreshTime;			/*dtmf缓冲区最新更新时间*/
-	int				fDtmfNeedLen;				/*Dtmf触发流程需要的长度*/
-	VOICE_STATUS	fTurnStatusCode;			/*Dtmf触发后，跳转的状态码*/
+	char			fDtmfBuff[20];				/*DTMF缓冲区*/
+	int				fDtmfCount;					/*DTMF码长度*/
+	CTime			fDtmfRefreshTime;			/*DTMF缓冲区最新更新时间*/
+	int				fDtmfNeedLen;				/*DTMF触发流程需要的长度*/
+	VOICE_STATUS	fTurnStatusCode;			/*DTMF触发后，跳转的状态码*/
 	VOICE_STATUS	fDtmfTimeOutStatusCode;		/*DTMF超时所需要跳转的状态*/
 	long			fLinkVoiceChannelNo;			/*关联的设备全局号*/
 	DeviceID_t		fLinkVoiceDeviceID;				/*关联语音设备编号*/

@@ -111,6 +111,10 @@ SOURCE=.\KeySwitch.rc
 # End Source File
 # Begin Source File
 
+SOURCE=.\KeySwitch_String.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\KeySwitchDlg.cpp
 # End Source File
 # Begin Source File
@@ -150,6 +154,10 @@ SOURCE=.\DBProcess.h
 # Begin Source File
 
 SOURCE=.\KeySwitch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\KeySwitch_String.h
 # End Source File
 # Begin Source File
 
