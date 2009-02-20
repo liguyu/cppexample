@@ -139,9 +139,11 @@ void ProcVOIPWork(VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt)
 
 	case XMS_EVT_CALLIN:		/*呼入事件*/
 		{
+			g_pShowInfo->ShowInfo("ProcVOIPWork()===>VOIP呼入事件。。。");
+
 			if(pOneVOIP->iState != VOIP_FREE)
 			{
-				/*if(g_cfgAppIsLog)
+				if(g_cfgAppIsLog)
 				{
 					sprintf(chTemp256, "(DSP%d VOIP%d) %s %s (%s)", 
 						pOneVOIP->deviceID.m_s8ModuleID, pOneVOIP->deviceID.m_s16ChannelID, 
@@ -149,9 +151,11 @@ void ProcVOIPWork(VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt)
 						theApp.m_clsLIni.GLoadString("VOIPStateError"), 
 						VOIPSTATE_STRING[pOneVOIP->iState]);
 					g_pLogInfo->WriteLogInfo(chTemp256, LOGTYPE_ALTER);
-				}*/
+					g_pShowInfo->ShowInfo(chTemp256);
+				}
 				break;
 			}
+
 
 			Acs_CallControl_Data *pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
 			if( pCallControl->m_PrivData.m_u32DataSize != sizeof(VoIPCallPrivate_t) )
@@ -1253,6 +1257,8 @@ int CallOutVOIPToPSTN(char* callerNum, char* calledNum, DeviceID_t* pInterfaceDe
 	}
 
 	iResult = XMS_ctsMakeCallOut(g_acsHandle, pInterfaceDev, callerNum, calledNum,  NULL);
+	g_pShowInfo->ShowInfo("XMS_ctsMakeCallOut()................................");
+
 	if(g_cfgAppIsLog)
 	{
 		sprintf(chTemp256, "%s TRUNK(%d.%d) Caller(%s) Callee(%s) Retrun(%d)", 
@@ -1262,6 +1268,7 @@ int CallOutVOIPToPSTN(char* callerNum, char* calledNum, DeviceID_t* pInterfaceDe
 			callerNum, calledNum, iResult);
 
 		g_pLogInfo->WriteLogInfo(chTemp256);
+		g_pShowInfo->ShowInfo(chTemp256);
 	}
 	if(iResult > 0 )
 	{
@@ -1271,9 +1278,9 @@ int CallOutVOIPToPSTN(char* callerNum, char* calledNum, DeviceID_t* pInterfaceDe
 		if( pInterfaceDev->m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER )
 		{
 			// 20080506 USER底层修改后 送主叫并设置MakeCallOut标志
-			DJ_U16 u16IoType = XMS_IO_TYPE_DTMF;
-			RetCode_t s32Result = XMS_ctsSendIOData(g_acsHandle, &pOneVOIP->VocDevID, 
-				u16IoType, strlen(callerNum), callerNum);
+// 			DJ_U16 u16IoType = XMS_IO_TYPE_DTMF;
+// 			RetCode_t s32Result = XMS_ctsSendIOData(g_acsHandle, &pOneVOIP->VocDevID, 
+// 				u16IoType, strlen(callerNum), callerNum);
 			pOneInterface->iIsMakeCallOut = 1;
 			XMS_ctsSetDevTimer(g_acsHandle, &pOneInterface->deviceID, 60000);// 设置定时器 超时则自动清楚此呼叫
 
@@ -1326,9 +1333,19 @@ int CallOutVOIPToPSTN(char* callerNum, char* calledNum, DeviceID_t* pInterfaceDe
 		else if( pInterfaceDev->m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK )
 		{
 			// 20080506 ATRUNK底层修改后 设置MakeCallOut标志
+			//暂时修改。。。
+			char tempstr[10];
+			sprintf(tempstr,",,,,%s",calledNum);
+			DJ_U16 u16IoType = XMS_IO_TYPE_DTMF;
+			RetCode_t s32Result = XMS_ctsSendIOData(g_acsHandle,&pOneInterface->VocDevID, 
+				u16IoType, 10, tempstr);
+			
+			Sleep (10000);
+
 			lstrcpy(pOneInterface->CalleeNum, calledNum);
 			lstrcpy(pOneInterface->CallerNum, callerNum);
 			pOneInterface->iIsMakeCallOut = 1;
+
 			XMS_ctsSetDevTimer(g_acsHandle, &pOneInterface->deviceID, 65000);// 设置定时器 超时则自动清除此呼叫
 
 			// ATrunk内部有Link 必须在CallOut发送呼叫码后连接
@@ -1375,8 +1392,10 @@ int CallOutVOIPToPSTN(char* callerNum, char* calledNum, DeviceID_t* pInterfaceDe
 				g_pLogInfo->WriteLogInfo(chTemp256);
 			}
 
+		//	RetCode_t r = XMS_ctsSendIOData(g_acsHandle,&pOneVOIP->VocDevID,XMS_IO_TYPE_DTMF,20,"6346");
+
 			// 20080422 在呼叫连通前VOIP语音与ATRUNK语音不互联 故需给VOIP放回铃音
-			int iResult3 = PlayTone(&pOneVOIP->VocDevID, PLAYTONE_RINGBACK);	// Play RingBack for VOIP
+//			int iResult3 = PlayTone(&pOneVOIP->VocDevID, PLAYTONE_RINGBACK);	// Play RingBack for VOIP
 		}
 		else
 		{
