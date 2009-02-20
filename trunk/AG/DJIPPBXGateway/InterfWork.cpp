@@ -6,6 +6,7 @@ void ProcInterfaceWork(INTERFACE_STRUCT* pOneInterface, Acs_Evt_t* pAcsEvt)
 {
 	_ASSERT(pOneInterface != NULL);
 	_ASSERT(pAcsEvt != NULL);
+	_RPTF("dfdfsdfa");
 
 	switch(pOneInterface->deviceID.m_s16DeviceSub)
 	{
@@ -1817,7 +1818,7 @@ void ProcUserWork(INTERFACE_STRUCT* pOneUser, Acs_Evt_t* pAcsEvt)
 			pOneUser->dwTime = 0;
 			XMS_ctsSetDevTimer(g_acsHandle, &pOneUser->deviceID, 30000);// 每次用户摘机都将设置30秒定时器
 
-			PlayTone(&pOneUser->VocDevID, PLAYTONE_DAIL);		// dial tone
+ 			PlayTone(&pOneUser->VocDevID, PLAYTONE_DAIL);		// dial tone
 		}
 		break;
 
