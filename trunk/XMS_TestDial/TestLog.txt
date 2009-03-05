@@ -17711,3 +17711,73 @@
  [02/20/09 11:13:24], DeviceID(1, 60) Err=16,Cause=0 
  [02/20/09 11:13:24], DeviceID(1, 93) Err=16,Cause=0 
   [02/20/09 11:13:48] ------VoiceCheck Test Start------
+  [02/23/09 19:34:16] ------VoiceCheck Test Start------
+ [02/23/09 19:34:18], DeviceID(1, 1) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 2) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 3) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 4) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 5) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 6) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 7) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 8) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 9) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 10) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 11) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 12) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 13) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 14) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 15) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 28) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 29) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 30) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:18], DeviceID(1, 31) GetDtmf [] error, count=1£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 1) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 2) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 13) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 14) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 15) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 17) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 18) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 19) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 20) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 21) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 22) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 23) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 24) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 25) GetDtmf [] error, count=2£¬ErrCount=1 
+ [02/23/09 19:34:20], DeviceID(1, 28) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 29) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:20], DeviceID(1, 30) GetDtmf [] error, count=2£¬ErrCount=2 
+ [02/23/09 19:34:22], DeviceID(1, 1) GetDtmf [] error, count=3£¬ErrCount=3 
+ [02/23/09 19:34:22], DeviceID(1, 2) GetDtmf [] error, count=3£¬ErrCount=3 
+ [02/23/09 19:34:22], DeviceID(1, 3) GetDtmf [] error, count=3£¬ErrCount=2 
+ [02/23/09 19:34:22], DeviceID(1, 28) GetDtmf [] error, count=3£¬ErrCount=3 
+ [02/23/09 19:34:22], DeviceID(1, 29) GetDtmf [] error, count=3£¬ErrCount=3 
+ [02/23/09 19:34:22], DeviceID(1, 30) GetDtmf [] error, count=3£¬ErrCount=3 
+ [02/23/09 19:34:22], DeviceID(1, 31) GetDtmf [] error, count=3£¬ErrCount=2 
+ [02/23/09 19:34:24], DeviceID(1, 1) GetDtmf [] error, count=4£¬ErrCount=4 
+ [02/23/09 19:34:24], DeviceID(1, 2) GetDtmf [] error, count=4£¬ErrCount=4 
+ [02/23/09 19:34:24], DeviceID(1, 3) GetDtmf [] error, count=4£¬ErrCount=3 
+ [02/23/09 19:34:25], DeviceID(1, 28) GetDtmf [] error, count=4£¬ErrCount=4 
+ [02/23/09 19:34:25], DeviceID(1, 29) GetDtmf [] error, count=4£¬ErrCount=4 
+ [02/23/09 19:34:25], DeviceID(1, 30) GetDtmf [] error, count=4£¬ErrCount=4 
+ [02/23/09 19:34:25], DeviceID(1, 31) GetDtmf [] error, count=4£¬ErrCount=3 
+ [02/23/09 19:34:26], DeviceID(1, 1) GetDtmf [] error, count=5£¬ErrCount=5 
+ [02/23/09 19:34:26], DeviceID(1, 2) GetDtmf [] error, count=5£¬ErrCount=5 
+ [02/23/09 19:34:26], DeviceID(1, 3) GetDtmf [] error, count=5£¬ErrCount=4 
+ [02/23/09 19:34:26], DeviceID(1, 4) GetDtmf [] error, count=5£¬ErrCount=2 
+ [02/23/09 19:34:26], DeviceID(1, 5) GetDtmf [] error, count=5£¬ErrCount=2 
+  [02/23/09 19:34:36] ----No VoiceCheck Test Start----
+ [02/23/09 19:34:50], DeviceID(1, 2) Err=31,Cause=0 
+ [02/23/09 19:35:01], DeviceID(1, 31) Err=18,Cause=0 
+  [02/23/09 19:36:54] ----No VoiceCheck Test Start----
+  [02/23/09 19:39:33] ----No VoiceCheck Test Start----
+
+**[02/23/09 22:40:09]***************Test End**********
+**ºô½Ð´ÎÊý£º180718                            
+**ºôËð£º0                                
+**ÎóÂë´ÎÊý: 0                            
+**Ê§°ÜÂÊ(ºôËð\ÎóÂë): 0.000000%/0.000000%                  
+**²âÊÔÊ±¼ä: 03:00:36                            
+******************************************************
+  [02/24/09 09:12:11] ----No VoiceCheck Test Start----
