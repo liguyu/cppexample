@@ -1,0 +1,84 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: KGEventView - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSP666.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /I "inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "__NO_DLL_IMPL__" /FR"Debug/" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\KGEventView\src\xksocket.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSP666.tmp" 
+Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSP667.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/KGEventView.pdb" /debug /machine:I386 /out:"Debug/KGEventView.exe" /pdbtype:sept /libpath:"lib" 
+.\Debug\CheckComboBox.obj
+.\Debug\commontool.obj
+.\Debug\DialogRun.obj
+.\Debug\EditTxt.obj
+.\Debug\InfoDetail.obj
+.\Debug\InfoRaw.obj
+.\Debug\KGEventView.obj
+.\Debug\KGEventViewDoc.obj
+.\Debug\KGEventViewView.obj
+.\Debug\MainFrm.obj
+.\Debug\MyDlgBar.obj
+.\Debug\ReadAPIDetail.obj
+.\Debug\ReadEvtDetail.obj
+.\Debug\ReadPacket.obj
+.\Debug\SAStatusLog.obj
+.\Debug\StdAfx.obj
+.\Debug\xkexception.obj
+.\Debug\xkhostinfo.obj
+.\Debug\xkmsgqueue.obj
+.\Debug\xknetunit.obj
+.\Debug\xksocket.obj
+.\Debug\xkthread.obj
+.\Debug\xkthreadqueue.obj
+.\Debug\KGEventView.res
+]
+Creating command line "link.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSP667.tmp"
+<h3>Output Window</h3>
+Compiling...
+xksocket.cpp
+Linking...
+Creating temporary file "C:\DOCUME~1\User\LOCALS~1\Temp\RSP669.tmp" with contents
+[
+/nologo /o"Debug/KGEventView.bsc" 
+.\Debug\StdAfx.sbr
+.\Debug\CheckComboBox.sbr
+.\Debug\commontool.sbr
+.\Debug\DialogRun.sbr
+.\Debug\EditTxt.sbr
+.\Debug\InfoDetail.sbr
+.\Debug\InfoRaw.sbr
+.\Debug\KGEventView.sbr
+.\Debug\KGEventViewDoc.sbr
+.\Debug\KGEventViewView.sbr
+.\Debug\MainFrm.sbr
+.\Debug\MyDlgBar.sbr
+.\Debug\ReadAPIDetail.sbr
+.\Debug\ReadEvtDetail.sbr
+.\Debug\ReadPacket.sbr
+.\Debug\SAStatusLog.sbr
+.\Debug\xkexception.sbr
+.\Debug\xkhostinfo.sbr
+.\Debug\xkmsgqueue.sbr
+.\Debug\xknetunit.sbr
+.\Debug\xksocket.sbr
+.\Debug\xkthread.sbr
+.\Debug\xkthreadqueue.sbr]
+Creating command line "bscmake.exe @C:\DOCUME~1\User\LOCALS~1\Temp\RSP669.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+KGEventView.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
