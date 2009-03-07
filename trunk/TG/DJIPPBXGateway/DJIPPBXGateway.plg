@@ -1,0 +1,82 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: DJIPPBXGateway - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/DJIPPBXGateway.res" /d "NDEBUG" "D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\DJIPPBXGateway.rc"" 
+Creating temporary file "C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPA.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Release/" /Fp"Release/DJIPPBXGateway.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\DJIPPBXGateway.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\DJIPPBXGatewayDlg.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\GatewayWork.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\InterfWork.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\LanguageIni.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\LogInfo.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\ShowInfo.cpp"
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\VOIPWork.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPA.tmp" 
+Creating temporary file "C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPB.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Release/" /Fp"Release/DJIPPBXGateway.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\PROGRAM\IP\IPPBX\VD2\Keygoe V2.2.0\DJIPPBXGateway\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPB.tmp" 
+Creating temporary file "C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPC.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"Release/DJIPPBXGateway.pdb" /machine:I386 /out:"Release/DJIPPBXGateway.exe" 
+".\Release\DJIPPBXGateway.obj"
+".\Release\DJIPPBXGatewayDlg.obj"
+".\Release\GatewayWork.obj"
+".\Release\InterfWork.obj"
+".\Release\LanguageIni.obj"
+".\Release\LogInfo.obj"
+".\Release\ShowInfo.obj"
+".\Release\StdAfx.obj"
+".\Release\VOIPWork.obj"
+".\Release\DJIPPBXGateway.res"
+".\Include\DJAcsAPI.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPC.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+DJIPPBXGateway.cpp
+DJIPPBXGatewayDlg.cpp
+GatewayWork.cpp
+InterfWork.cpp
+LanguageIni.cpp
+LogInfo.cpp
+ShowInfo.cpp
+VOIPWork.cpp
+Generating Code...
+Linking...
+Creating temporary file "C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPE.tmp" with contents
+[
+/nologo /o"Release/DJIPPBXGateway.bsc" 
+".\Release\StdAfx.sbr"
+".\Release\DJIPPBXGateway.sbr"
+".\Release\DJIPPBXGatewayDlg.sbr"
+".\Release\GatewayWork.sbr"
+".\Release\InterfWork.sbr"
+".\Release\LanguageIni.sbr"
+".\Release\LogInfo.sbr"
+".\Release\ShowInfo.sbr"
+".\Release\VOIPWork.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\EAGLE~1.WAN\LOCALS~1\Temp\RSPE.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+DJIPPBXGateway.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
