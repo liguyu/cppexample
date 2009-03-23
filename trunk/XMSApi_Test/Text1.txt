@@ -1,0 +1,125 @@
+//send fax prepare
+{
+devState = DES_FAX_SENDFAX_RECVCMD;
+
+unitID = faxDevice.m_s8ModuleID;
+
+eventState=1;
+errCode=0;
+
+printf("Recv SendFax Command file=%s\n",FaxTiffFile);
+
+linux_flag = 0;
+strcpy(szFaxPath,FaxTiffFile);
+
+char* p1  = szFaxPath + sizeof(szFaxPath);
+
+int ilen = 0;
+while( *p1 != '\\' )
+{
+    *p1 = 0 ;
+    p1 -- ;
+	ilen++;
+	if( ilen == strlen(FaxTiffFile) )
+		break;
+}
+printf("SendFax GetPath=%s srlen=%d FaxTiffFile=[%s]\n",szFaxPath,strlen(szFaxPath),FaxTiffFile);
+
+if( strlen(szFaxPath) == strlen(FaxTiffFile) )
+{
+  linux_flag = 1;
+  strcpy(szFaxPath,FaxTiffFile);
+  p1 = szFaxPath + sizeof(szFaxPath);
+  while( *p1 != '/' )
+  {
+      *p1 = 0 ;
+      p1 -- ;
+  }
+  printf("Linux SendFax GetPath=%s srlen=%d \n",szFaxPath,strlen(szFaxPath));
+}
+
+}
+
+
+//recv fax prepare
+{
+	devState = DES_FAX_RECVFAX_RECVCMD;
+	
+	eventState=1;
+	errCode=0;
+	unitID = faxDevice.m_s8ModuleID;
+	
+	{
+		
+		printf("Recv RecvFax Command file=%s\n",FaxTiffFile);
+		
+		linux_flag = 0;
+		strcpy(szFaxPath,FaxTiffFile);
+		
+		char* p2  = szFaxPath + sizeof(szFaxPath);
+		
+		int ilen = 0;
+		while( *p2 != '\\' )
+		{
+			*p2 = 0 ;
+			p2 -- ;
+			ilen++;
+			if( ilen == strlen(FaxTiffFile) )
+				break;
+		}
+		printf("RecvFax GetPath=%s srlen=%d FaxTiffFile=[%s]\n",szFaxPath,strlen(szFaxPath),FaxTiffFile);
+		
+		if( strlen(szFaxPath) == strlen(FaxTiffFile) )
+		{
+			linux_flag = 1;
+			strcpy(szFaxPath,FaxTiffFile);
+			p2 = szFaxPath + sizeof(szFaxPath);
+			while( *p2 != '/' )
+			{
+				*p2 = 0 ;
+				p2 -- ;
+			}
+			printf("Linux RecvFax GetPath=%s srlen=%d \n",szFaxPath,strlen(szFaxPath));
+		}
+		
+	}
+}
+
+
+//send fax init
+printf("FaxSend Set FaxDataFile Name\n");
+if ( linux_flag == 0 )
+   sprintf(FaxDataFile,"%s\\faxDataSendUnit%dCH%d.dat",szFaxPath,unitID,faxChannel);
+else if ( linux_flag == 1 )
+   sprintf(FaxDataFile,"%sfaxDataSendUnit%dCH%d.dat",szFaxPath,unitID,faxChannel);
+
+printf("FaxSend begin Truncate File %s\n",FaxDataFile);
+
+
+
+unlink(FaxDataFile);
+
+memset(&FaxFinishParam,0,sizeof(FaxFinishParam));
+
+TotalPageNum = 0 ;
+
+printf("FaxSend Init FaxDataFile and FinishParam OK\n");
+
+
+//recv fax init
+printf("FaxRecv Make FaxDataFile Name\n");
+if ( linux_flag == 0 )
+  sprintf(FaxDataFile,"%s\\faxDataRecvUnit%dCH%d.dat",szFaxPath,unitID,faxChannel);
+else if ( linux_flag == 1 )
+  sprintf(FaxDataFile,"%sfaxDataRecvUnit%dCH%d.dat",szFaxPath,unitID,faxChannel);
+
+printf("FaxRecv Truncate FaxDataFile:%s\n",FaxDataFile);
+
+unlink(FaxDataFile);
+unlink(FaxTiffFile);
+
+
+devState = DES_FAX_RECVFAX_WAIT_HANDSHAKE;
+
+eventState=1;
+errCode=0;
