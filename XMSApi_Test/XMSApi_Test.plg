@@ -1,0 +1,168 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: XMSApi_Test - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMSApi_Test.res" /d "_DEBUG" "D:\cppexample\XMSApi_Test\XMSApi_Test.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1AF.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMSApi_Test.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMSApi_Test\CSPPlayDlg.cpp"
+"D:\cppexample\XMSApi_Test\Dialog3GFaxTone.cpp"
+"D:\cppexample\XMSApi_Test\DialogAnalogUser.cpp"
+"D:\cppexample\XMSApi_Test\DialogAnaTrunk.cpp"
+"D:\cppexample\XMSApi_Test\DialogAtrunkFlash.cpp"
+"D:\cppexample\XMSApi_Test\DialogFaxHeader.cpp"
+"D:\cppexample\XMSApi_Test\DialogFlashSet.cpp"
+"D:\cppexample\XMSApi_Test\DialogFskSet.cpp"
+"D:\cppexample\XMSApi_Test\DialogGTD.cpp"
+"D:\cppexample\XMSApi_Test\DialogGTDSet.cpp"
+"D:\cppexample\XMSApi_Test\RecCSPDlg.cpp"
+"D:\cppexample\XMSApi_Test\XMS_Test_ParamVoIP.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_BuildIndex.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_ConfParam.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_ControlPlay.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_ControlRecord.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_ParamCAS.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_PlaySet.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_RecordSet.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_SendIOData.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_Test.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_Test_Event.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_Test_Func.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_Test_ParamVoice.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_Test_String.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_Test_Sub.cpp"
+"D:\cppexample\XMSApi_Test\XMSApi_TestDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1AF.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B0.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMSApi_Test.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\XMSApi_Test\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B0.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B1.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMSApi_Test.pdb" /debug /machine:I386 /out:"Debug/XMSApi_Test.exe" /pdbtype:sept 
+.\Debug\CAS_Common_Cfg.obj
+.\Debug\CSPPlayDlg.obj
+.\Debug\Dialog3GFaxTone.obj
+.\Debug\DialogAnalogUser.obj
+.\Debug\DialogAnaTrunk.obj
+.\Debug\DialogAtrunkFlash.obj
+.\Debug\DialogFaxHeader.obj
+.\Debug\DialogFlashSet.obj
+.\Debug\DialogFskSet.obj
+.\Debug\DialogGTD.obj
+.\Debug\DialogGTDSet.obj
+.\Debug\RecCSPDlg.obj
+.\Debug\StdAfx.obj
+.\Debug\XMS_Test_ParamVoIP.obj
+.\Debug\XMSApi_BuildIndex.obj
+.\Debug\XMSApi_ConfParam.obj
+.\Debug\XMSApi_ControlPlay.obj
+.\Debug\XMSApi_ControlRecord.obj
+.\Debug\XMSApi_ParamCAS.obj
+.\Debug\XMSApi_PlaySet.obj
+.\Debug\XMSApi_RecordSet.obj
+.\Debug\XMSApi_SendIOData.obj
+.\Debug\XMSApi_Test.obj
+.\Debug\XMSApi_Test_Event.obj
+.\Debug\XMSApi_Test_Func.obj
+.\Debug\XMSApi_Test_ParamVoice.obj
+.\Debug\XMSApi_Test_String.obj
+.\Debug\XMSApi_Test_Sub.obj
+.\Debug\XMSApi_TestDlg.obj
+.\Debug\XMSApi_Test.res
+..\..\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B1.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+CAS_Common_Cfg.CPP
+CSPPlayDlg.cpp
+Dialog3GFaxTone.cpp
+DialogAnalogUser.cpp
+D:\cppexample\XMSApi_Test\DialogAnalogUser.cpp(64) : warning C4101: 'TmpStr' : unreferenced local variable
+D:\cppexample\XMSApi_Test\DialogAnalogUser.cpp(89) : warning C4101: 'iTmpVal' : unreferenced local variable
+DialogAnaTrunk.cpp
+DialogAtrunkFlash.cpp
+DialogFaxHeader.cpp
+DialogFlashSet.cpp
+DialogFskSet.cpp
+DialogGTD.cpp
+DialogGTDSet.cpp
+RecCSPDlg.cpp
+XMS_Test_ParamVoIP.cpp
+XMSApi_BuildIndex.cpp
+XMSApi_ConfParam.cpp
+XMSApi_ControlPlay.cpp
+XMSApi_ControlRecord.cpp
+XMSApi_ParamCAS.cpp
+XMSApi_PlaySet.cpp
+XMSApi_RecordSet.cpp
+Generating Code...
+Compiling...
+XMSApi_SendIOData.cpp
+XMSApi_Test.cpp
+XMSApi_Test_Event.cpp
+XMSApi_Test_Func.cpp
+XMSApi_Test_ParamVoice.cpp
+XMSApi_Test_String.cpp
+XMSApi_Test_Sub.cpp
+XMSApi_TestDlg.cpp
+Generating Code...
+Linking...
+LINK : fatal error LNK1104: cannot open file "..\..\Lib\DJAcsAPI.lib"
+Error executing link.exe.
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B2.tmp" with contents
+[
+/nologo /o"Debug/XMSApi_Test.bsc" 
+.\Debug\StdAfx.sbr
+.\Debug\CAS_Common_Cfg.sbr
+.\Debug\CSPPlayDlg.sbr
+.\Debug\Dialog3GFaxTone.sbr
+.\Debug\DialogAnalogUser.sbr
+.\Debug\DialogAnaTrunk.sbr
+.\Debug\DialogAtrunkFlash.sbr
+.\Debug\DialogFaxHeader.sbr
+.\Debug\DialogFlashSet.sbr
+.\Debug\DialogFskSet.sbr
+.\Debug\DialogGTD.sbr
+.\Debug\DialogGTDSet.sbr
+.\Debug\RecCSPDlg.sbr
+.\Debug\XMS_Test_ParamVoIP.sbr
+.\Debug\XMSApi_BuildIndex.sbr
+.\Debug\XMSApi_ConfParam.sbr
+.\Debug\XMSApi_ControlPlay.sbr
+.\Debug\XMSApi_ControlRecord.sbr
+.\Debug\XMSApi_ParamCAS.sbr
+.\Debug\XMSApi_PlaySet.sbr
+.\Debug\XMSApi_RecordSet.sbr
+.\Debug\XMSApi_SendIOData.sbr
+.\Debug\XMSApi_Test.sbr
+.\Debug\XMSApi_Test_Event.sbr
+.\Debug\XMSApi_Test_Func.sbr
+.\Debug\XMSApi_Test_ParamVoice.sbr
+.\Debug\XMSApi_Test_String.sbr
+.\Debug\XMSApi_Test_Sub.sbr
+.\Debug\XMSApi_TestDlg.sbr]
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B2.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+XMSApi_Test.exe - 1 error(s), 2 warning(s)
+</pre>
+</body>
+</html>
