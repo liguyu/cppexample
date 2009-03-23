@@ -85,7 +85,7 @@ LINK32=link.exe
 # ADD LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=copy debug\*.exe 
+PostBuild_Cmds=copy debug\*.exe
 # End Special Build Tool
 
 !ENDIF 
@@ -136,7 +136,7 @@ SOURCE=.\XMS_HizDemoDlg.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Lib\DJAcsAPI.lib
+SOURCE=C:\DJKeygoe\Lib\DJAcsAPI.lib
 # End Source File
 # End Group
 # Begin Group "Header Files"
