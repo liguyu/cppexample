@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: XMS_Demo - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E5.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_HizDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_HizDemo.exe" /pdbtype:sept 
+.\Debug\Analog_Common_Code.obj
+.\Debug\CAS_Common_Cfg.obj
+.\Debug\StdAfx.obj
+.\Debug\XMS_HizDemo.obj
+.\Debug\XMS_HizDemo_Event.obj
+.\Debug\XMS_HizDemo_String.obj
+.\Debug\XMS_HizDemo_Sub.obj
+.\Debug\XMS_HizDemoDlg.obj
+.\Debug\XMS_HizDemo.res
+..\..\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E5.tmp"
+<h3>Output Window</h3>
+Linking...
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E6.bat" with contents
+[
+@echo off
+copy debug\*.exe
+]
+Creating command line "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E6.bat"
+
+debug\XMS_HizDemo.exe
+已复制         1 个文件。
+
+
+
+<h3>Results</h3>
+XMS_HizDemo.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
