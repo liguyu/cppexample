@@ -678,6 +678,9 @@ void DrawMain_State( TRUNK_STRUCT *pOneTrunk )
 	case TRK_CONNECT:
 		strcpy(StateStr,"Connect");
 		break ;
+	case TRK_RECORDFILE:
+		strcpy(StateStr,"RecordFile");
+		break ;
 	case TRK_DISCONNECT:
 		strcpy(StateStr,"Disonnect");
 		break ;
@@ -2129,52 +2132,85 @@ void SetGtD_AnalogTrunk(DeviceID_t* pDevId)
 	//========Set GTG End  ========
 }
 
-void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
+void TrunkWork_SS7( TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 {
 	DeviceID_t				FreeVoc1DeviceID;
 	DeviceID_t				FreeVoc2DeviceID;
-	char					FileName[256];
+	char					FileName[256] = {0};
 	char                    str[20] = {0};
 	DeviceID_t *            pDev = &pAcsEvt->m_DeviceID;
 	PSMON_EVENT             SMevt= NULL;
     static  DJ_U32          m_u32Counter = 0;
-	int monitorDspModuleID;
-	int monitorFirstE1;
-	int monitorSecondE1;
+	int						monitorDspModuleID;
+	int						monitorFirstE1;
+	int						monitorSecondE1;
+	int						iPos = 0;
+	int						voc1Chn = 0;
+	int						voc2Chn = 0;
 
-    int iPos = CalDispRow(pOneTrunk->iSeqID); 
-	switch(pOneTrunk->State)
+	if ( XMS_EVT_SIGMON != pAcsEvt->m_s32EventType){
+		AddMsg("Event type Error");
+		return;
+	}
+    
+	SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);
+	
+	if (g_NumbersOfMonitorGroup == 0)
 	{
-	case TRK_FREE:
-		if ( XMS_EVT_SIGMON == pAcsEvt->m_s32EventType && g_u8IsStartFlag)
+		AddMsg("g_NumbersOfMonitorGroup == 0");
+		return;
+	}
+	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
+	{
+		if (SMevt->Pcm == g_MonitorGroupInfo[i].m_MonitorCIC)
 		{
-			SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);
+			monitorDspModuleID = g_MonitorGroupInfo[i].m_MonitorDspModuleID;
+			monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
+			monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
+			i = g_NumbersOfMonitorGroup;
+		}else{
+			AddMsg("No correct MonitorCIC");
+			return;
+		}
+	}
+	
 
-			
-			
-			if (g_NumbersOfMonitorGroup == 0)
+	switch(SMevt->EventType)
+	{
+	case SMON_EVT_Call_Generate:
+		if ( g_u8IsStartFlag)
+		{
+			TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
+			TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
+			if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
 			{
-				AddMsg("g_NumbersOfMonitorGroup == 0");
+				AddMsg("Record Trunk is not exist");
 				return;
 			}
-			for (int i=0; i<g_NumbersOfMonitorGroup; i++)
+			
+			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+				
+			sprintf(str,"%d", SMevt->MsgType);
+			pdlg->m_ListMain.SetItemText(iRecord1Pos, 7, str);
+			pdlg->m_ListMain.SetItemText(iRecord1Pos, 6, SMevt->Caller_ID);
+			pdlg->m_ListMain.SetItemText(iRecord1Pos, 5, SMevt->Called_ID);
+			pdlg->m_ListMain.SetItemText(iRecord2Pos, 7, str);
+			pdlg->m_ListMain.SetItemText(iRecord2Pos, 6, SMevt->Caller_ID);
+			pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);
+		
+			TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+				
+		}else
+		{
+			AddMsg("please start record");
+			return;
+		}			
+		
+		break;
+	case SMON_EVT_Call_Connect:
+			if ( g_u8IsStartFlag)
 			{
-				if (SMevt->Pcm == g_MonitorGroupInfo[i].m_MonitorCIC)
-				{
-					monitorDspModuleID = g_MonitorGroupInfo[i].m_MonitorDspModuleID;
-					monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
-					monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
-					i = g_NumbersOfMonitorGroup;
-				}else{
-					AddMsg("No correct MonitorCIC");
-					return;
-				}
-			}
-
-			///////////////////////////////////////////////////////////////////
-			if ( SMON_EVT_Call_Generate == SMevt->EventType )
-			{
-				pOneTrunk->u8IsRecordFlag = FALSE;
 				TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
 				TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
 				if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
@@ -2183,33 +2219,27 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 					return;
 				}
 				
-				int voc1Chn = 0;
-				int voc2Chn = 0;
-				voc1Chn = SearchOneFreeVoice ( pOneTrunk,  &FreeVoc1DeviceID );
+				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+				//search free voice resource		
+				voc1Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc1DeviceID );
 				if ( voc1Chn >= 0 )
 				{
 					pOneRecordTrunk1->VocDevID = FreeVoc1DeviceID;
-					
 					M_OneVoice(FreeVoc1DeviceID).UsedDevID = pOneRecordTrunk1->deviceID; 
-					
 					DrawMain_VocInfo ( pOneRecordTrunk1 );
-					
 					My_DualLink ( &FreeVoc1DeviceID, &pOneRecordTrunk1->deviceID ); 
 				}else{
 					AddMsg("No Free Voc resource");
 					return;
-				}
+				}			
 				
-				// start record
-				voc2Chn = SearchOneFreeVoice ( pOneTrunk,  &FreeVoc2DeviceID );
+				voc2Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc2DeviceID );
 				if (  voc2Chn >= 0 )
 				{
 					pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
-					
 					M_OneVoice(FreeVoc2DeviceID).UsedDevID = pOneRecordTrunk2->deviceID; 
-					
 					DrawMain_VocInfo ( pOneRecordTrunk2 );
-					
 					My_DualLink ( &FreeVoc2DeviceID, &pOneRecordTrunk2->deviceID ); 
 					
 					//get system time
@@ -2217,65 +2247,50 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 					CTime tm;					
 					tm=CTime::GetCurrentTime();
 					str=tm.Format("%Y%m%d%H%M%S");
-					
-
 					sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+					//start record in the mix way
 					RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
-					
-					
 					pOneRecordTrunk1->u8IsRecordFlag = TRUE;
 					pOneRecordTrunk2->u8IsRecordFlag = TRUE;
 					pOneRecordTrunk1->u8RecordCounter = (++pOneRecordTrunk1->u8RecordCounter)%0x10;
 					pOneRecordTrunk2->u8RecordCounter = (++pOneRecordTrunk2->u8RecordCounter)%0x10;
 				}
+								 
+				Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
+				Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
 				
-				sprintf(str,"%d", SMevt->MsgType);
-				pdlg->m_ListMain.SetItemText(iPos, 7, str);
-				pdlg->m_ListMain.SetItemText(iPos, 6, SMevt->Caller_ID);
-				pdlg->m_ListMain.SetItemText(iPos, 5, SMevt->Called_ID);
-				Change_State ( pOneRecordTrunk1, TRK_CONNECT );	
-				Change_State ( pOneRecordTrunk2, TRK_CONNECT );	
-				//TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pOneTrunk->deviceID.m_s8ModuleID, pOneTrunk->deviceID.m_s16ChannelID );
-			}
+				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+		
 
+			}else
+			{
+				AddMsg("please start record");
+				return;
+			}			
+						
+		break;
+
+
+	case SMON_EVT_Call_Disconnect:	
+			TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
+			TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
+			if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
+			{
+				AddMsg("Record Trunk is not exist");
+				return;
+			}
 			
-		}
-		break;
-	case TRK_CONNECT:		// Wait OnHook
-		if ( XMS_EVT_SIGMON == pAcsEvt->m_s32EventType && g_u8IsStartFlag)
-		{
-			SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);
-			if ( SMON_EVT_Call_Connect == SMevt->EventType )
-			{
-				sprintf(str,"%d", SMevt->MsgType);
-				pdlg->m_ListMain.SetItemText(iPos, 7, str);
-				Change_State ( pOneTrunk, TRK_DISCONNECT );	
-			TRACE("********** (DSP: %d, CH: %d)Call_Connect ***** \n", pOneTrunk->deviceID.m_s8ModuleID, pOneTrunk->deviceID.m_s16ChannelID );
-			}
-		}
-		break;
-	case TRK_DISCONNECT:		// Wait OnHook
-		if ( XMS_EVT_SIGMON == pAcsEvt->m_s32EventType )
-		{
-			SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);
-			if ( (SMON_EVT_Call_Disconnect == SMevt->EventType) && ( TRUE == pOneTrunk->u8IsRecordFlag ) )
-			{
-				sprintf(str,"%d", SMevt->MsgType);
-				pdlg->m_ListMain.SetItemText(iPos, 7, str);
-
-				sprintf(str,"%d", SMevt->ReleaseReason);
-				pdlg->m_ListMain.SetItemText(iPos, 9, str);
-
-				StopRecordFile ( &pOneTrunk->VocDevID );
-
-				ResetTrunk ( pOneTrunk, pAcsEvt );
-
-				Change_State ( pOneTrunk, TRK_FREE );
-			//	Sleep(500);
-			TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pOneTrunk->deviceID.m_s8ModuleID, pOneTrunk->deviceID.m_s16ChannelID );
-			}
-		}
+			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+			
+			sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
+				monitorDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
+			AddMsg(str);	
+			ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
+			ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
+			TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+		
 		break;
 	}
+	
 }
-
