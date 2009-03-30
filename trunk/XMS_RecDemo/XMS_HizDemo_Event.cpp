@@ -504,7 +504,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 // 						{
 // 							if ( TRUE == pOneTrunk->u8IsBGTxFlag )  //is the TX channel
 // 							{
-								TrunkWork ( pOneTrunk, pAcsEvt );	
+								TrunkWork_SS7( pOneTrunk, pAcsEvt );	
 // 							}
 // 							else //is not the TX channel, and get the appointed TX channel
 // 							{
@@ -519,7 +519,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 				}
 				else
 				{
-					TrunkWork ( &M_OneTrunk(pAcsEvt->m_DeviceID), pAcsEvt );
+					TrunkWork_SS7 ( &M_OneTrunk(pAcsEvt->m_DeviceID), pAcsEvt );
 				}
 
 			}
@@ -531,7 +531,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 
 				if ( pDevID->m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 				{
-					TrunkWork ( &M_OneTrunk(*pDevID), pAcsEvt );
+					TrunkWork_SS7 ( &M_OneTrunk(*pDevID), pAcsEvt );
 				}
 			}
 			break;
