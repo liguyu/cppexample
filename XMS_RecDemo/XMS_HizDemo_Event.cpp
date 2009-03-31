@@ -500,26 +500,29 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 
 					if ( NULL != pOneTrunk )
 					{
-// 						if ( TRUE == pOneTrunk->u8IsBGFlag ) //is BG channel
-// 						{
-// 							if ( TRUE == pOneTrunk->u8IsBGTxFlag )  //is the TX channel
-// 							{
-								TrunkWork_SS7( pOneTrunk, pAcsEvt );	
-// 							}
-// 							else //is not the TX channel, and get the appointed TX channel
-// 							{
-// 								pOneTrunk = &M_OneTrunk(pOneTrunk->BGDevID);
-// 								if ( NULL != pOneTrunk )
-// 								{
-// 									TrunkWork ( pOneTrunk, pAcsEvt );
-// 								}
-// 							}
-// 						}
+							TrunkWork_SS7( pOneTrunk, pAcsEvt );
 					}				
 				}
-				else
+				else if ( XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub 
+				  || XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
-					TrunkWork_SS7 ( &M_OneTrunk(pAcsEvt->m_DeviceID), pAcsEvt );
+					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
+					
+					if ( NULL != pOneTrunk )
+					{
+						TrunkWork_ISDN( pOneTrunk, pAcsEvt );
+					}
+				}	
+				else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub
+					|| XMS_DEVSUB_DIGITAL_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub )
+				{
+					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
+					
+					if ( NULL != pOneTrunk )
+					{
+						TrunkWork_Analog( pOneTrunk, pAcsEvt );
+					}
+
 				}
 
 			}
@@ -531,7 +534,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 
 				if ( pDevID->m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 				{
-					TrunkWork_SS7 ( &M_OneTrunk(*pDevID), pAcsEvt );
+					//TrunkWork_SS7 ( &M_OneTrunk(*pDevID), pAcsEvt );
 				}
 			}
 			break;
