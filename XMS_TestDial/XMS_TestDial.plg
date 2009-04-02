@@ -3,59 +3,43 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: XMS_TestDial - Win32 Release--------------------
-</h3>
-<h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/XMS_TestDial.res" /d "NDEBUG" "D:\DJXMS_SAMPLE\XMS_TestDial\XMS_TestDial.rc"" 
-Creating temporary file "D:\DOCUME~1\DJ-TES~1\LOCALS~1\Temp\RSPF.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Fo"Release/" /Fd"Release/" /FD /c 
-"D:\DJXMS_SAMPLE\XMS_TestDial\CAS_Common_Cfg.CPP"
-"D:\DJXMS_SAMPLE\XMS_TestDial\XMS_Dial_Event.cpp"
-"D:\DJXMS_SAMPLE\XMS_TestDial\XMS_Dial_String.cpp"
-"D:\DJXMS_SAMPLE\XMS_TestDial\XMS_Dial_Sub.cpp"
-"D:\DJXMS_SAMPLE\XMS_TestDial\XMS_TestDial.cpp"
-"D:\DJXMS_SAMPLE\XMS_TestDial\XMS_TestDialDlg.cpp"
-]
-Creating command line "cl.exe @"D:\DOCUME~1\DJ-TES~1\LOCALS~1\Temp\RSPF.tmp"" 
-Creating temporary file "D:\DOCUME~1\DJ-TES~1\LOCALS~1\Temp\RSP10.tmp" with contents
-[
-/nologo /subsystem:windows /incremental:no /pdb:"Release/XMS_TestDial.pdb" /machine:I386 /out:"Release/XMS_TestDial.exe" 
-.\Release\CAS_Common_Cfg.obj
-.\Release\XMS_Dial_Event.obj
-.\Release\XMS_Dial_String.obj
-.\Release\XMS_Dial_Sub.obj
-.\Release\XMS_TestDial.obj
-.\Release\XMS_TestDialDlg.obj
-.\Release\XMS_TestDial.res
-C:\DJXMS\Lib\DJAcsAPI.lib
-]
-Creating command line "link.exe @"D:\DOCUME~1\DJ-TES~1\LOCALS~1\Temp\RSP10.tmp""
-<h3>Output Window</h3>
-Compiling resources...
-Compiling...
-CAS_Common_Cfg.CPP
-XMS_Dial_Event.cpp
-XMS_Dial_String.cpp
-XMS_Dial_Sub.cpp
-XMS_TestDial.cpp
-XMS_TestDialDlg.cpp
-Generating Code...
-Linking...
-
-
-
-<h3>Results</h3>
-XMS_TestDial.exe - 0 error(s), 0 warning(s)
-<h3>
 --------------------Configuration: XMS_TestDial - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP121.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/XMS_TestDial.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP121.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP122.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_TestDial.pdb" /debug /machine:I386 /out:"Debug/XMS_TestDial.exe" /pdbtype:sept 
+.\Debug\XMS_Dial_Event.obj
+.\Debug\XMS_Dial_String.obj
+.\Debug\XMS_Dial_Sub.obj
+.\Debug\XMS_TestDial.obj
+.\Debug\XMS_TestDialDlg.obj
+.\Debug\XMS_TestDial.res
+.\Debug\CAS_Common_Cfg.obj
+C:\DJKeygoe\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP122.tmp"
+<h3>Output Window</h3>
+Compiling...
+CAS_Common_Cfg.CPP
+d:\cppexample\cas_common_code\cas_common_cfg.cpp(1) : fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+Error executing cl.exe.
+Creating command line "bscmake.exe /nologo /o"Debug/XMS_TestDial.bsc"  .\Debug\XMS_Dial_Event.sbr .\Debug\XMS_Dial_String.sbr .\Debug\XMS_Dial_Sub.sbr .\Debug\XMS_TestDial.sbr .\Debug\XMS_TestDialDlg.sbr .\Debug\CAS_Common_Cfg.sbr"
+Creating browse info file...
+BSCMAKE: error BK1506 : cannot open file '.\Debug\CAS_Common_Cfg.sbr': No such file or directory
+Error executing bscmake.exe.
+<h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-XMS_TestDial.exe - 0 error(s), 0 warning(s)
+XMS_TestDial.exe - 2 error(s), 0 warning(s)
 </pre>
 </body>
 </html>
