@@ -48,6 +48,8 @@ int				cfg_s32DebugOn;
 // var about work
 ACSHandle_t		g_acsHandle = -1;
 DJ_U8			g_u8UnitID = 15;
+RecordProperty_t	g_RecordProperty;
+
 
 // var in XMS_Demo_Event.CPP
 extern TYPE_XMS_DSP_DEVICE_RES_DEMO	AllDeviceRes[MAX_DSP_MODULE_NUMBER_OF_XMS];
