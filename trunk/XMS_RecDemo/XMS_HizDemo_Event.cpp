@@ -11,7 +11,7 @@
 #include "XMS_HizDemo_String.H"
 
 extern int				cfg_iPartWork;
-extern int				cfg_iPartWorkModuleID;
+extern int				cfg_iPartWorkModuleID[256];
 
 // ----------------------------------------------------------------------------------------------------
 TYPE_XMS_DSP_DEVICE_RES_DEMO	AllDeviceRes[MAX_DSP_MODULE_NUMBER_OF_XMS];
@@ -431,6 +431,28 @@ void	AddDeviceRes ( Acs_Dev_List_Head_t *pAcsDevList )
 	}
 }
 
+BOOL IsSysMod(DJ_S8 s8ModuleID)
+{
+	int   i;
+	BOOL  ret = FALSE;
+	
+	for (i=0; i<256; i++)
+	{
+		if (cfg_iPartWorkModuleID[i]==0)
+		{
+			ret = FALSE;
+			break;
+		}
+		
+		if (cfg_iPartWorkModuleID[i] == s8ModuleID)
+		{
+			ret = TRUE;
+			break;
+		}
+	}
+	
+	return ret;
+}
 
 DJ_Void EvtHandler(DJ_U32 esrParam)
 {
@@ -444,7 +466,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 	switch ( pAcsEvt->m_s32EventType )
 	{
 		case XMS_EVT_QUERY_DEVICE:
-			if ( ( cfg_iPartWork == 0 ) || (pAcsEvt->m_DeviceID.m_s8ModuleID == cfg_iPartWorkModuleID) )
+			if (  IsSysMod(pAcsEvt->m_DeviceID.m_s8ModuleID) )
 			{
 				pAcsDevList = ( Acs_Dev_List_Head_t *) FetchEventData(pAcsEvt);
 
@@ -454,7 +476,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 			break; 
 		case XMS_EVT_QUERY_ONE_DSP_END:
 		case XMS_EVT_QUERY_REMOVE_ONE_DSP_END:
-			if ( ( cfg_iPartWork == 0 ) || (pAcsEvt->m_DeviceID.m_s8ModuleID == cfg_iPartWorkModuleID) )
+			if ( IsSysMod(pAcsEvt->m_DeviceID.m_s8ModuleID) )
 			{
 				if ( pAcsEvt->m_s32EventType == XMS_EVT_QUERY_ONE_DSP_END )
 				{
@@ -500,7 +522,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 
 					if ( NULL != pOneTrunk )
 					{
-							TrunkWork_SS7( pOneTrunk, pAcsEvt );
+						TrunkWork_SS7( pOneTrunk, pAcsEvt );
 					}				
 				}
 				else if ( XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub 

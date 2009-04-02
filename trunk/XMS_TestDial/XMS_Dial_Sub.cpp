@@ -17,7 +17,7 @@ static char THIS_FILE[] = __FILE__;
 #include "XMS_Dial_Event.H"
 
 // Special code for CAS(SS1)
-#include "C:\\DJXMS\\Samples\\CAS_Common_Code\\CAS_Common_Cfg.h"		
+#include "..\CAS_Common_Code\CAS_Common_Cfg.h"				
 CmdParamData_CAS_t g_Param_CAS;
 // end of code for CAS(SS1)
 

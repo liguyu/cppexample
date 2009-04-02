@@ -6,12 +6,12 @@
 --------------------Configuration: XMS_LoadTest - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPFF.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP162.tmp" with contents
 [
-/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/XMS_LoadTest.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"D:\DJXMS_Sample\XMS_LoadTest\XMS_Demo_Sub.cpp"
+/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Release/" /Fp"Release/XMS_LoadTest.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\cppexample\XMS_LoadTest\XMS_Demo_Sub.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPFF.tmp" 
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP162.tmp" 
 <h3>Output Window</h3>
 Compiling...
 XMS_Demo_Sub.cpp

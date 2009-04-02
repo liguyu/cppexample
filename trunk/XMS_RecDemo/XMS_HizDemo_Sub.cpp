@@ -41,8 +41,8 @@ int				cfg_iDispChnl;
 int				cfg_iVoiceRule;
 
 int				cfg_iPartWork;
-int				cfg_iPartWorkModuleID;
-
+int				cfg_iPartWorkModuleID[256] = {0};
+char            cfg_chPartWorkModuleID[256] = {0};
 int				cfg_s32DebugOn;
 
 // var about work
@@ -115,8 +115,6 @@ typedef struct
 MGNodeINFO                  g_stMGNodeInfo;
 int							g_NumbersOfMonitorGroup = 0;
 MonitorGroupInfo			g_MonitorGroupInfo[100];
-int							g_NumbersOfMonitorGroupISDN = 0;
-MonitorGroupInfo			g_MonitorGroupInfoISDN[100];
 #define  MAX_APPNAME_LEN    30
 
 
@@ -317,40 +315,11 @@ DJ_S32 ReadMGNode(MGNode * info)
 
 	return 0;
 }
-//get ISND monitor group infomation
-DJ_S32 ReadMonitorGroupInfoISDN(void)
-{
-	static char strAppName[ ] = "MONITOR_CFG_ISDN";
-	static char strKey[MAX_APPNAME_LEN];
-	
-	TRACE("******** ReadBindInfo\n");
-	memset(&g_MonitorGroupInfo, 0, sizeof(MonitorGroupInfo) );
-	
-	memset(strKey, 0, MAX_APPNAME_LEN);
-	sprintf(strKey, "NumsOfMonitorGroupISDN");
-	g_NumbersOfMonitorGroupISDN = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 
-	for (int i=0; i<g_NumbersOfMonitorGroupISDN; i++)
-	{
-		memset(strKey, 0, MAX_APPNAME_LEN);
-		sprintf(strKey, "MonitorDspModuleID[%d]", i + 1);
-		g_MonitorGroupInfoISDN[i].m_MonitorDspModuleID  = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
-
-		memset(strKey, 0, MAX_APPNAME_LEN);
-		sprintf(strKey, "MonitorFirstE1[%d]", i + 1);
-		g_MonitorGroupInfoISDN[i].m_MonitorFirstE1 = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
-
-		memset(strKey, 0, MAX_APPNAME_LEN);
-		sprintf(strKey, "MonitorSecondE1[%d]", i + 1);
-		g_MonitorGroupInfoISDN[i].m_MonitorSecondE1  = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
-	}
-	
-	return 0;
-}
-//get SS7 monitor group information from ini
+//get monitor group information from ini
 DJ_S32 ReadMonitorGroupInfo(void)
 {
-	static char strAppName[ ] = "MONITOR_CFG_SS7";
+	static char strAppName[ ] = "MONITOR_CFG";
 	static char strKey[MAX_APPNAME_LEN];
 	
 	TRACE("******** ReadBindInfo\n");
@@ -416,8 +385,33 @@ void ReadMGNodeInfo(void)
 	}
 }
 
+//read ini config file,-----------------------------------------------------------------------
+int    SplitStr2Int(DJ_S8 *str, DJ_S8 *sep, int buf[])
+{
+	DJ_U32   i = 0;
+	DJ_S8    *p = NULL;
+	DJ_S8    *pBuf = NULL;
+	
+	if ( (str==NULL)||(strlen(str)==0)||(sep==NULL)||(strlen(sep)==0) )
+	{
+		return -1;
+	}
+	
+	pBuf = str;
+	p = strtok(pBuf, sep);
+	
+	while ( p != NULL )
+	{
+		buf[i++] = atoi(p);
+		p = strtok(NULL, sep);
+	}
+	
+	return i;
+}
+
 void	ReadFromConfig(void)
 {
+	char strTmp[256]={0};
 	GetCurrentDirectory ( MAX_FILE_NAME_LEN-32, cfg_IniName );
 	strcat ( cfg_IniName, cfg_IniShortName );
 
@@ -427,23 +421,20 @@ void	ReadFromConfig(void)
 
 	GetPrivateProfileString("ConfigInfo","UserName","",cfg_ServerID.m_s8UserName,sizeof(cfg_ServerID.m_s8UserName),cfg_IniName);
 	GetPrivateProfileString("ConfigInfo","PassWord","",cfg_ServerID.m_s8UserPwd,sizeof(cfg_ServerID.m_s8UserPwd),cfg_IniName);
-
 	GetPrivateProfileString ( "ConfigInfo", "VocPath", "..\\VOC\\", cfg_VocPath, sizeof(cfg_VocPath), cfg_IniName);
 
 	cfg_iDispChnl = GetPrivateProfileInt ( "ConfigInfo", "DispChnl", 30, cfg_IniName);
-
 	cfg_iVoiceRule = GetPrivateProfileInt ( "ConfigInfo", "VoiceRule", 0, cfg_IniName);
-
 	cfg_iPartWork = GetPrivateProfileInt ( "ConfigInfo", "PartWork", 0, cfg_IniName);
-
-	cfg_iPartWorkModuleID = GetPrivateProfileInt ( "ConfigInfo", "PartWorkModuleID", 0, cfg_IniName);
-
 	cfg_s32DebugOn = GetPrivateProfileInt ( "ConfigInfo", "DebugOn", 0, cfg_IniName);
+
+	GetPrivateProfileString("ConfigInfo", "PartWorkModuleID","",cfg_chPartWorkModuleID, sizeof(cfg_chPartWorkModuleID), cfg_IniName); 
+	strncpy(strTmp, cfg_chPartWorkModuleID, sizeof(strTmp));
+	SplitStr2Int(strTmp, ",", cfg_iPartWorkModuleID);
 
 	//////////////////////////
 	ReadMGNodeInfo();
 	ReadMonitorGroupInfo();
-	ReadMonitorGroupInfoISDN();
 }
 
 void	WriteToConfig(void)
@@ -466,7 +457,7 @@ void	WriteToConfig(void)
 	sprintf ( TmpStr, "%d", cfg_iPartWork);
 	WritePrivateProfileString ( "ConfigInfo", "PartWork", TmpStr, cfg_IniName);
 
-	sprintf ( TmpStr, "%d", cfg_iPartWorkModuleID);
+	sprintf ( TmpStr, "%s", cfg_chPartWorkModuleID);
 	WritePrivateProfileString ( "ConfigInfo", "PartWorkModuleID", TmpStr, cfg_IniName);
 
 	sprintf ( TmpStr, "%d", cfg_s32DebugOn);
@@ -506,7 +497,7 @@ void	InitTextBox(void)
 	else
 		((CButton *)pdlg->GetDlgItem (IDC_CHECK_PartWork))->SetCheck ( 1 ) ;
 
-	sprintf ( TmpStr, "%d", cfg_iPartWorkModuleID );
+	sprintf ( TmpStr, "%s", cfg_chPartWorkModuleID );
 	pdlg->GetDlgItem ( IDC_EDIT_ModuleID )->SetWindowText ( TmpStr );
 
 	if ( cfg_s32DebugOn == 0 )
@@ -553,8 +544,9 @@ void	FetchFromText(void)
 	else
 		cfg_iPartWork = 0;
 
-	pdlg->GetDlgItem ( IDC_EDIT_ModuleID )->GetWindowText ( TmpStr, 30 );
-	sscanf ( TmpStr, "%d", &cfg_iPartWorkModuleID);
+// 	pdlg->GetDlgItem ( IDC_EDIT_ModuleID )->GetWindowText ( TmpStr, 30 );
+// 	sscanf ( TmpStr, "%d", &cfg_iPartWorkModuleID);
+	pdlg->GetDlgItem(IDC_EDIT_ModuleID)->GetWindowText(cfg_chPartWorkModuleID, sizeof(cfg_chPartWorkModuleID));
 
 	if ( ((CButton *)pdlg->GetDlgItem (IDC_CHECK_DEBUG))->GetCheck ( ) )
 		cfg_s32DebugOn = 1;
@@ -2207,7 +2199,7 @@ void TrunkWork_ISDN(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		return;
 	}
 
-	if (g_NumbersOfMonitorGroupISDN == 0)
+	if (g_NumbersOfMonitorGroup == 0)
 	{
 		AddMsg("g_NumbersOfMonitorGroup == 0");
 		return;
@@ -2215,24 +2207,25 @@ void TrunkWork_ISDN(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	
 	SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);
 	
-	for (int i=0; i<g_NumbersOfMonitorGroupISDN; i++)
+	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
 	{
-		if (pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1 == g_MonitorGroupInfoISDN[i].m_MonitorFirstE1
-			|| pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1 == g_MonitorGroupInfoISDN[i].m_MonitorSecondE1)
+		if (pAcsEvt->m_DeviceID.m_s8ModuleID == g_MonitorGroupInfo[i].m_MonitorDspModuleID)
 		{
-			if (pAcsEvt->m_DeviceID.m_s8ModuleID == g_MonitorGroupInfoISDN[i].m_MonitorDspModuleID)
+			
+			if (pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1 == g_MonitorGroupInfo[i].m_MonitorFirstE1
+				|| pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1 == g_MonitorGroupInfo[i].m_MonitorSecondE1)
 			{
-				monitorDspModuleID = g_MonitorGroupInfoISDN[i].m_MonitorDspModuleID;
-				monitorFirstE1 = g_MonitorGroupInfoISDN[i].m_MonitorFirstE1;
-				monitorSecondE1 = g_MonitorGroupInfoISDN[i].m_MonitorSecondE1;
+				monitorDspModuleID = g_MonitorGroupInfo[i].m_MonitorDspModuleID;
+				monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
+				monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
 				i = g_NumbersOfMonitorGroup;
 			}else{
-				AddMsg("The ini file is wrong!");
+				AddMsg("DSP number is right,E1 number is wrong");
 				return;
 			}
 			
 		}else{
-			AddMsg("No correct MonitorCIC");
+			AddMsg("DSP number is wrong.");
 			return;
 		}
 	}
@@ -2389,18 +2382,27 @@ void TrunkWork_SS7( TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 
 	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
 	{
-		if (SMevt->Pcm == g_MonitorGroupInfo[i].m_MonitorCIC)
+		if (pAcsEvt->m_DeviceID.m_s8ModuleID == g_MonitorGroupInfo[i].m_MonitorDspModuleID)
 		{
-			monitorDspModuleID = g_MonitorGroupInfo[i].m_MonitorDspModuleID;
-			monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
-			monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
-			i = g_NumbersOfMonitorGroup;
+
+			if (pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1 == g_MonitorGroupInfo[i].m_MonitorFirstE1
+				|| pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1 == g_MonitorGroupInfo[i].m_MonitorSecondE1)
+			{
+			
+				monitorDspModuleID = g_MonitorGroupInfo[i].m_MonitorDspModuleID;
+				monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
+				monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
+				i = g_NumbersOfMonitorGroup;
+			}else{
+				AddMsg("DSP number is right,E1 number is wrong");
+				return;
+			}
+			
 		}else{
-			AddMsg("No correct MonitorCIC");
+			AddMsg("DSP number is wrong.");
 			return;
 		}
 	}
-	
 
 	switch(SMevt->EventType)
 	{
