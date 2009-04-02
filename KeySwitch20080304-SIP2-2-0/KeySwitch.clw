@@ -13,14 +13,14 @@ Class2=CKeySwitchDlg
 Class3=CAboutDlg
 
 ResourceCount=7
-Resource1=IDD_OUT_LINE_SET
+Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME
-Resource3=IDD_KEYSWITCH_DIALOG
-Resource4=IDD_VOIP_SET
-Resource5=IDD_ABOUTBOX
+Resource3=IDD_OUT_LINE_SET
+Resource4=IDD_KEYSWITCH_DIALOG
+Resource5=IDD_IN_LINE_SET
 Class4=CInLineSetDlg
 Class5=COutLineSetDlg
-Resource6=IDD_IN_LINE_SET
+Resource6=IDD_VOIP_SET
 Class6=CVoipSetDlg
 Resource7=IDR_MENU1
 
