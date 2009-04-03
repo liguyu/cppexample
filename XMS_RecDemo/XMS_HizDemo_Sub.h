@@ -122,6 +122,7 @@ DJ_S32	 PlayFile ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U8 u8PlayTag, bo
 DJ_S32	 PlayIndex ( DeviceID_t	*pVocDevID, DJ_U16 u16Index, DJ_U8 u8PlayTag, bool bIsQueue );
 
 void	TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
+void	TrunkWork_Digital ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 void	TrunkWork_ISDN ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 void	TrunkWork_SS7 ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 
