@@ -49,6 +49,7 @@ int				cfg_s32DebugOn;
 ACSHandle_t		g_acsHandle = -1;
 DJ_U8			g_u8UnitID = 15;
 RecordProperty_t	g_RecordProperty;
+CmdParamData_Voice_t	g_Voice_Param;
 
 
 // var in XMS_Demo_Event.CPP
@@ -316,6 +317,97 @@ DJ_S32 ReadMGNode(MGNode * info)
 	return 0;
 }
 
+//get record property information from ini
+DJ_S32 ReadRecordProperty(void)
+{
+	char strAppName[ ] = "RECORD_PROPERTY";
+	char strKey[MAX_APPNAME_LEN]={0};
+	
+	TRACE("******** ReadBindInfo\n");
+	memset(&g_RecordProperty, 0, sizeof(RecordProperty_t) );
+	memset(&g_Voice_Param, 0, sizeof (CmdParamData_Voice_t) );	
+	
+	
+	memset(strKey, 0, MAX_APPNAME_LEN);
+	sprintf(strKey, "EncodeType");
+	switch (GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName))
+	{
+		case 0:
+			g_RecordProperty.m_u8EncodeType = XMS_Alaw_type;
+			break;
+		case 1:
+			g_RecordProperty.m_u8EncodeType = XMS_Ulaw_type;
+			break;
+		case 2:
+			g_RecordProperty.m_u8EncodeType = XMS_Vox_type;
+			break;
+		case 3:
+			g_RecordProperty.m_u8EncodeType = XMS_Linear_8bit;
+			break;
+		case 4:
+			g_RecordProperty.m_u8EncodeType = XMS_Linear_16bit;
+			break;
+		default:
+			g_RecordProperty.m_u8EncodeType = XMS_Alaw_type;
+			break;
+	}
+
+	
+	memset(strKey, 0, MAX_APPNAME_LEN);
+	sprintf(strKey, "SRCMode");
+	switch (GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName))
+	{
+	case 0:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_8K;
+		break;
+	case 1:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_6K;
+		break;
+	case 2:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_GTG;
+		break;
+	case 3:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_FSK;
+		break;
+	case 4:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_RTP;
+		break;
+	case 5:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_FAX;
+		break;
+	default:
+		g_RecordProperty.m_u8SRCMode = XMS_SRC_8K;
+		break;
+	}
+
+	memset(strKey, 0, MAX_APPNAME_LEN);
+	sprintf(strKey, "StopMode");
+	switch (GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName))
+	{
+	case 0:
+		g_RecordProperty.m_u8StopMode = XMS_Normal_Stop;
+		break;
+	case 1:
+		g_RecordProperty.m_u8StopMode = XMS_Single_Code;
+		break;
+	case 2:
+		g_RecordProperty.m_u8StopMode = XMS_Any_Code;
+		break;
+	default:
+		g_RecordProperty.m_u8StopMode = XMS_Normal_Stop;
+		break;
+	}
+		
+	memset(strKey, 0, MAX_APPNAME_LEN);
+	sprintf(strKey, "AGCEnable");
+	g_Voice_Param.m_VocInputControl.m_u8AgcEnable = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
+	
+	memset(strKey, 0, MAX_APPNAME_LEN);
+	sprintf(strKey, "FixGain");
+	g_Voice_Param.m_VocInputControl.m_u16FixGain = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
+
+	return 0;
+}
 //get monitor group information from ini
 DJ_S32 ReadMonitorGroupInfo(void)
 {
@@ -351,39 +443,39 @@ DJ_S32 ReadMonitorGroupInfo(void)
 	
 	return 0;
 }
-void ReadMGNodeInfo(void)
-{
-	static char strAppName[ ] = "MONITOR_CFG";
-	static char strKey[MAX_APPNAME_LEN];	
-	
-	TRACE("******** ReadMGNodeInfo\n");
-
-	memset(&g_stMGNodeInfo, 0, sizeof(MGNodeINFO) );
-
-	///////////////////////////////////////////////////////////////////////////////////////
-	//get the EM init config
-	memset(strKey, 0, MAX_APPNAME_LEN);
-	strcpy(strKey, "NumsOfMonitorGroup");
-
-	g_stMGNodeInfo.m_u16BGCount = GetPrivateProfileInt(strAppName,strKey,0, cfg_IniName);
-	///////////////////////////////////////////////////////////////////////////////////////
-	
-	g_stMGNodeInfo.m_pstMGNode = (MGNode*)malloc(sizeof(MGNode)*(g_stMGNodeInfo.m_u16BGCount+1));
-	if ( NULL == g_stMGNodeInfo.m_pstMGNode )
-	{
-		return;
-	}
-
-	memset( (DJ_U8*)g_stMGNodeInfo.m_pstMGNode, 0, sizeof(MGNode)*(g_stMGNodeInfo.m_u16BGCount+1) );
-
-	for (int i = 0; i < g_stMGNodeInfo.m_u16BGCount; i++)
-	{
-		g_stMGNodeInfo.m_pstMGNode[i].m_u16SeqID = i;
-		g_stMGNodeInfo.m_pstMGNode[i].m_u8IsUsed = FALSE;
-
-		ReadMGNode( &g_stMGNodeInfo.m_pstMGNode[i] );
-	}
-}
+// void ReadMGNodeInfo(void)
+// {
+// 	static char strAppName[ ] = "MONITOR_CFG";
+// 	static char strKey[MAX_APPNAME_LEN];	
+// 	
+// 	TRACE("******** ReadMGNodeInfo\n");
+// 
+// 	memset(&g_stMGNodeInfo, 0, sizeof(MGNodeINFO) );
+// 
+// 	///////////////////////////////////////////////////////////////////////////////////////
+// 	//get the EM init config
+// 	memset(strKey, 0, MAX_APPNAME_LEN);
+// 	strcpy(strKey, "NumsOfMonitorGroup");
+// 
+// 	g_stMGNodeInfo.m_u16BGCount = GetPrivateProfileInt(strAppName,strKey,0, cfg_IniName);
+// 	///////////////////////////////////////////////////////////////////////////////////////
+// 	
+// 	g_stMGNodeInfo.m_pstMGNode = (MGNode*)malloc(sizeof(MGNode)*(g_stMGNodeInfo.m_u16BGCount+1));
+// 	if ( NULL == g_stMGNodeInfo.m_pstMGNode )
+// 	{
+// 		return;
+// 	}
+// 
+// 	memset( (DJ_U8*)g_stMGNodeInfo.m_pstMGNode, 0, sizeof(MGNode)*(g_stMGNodeInfo.m_u16BGCount+1) );
+// 
+// 	for (int i = 0; i < g_stMGNodeInfo.m_u16BGCount; i++)
+// 	{
+// 		g_stMGNodeInfo.m_pstMGNode[i].m_u16SeqID = i;
+// 		g_stMGNodeInfo.m_pstMGNode[i].m_u8IsUsed = FALSE;
+// 
+// 		ReadMGNode( &g_stMGNodeInfo.m_pstMGNode[i] );
+// 	}
+// }
 
 //read ini config file,-----------------------------------------------------------------------
 int    SplitStr2Int(DJ_S8 *str, DJ_S8 *sep, int buf[])
@@ -417,11 +509,11 @@ void	ReadFromConfig(void)
 
 	GetPrivateProfileString ( "ConfigInfo", "IpAddr", "192.168.0.8", cfg_ServerID.m_s8ServerIp, sizeof(cfg_ServerID.m_s8ServerIp), cfg_IniName);
 
-	cfg_ServerID.m_u32ServerPort = GetPrivateProfileInt ( "ConfigInfo", "Port", 9001, cfg_IniName);
+	cfg_ServerID.m_u32ServerPort = GetPrivateProfileInt ( "ConfigInfo", "Port", 9000, cfg_IniName);
 
 	GetPrivateProfileString("ConfigInfo","UserName","",cfg_ServerID.m_s8UserName,sizeof(cfg_ServerID.m_s8UserName),cfg_IniName);
 	GetPrivateProfileString("ConfigInfo","PassWord","",cfg_ServerID.m_s8UserPwd,sizeof(cfg_ServerID.m_s8UserPwd),cfg_IniName);
-	GetPrivateProfileString ( "ConfigInfo", "VocPath", "..\\VOC\\", cfg_VocPath, sizeof(cfg_VocPath), cfg_IniName);
+	GetPrivateProfileString("ConfigInfo","VocPath", "..\\VOC\\", cfg_VocPath, sizeof(cfg_VocPath), cfg_IniName);
 
 	cfg_iDispChnl = GetPrivateProfileInt ( "ConfigInfo", "DispChnl", 30, cfg_IniName);
 	cfg_iVoiceRule = GetPrivateProfileInt ( "ConfigInfo", "VoiceRule", 0, cfg_IniName);
@@ -432,8 +524,7 @@ void	ReadFromConfig(void)
 	strncpy(strTmp, cfg_chPartWorkModuleID, sizeof(strTmp));
 	SplitStr2Int(strTmp, ",", cfg_iPartWorkModuleID);
 
-	//////////////////////////
-	ReadMGNodeInfo();
+	ReadRecordProperty();
 	ReadMonitorGroupInfo();
 }
 
@@ -1270,16 +1361,16 @@ void	OpenDeviceOK ( DeviceID_t *pDevice )
 
 	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_BOARD )
 	{
-		AllDeviceRes[pDevice->m_s8ModuleID].deviceID.m_CallID = pDevice->m_CallID;		// this line is very important, must before all operation
+		// this line is very important, must before all operation
+		AllDeviceRes[pDevice->m_s8ModuleID].deviceID.m_CallID = pDevice->m_CallID;
 		AllDeviceRes[pDevice->m_s8ModuleID].bOpenFlag = true;
-
 	}
 
 	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 	{
 		pOneTrunk = &M_OneTrunk(*pDevice);
-
-		pOneTrunk->deviceID.m_CallID = pDevice->m_CallID;		// this line is very important, must before all operation
+		// this line is very important, must before all operation
+		pOneTrunk->deviceID.m_CallID = pDevice->m_CallID;		
 
 		// init this Device: Trunk
 		InitTrunkChannel ( pOneTrunk );
@@ -1355,6 +1446,12 @@ void	OpenDeviceOK ( DeviceID_t *pDevice )
 		g_iTotalVoiceFree ++;
 		AllDeviceRes[pDevice->m_s8ModuleID].lVocOpened ++;
 		AllDeviceRes[pDevice->m_s8ModuleID].lVocFreeNum ++;
+		if (g_Voice_Param.m_VocInputControl.m_u8AgcEnable)
+		{
+			g_Voice_Param.m_u8InputCtrlValid = 1;
+			XMS_ctsSetParam(g_acsHandle,pDevice,VOC_PARAM_UNIPARAM,sizeof(g_Voice_Param),(void *)&g_Voice_Param);
+		}
+		
 
 		DrawCount_Voc ( pDevice->m_s8ModuleID );
 	}
@@ -1736,21 +1833,19 @@ DJ_S32 StopRecordFile ( DeviceID_t	*pVocDevID )
 DJ_S32	 RecordFile_NoMix ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U32 u32RecSize, bool bIsAppend )
 {	
 	DJ_U32				i = 0;	
-	RecordProperty_t	recordProperty;
 	RetCode_t			r;
 	
-	memset(&recordProperty,0,sizeof(RecordProperty_t));		
-	
-	recordProperty.m_u32MaxSize = u32RecSize;
+	g_RecordProperty.m_u32MaxSize = u32RecSize;
 	
 	if ( bIsAppend )
-		recordProperty.m_s8IsAppend = 1;
+		g_RecordProperty.m_s8IsAppend = 1;
 	else
-		recordProperty.m_s8IsAppend = 0;
+		g_RecordProperty.m_s8IsAppend = 0;
 	
-	strcpy ( recordProperty.m_s8FileName, s8FileName );
-	
-	r = XMS_ctsRecord ( g_acsHandle, pVocDevID, &recordProperty, NULL );
+	strcpy ( g_RecordProperty.m_s8FileName, s8FileName );
+	g_RecordProperty.m_s8IsMixEnable = 0;
+
+	r = XMS_ctsRecord ( g_acsHandle, pVocDevID, &g_RecordProperty, NULL );
 	
 	return r;
 }
@@ -1758,27 +1853,21 @@ DJ_S32	 RecordFile_NoMix ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U32 u32R
 DJ_S32	 RecordFile ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U32 u32RecSize, bool bIsAppend ,int voc1Chn)
 {	
 	DJ_U32				i = 0;	
-	RecordProperty_t	recordProperty;
 	RetCode_t			r;
 
-	memset(&recordProperty,0,sizeof(RecordProperty_t));		
-	
-	recordProperty.m_u32MaxSize = u32RecSize;
+	g_RecordProperty.m_u32MaxSize = u32RecSize;
 	if ( bIsAppend )
-		recordProperty.m_s8IsAppend = 1;
+		g_RecordProperty.m_s8IsAppend = 1;
 	else
-		recordProperty.m_s8IsAppend = 0;
+		g_RecordProperty.m_s8IsAppend = 0;	
+	g_RecordProperty.m_s8IsMixEnable = 1;
+    g_RecordProperty.m_MixerControl.m_u8SRC1_Ctrl = XMS_MIXER_FROM_INPUT;
+	g_RecordProperty.m_MixerControl.m_u16SRC_ChID1 = voc1Chn;
+	g_RecordProperty.m_MixerControl.m_u8SRC2_Ctrl = XMS_MIXER_FROM_INPUT;
+	g_RecordProperty.m_MixerControl.m_u16SRC_ChID2 = pVocDevID->m_s16ChannelID;
+	strcpy ( g_RecordProperty.m_s8FileName, s8FileName );
 
-	recordProperty.m_s8IsMixEnable = 1;
-    recordProperty.m_MixerControl.m_u8SRC1_Ctrl = XMS_MIXER_FROM_INPUT;
-	recordProperty.m_MixerControl.m_u16SRC_ChID1 = voc1Chn;
-	recordProperty.m_MixerControl.m_u8SRC2_Ctrl = XMS_MIXER_FROM_INPUT;
-	recordProperty.m_MixerControl.m_u16SRC_ChID2 = pVocDevID->m_s16ChannelID;
-
-
-	strcpy ( recordProperty.m_s8FileName, s8FileName );
-
-	r = XMS_ctsRecord ( g_acsHandle, pVocDevID, &recordProperty, NULL );
+	r = XMS_ctsRecord ( g_acsHandle, pVocDevID, &g_RecordProperty, NULL );
 
 	return r;
 }
@@ -2230,23 +2319,25 @@ void TrunkWork_ISDN(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		}
 	}
 
-	
+	TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
+	TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
+	if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
+	{
+		AddMsg("Record Trunk is not exist");
+		return;
+	}
+
 	switch(SMevt->EventType)
 	{
-		case SMON_EVT_Call_Generate:
-			if ( g_u8IsStartFlag)
-			{
-				TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
-				TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
-				if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
-				{
-					AddMsg("Record Trunk is not exist");
-					return;
-				}
-				
+	case SMON_EVT_Call_Generate:
+		if ( g_u8IsStartFlag)
+		{
+		
+			if (pOneRecordTrunk1->State == TRK_FREE && pOneRecordTrunk2->State == TRK_FREE)
+			{			
 				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
 				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
-				
+					
 				sprintf(str,"%d", SMevt->MsgType);
 				pdlg->m_ListMain.SetItemText(iRecord1Pos, 7, str);
 				pdlg->m_ListMain.SetItemText(iRecord1Pos, 6, SMevt->Caller_ID);
@@ -2255,101 +2346,106 @@ void TrunkWork_ISDN(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				pdlg->m_ListMain.SetItemText(iRecord2Pos, 6, SMevt->Caller_ID);
 				pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);
 				
+				Change_State(pOneRecordTrunk1,TRK_CONNECT);
+				Change_State(pOneRecordTrunk2,TRK_CONNECT);
+
 				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+			}else{
+				AddMsg("trunk state is wrong!");
+				return;
+			}	
+		}else
+		{
+			AddMsg("please start record");
+			return;
+		}			
+		
+		break;
+	case SMON_EVT_Call_Connect:
+			if ( g_u8IsStartFlag)
+			{			
+				if (pOneRecordTrunk1->State == TRK_CONNECT && pOneRecordTrunk2->State == TRK_CONNECT)
+				{
+					int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+					int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+					
+					//search free voice resource		
+					int voc1Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc1DeviceID );
+					if ( voc1Chn >= 0 )
+					{
+						pOneRecordTrunk1->VocDevID = FreeVoc1DeviceID;
+						M_OneVoice(FreeVoc1DeviceID).UsedDevID = pOneRecordTrunk1->deviceID; 
+						DrawMain_VocInfo ( pOneRecordTrunk1 );
+						My_DualLink ( &FreeVoc1DeviceID, &pOneRecordTrunk1->deviceID ); 
+					}else{
+						AddMsg("No Free Voc resource");
+						return;
+					}			
+					
+					int voc2Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc2DeviceID );
+					if (  voc2Chn >= 0 )
+					{
+						pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
+						M_OneVoice(FreeVoc2DeviceID).UsedDevID = pOneRecordTrunk2->deviceID; 
+						DrawMain_VocInfo ( pOneRecordTrunk2 );
+						My_DualLink ( &FreeVoc2DeviceID, &pOneRecordTrunk2->deviceID ); 
+						
+						//get system time
+						CString str;
+						CTime tm;					
+						tm=CTime::GetCurrentTime();
+						str=tm.Format("%Y%m%d-%H%M%S");
+						sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+						//start record in the mix way
+						RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
+						pOneRecordTrunk1->u8IsRecordFlag = TRUE;
+						pOneRecordTrunk2->u8IsRecordFlag = TRUE;
+						pOneRecordTrunk1->u8RecordCounter = (++pOneRecordTrunk1->u8RecordCounter)%0x10;
+						pOneRecordTrunk2->u8RecordCounter = (++pOneRecordTrunk2->u8RecordCounter)%0x10;
+					}
+					
+					Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
+					Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
+					
+					TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
 				
+				}else{
+					AddMsg("trunk state is wrong.");
+					return;
+				}				
+
 			}else
 			{
 				AddMsg("please start record");
 				return;
 			}			
-			
-			break;
-		case SMON_EVT_Call_Connect:
-			if ( g_u8IsStartFlag)
+						
+		break;
+
+	case SMON_EVT_Call_Disconnect:	
+		
+			if (pOneRecordTrunk1->State == TRK_RECORDFILE && pOneRecordTrunk2->State == TRK_RECORDFILE)
 			{
-							
-				TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
-				TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
-				if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
-				{
-					AddMsg("Record Trunk is not exist");
-					return;
-				}
-				
 				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
 				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
 				
-				//search free voice resource		
-				int voc1Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc1DeviceID );
-				if ( voc1Chn >= 0 )
-				{
-					pEventTrunk->VocDevID = FreeVoc1DeviceID;
-					M_OneVoice(FreeVoc1DeviceID).UsedDevID = pEventTrunk->deviceID; 
-					DrawMain_VocInfo ( pEventTrunk );
-					My_DualLink ( &FreeVoc1DeviceID, &pEventTrunk->deviceID ); 
-				}else{
-					AddMsg("No Free Voc resource");
-					return;
-				}
-				
-				int voc2Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc2DeviceID );
-				if (  voc2Chn >= 0 )
-				{
-					pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
-					M_OneVoice(FreeVoc2DeviceID).UsedDevID = pOneRecordTrunk2->deviceID; 
-					DrawMain_VocInfo ( pOneRecordTrunk2 );
-					My_DualLink ( &FreeVoc2DeviceID, &pOneRecordTrunk2->deviceID ); 
-					
-					//get system time
-					CString str;
-					CTime tm;					
-					tm=CTime::GetCurrentTime();
-					str=tm.Format("%Y%m%d%H%M%S");
-					sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
-					//start record in the mix way
-					RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
-					pOneRecordTrunk1->u8IsRecordFlag = TRUE;
-					pOneRecordTrunk2->u8IsRecordFlag = TRUE;
-					pOneRecordTrunk1->u8RecordCounter = (++pOneRecordTrunk1->u8RecordCounter)%0x10;
-					pOneRecordTrunk2->u8RecordCounter = (++pOneRecordTrunk2->u8RecordCounter)%0x10;
-				}
-				
-				Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
-				Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
-				
-				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
-				
-				
-			}else
-			{
-				AddMsg("please start record");
-				return;
-			}			
-			
-			break;
-
-		case SMON_EVT_Call_Disconnect:
-			TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
-			TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
-			if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
-			{
-				AddMsg("Record Trunk is not exist");
+				sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
+					monitorDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
+				AddMsg(str);	
+				StopRecordFile(&pOneRecordTrunk1->VocDevID);
+				StopRecordFile(&pOneRecordTrunk2->VocDevID);
+				ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
+				ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
+				TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+		
+			}else{
+				AddMsg("SMON_EVT_Call_Disconnect: trunk state is wrong.");
 				return;
 			}
 			
-			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
-			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
-			
-			sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
-				monitorDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
-			AddMsg(str);	
-			ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
-			ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
-			TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
-			
 			break;
-
 	}
+	
 
 }
 void TrunkWork_SS7( TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
@@ -2404,32 +2500,41 @@ void TrunkWork_SS7( TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		}
 	}
 
+	TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
+	TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
+	if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
+	{
+		AddMsg("Record Trunk is not exist");
+		return;
+	}
+
 	switch(SMevt->EventType)
 	{
 	case SMON_EVT_Call_Generate:
 		if ( g_u8IsStartFlag)
 		{
-			TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
-			TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
-			if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
-			{
-				AddMsg("Record Trunk is not exist");
-				return;
-			}
-			
-			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
-			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
-				
-			sprintf(str,"%d", SMevt->MsgType);
-			pdlg->m_ListMain.SetItemText(iRecord1Pos, 7, str);
-			pdlg->m_ListMain.SetItemText(iRecord1Pos, 6, SMevt->Caller_ID);
-			pdlg->m_ListMain.SetItemText(iRecord1Pos, 5, SMevt->Called_ID);
-			pdlg->m_ListMain.SetItemText(iRecord2Pos, 7, str);
-			pdlg->m_ListMain.SetItemText(iRecord2Pos, 6, SMevt->Caller_ID);
-			pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);
 		
-			TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+			if (pOneRecordTrunk1->State == TRK_FREE && pOneRecordTrunk2->State == TRK_FREE)
+			{			
+				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+					
+				sprintf(str,"%d", SMevt->MsgType);
+				pdlg->m_ListMain.SetItemText(iRecord1Pos, 7, str);
+				pdlg->m_ListMain.SetItemText(iRecord1Pos, 6, SMevt->Caller_ID);
+				pdlg->m_ListMain.SetItemText(iRecord1Pos, 5, SMevt->Called_ID);
+				pdlg->m_ListMain.SetItemText(iRecord2Pos, 7, str);
+				pdlg->m_ListMain.SetItemText(iRecord2Pos, 6, SMevt->Caller_ID);
+				pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);
 				
+				Change_State(pOneRecordTrunk1,TRK_CONNECT);
+				Change_State(pOneRecordTrunk2,TRK_CONNECT);
+
+				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+			}else{
+				AddMsg("trunk state is wrong!");
+				return;
+			}	
 		}else
 		{
 			AddMsg("please start record");
@@ -2439,58 +2544,56 @@ void TrunkWork_SS7( TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		break;
 	case SMON_EVT_Call_Connect:
 			if ( g_u8IsStartFlag)
-			{
-				TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
-				TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
-				if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
+			{			
+				if (pOneRecordTrunk1->State == TRK_CONNECT && pOneRecordTrunk2->State == TRK_CONNECT)
 				{
-					AddMsg("Record Trunk is not exist");
-					return;
-				}
-				
-				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
-				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
-				
-				//search free voice resource		
-				int voc1Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc1DeviceID );
-				if ( voc1Chn >= 0 )
-				{
-					pOneRecordTrunk1->VocDevID = FreeVoc1DeviceID;
-					M_OneVoice(FreeVoc1DeviceID).UsedDevID = pOneRecordTrunk1->deviceID; 
-					DrawMain_VocInfo ( pOneRecordTrunk1 );
-					My_DualLink ( &FreeVoc1DeviceID, &pOneRecordTrunk1->deviceID ); 
-				}else{
-					AddMsg("No Free Voc resource");
-					return;
-				}			
-				
-				int voc2Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc2DeviceID );
-				if (  voc2Chn >= 0 )
-				{
-					pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
-					M_OneVoice(FreeVoc2DeviceID).UsedDevID = pOneRecordTrunk2->deviceID; 
-					DrawMain_VocInfo ( pOneRecordTrunk2 );
-					My_DualLink ( &FreeVoc2DeviceID, &pOneRecordTrunk2->deviceID ); 
+					int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+					int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
 					
-					//get system time
-					CString str;
-					CTime tm;					
-					tm=CTime::GetCurrentTime();
-					str=tm.Format("%Y%m%d%H%M%S");
-					sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
-					//start record in the mix way
-					RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
-					pOneRecordTrunk1->u8IsRecordFlag = TRUE;
-					pOneRecordTrunk2->u8IsRecordFlag = TRUE;
-					pOneRecordTrunk1->u8RecordCounter = (++pOneRecordTrunk1->u8RecordCounter)%0x10;
-					pOneRecordTrunk2->u8RecordCounter = (++pOneRecordTrunk2->u8RecordCounter)%0x10;
-				}
-								 
-				Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
-				Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
+					//search free voice resource		
+					int voc1Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc1DeviceID );
+					if ( voc1Chn >= 0 )
+					{
+						pOneRecordTrunk1->VocDevID = FreeVoc1DeviceID;
+						M_OneVoice(FreeVoc1DeviceID).UsedDevID = pOneRecordTrunk1->deviceID; 
+						DrawMain_VocInfo ( pOneRecordTrunk1 );
+						My_DualLink ( &FreeVoc1DeviceID, &pOneRecordTrunk1->deviceID ); 
+					}else{
+						AddMsg("No Free Voc resource");
+						return;
+					}			
+					
+					int voc2Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc2DeviceID );
+					if (  voc2Chn >= 0 )
+					{
+						pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
+						M_OneVoice(FreeVoc2DeviceID).UsedDevID = pOneRecordTrunk2->deviceID; 
+						DrawMain_VocInfo ( pOneRecordTrunk2 );
+						My_DualLink ( &FreeVoc2DeviceID, &pOneRecordTrunk2->deviceID ); 
+						
+						//get system time
+						CString str;
+						CTime tm;					
+						tm=CTime::GetCurrentTime();
+						str=tm.Format("%Y%m%d-%H%M%S");
+						sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+						//start record in the mix way
+						RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
+						pOneRecordTrunk1->u8IsRecordFlag = TRUE;
+						pOneRecordTrunk2->u8IsRecordFlag = TRUE;
+						pOneRecordTrunk1->u8RecordCounter = (++pOneRecordTrunk1->u8RecordCounter)%0x10;
+						pOneRecordTrunk2->u8RecordCounter = (++pOneRecordTrunk2->u8RecordCounter)%0x10;
+					}
+					
+					Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
+					Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
+					
+					TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
 				
-				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
-		
+				}else{
+					AddMsg("trunk state is wrong.");
+					return;
+				}				
 
 			}else
 			{
@@ -2501,24 +2604,26 @@ void TrunkWork_SS7( TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		break;
 
 	case SMON_EVT_Call_Disconnect:	
-			TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
-			TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
-			if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
+		
+			if (pOneRecordTrunk1->State == TRK_RECORDFILE && pOneRecordTrunk2->State == TRK_RECORDFILE)
 			{
-				AddMsg("Record Trunk is not exist");
+				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+				
+				sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
+					monitorDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
+				AddMsg(str);	
+				StopRecordFile(&pOneRecordTrunk1->VocDevID);
+				StopRecordFile(&pOneRecordTrunk2->VocDevID);
+				ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
+				ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
+				TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+		
+			}else{
+				AddMsg("SMON_EVT_Call_Disconnect: trunk state is wrong.");
 				return;
 			}
 			
-			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
-			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
-			
-			sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
-				monitorDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
-			AddMsg(str);	
-			ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
-			ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
-			TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
-		
 		break;
 	}
 	
@@ -2532,57 +2637,140 @@ void TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 	char					FileName[256];
 	char					TmpDtmf;
 	
+
 	switch(pOneTrunk->State)
 	{
 	case TRK_FREE:
-		if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_REC )
-		{
+		if (g_u8IsStartFlag){
 			char	 *p;			
 			p = My_GetFskCode ( pAcsEvt );
 			if ( p != NULL )
 			{
 				ConvertRawFskToCallerID ((unsigned char *) p, pOneTrunk->CallerCode, 20 );
 			}	
-		}
-		
-		pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
-		
-		if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )				// OffHook
-		{
-			// release the Voice for get FSK
-			if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_REC )
-			{
+
+			if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )
+			{				
+				// release the Voice for get FSK
 				My_DualUnlink ( &pOneTrunk->VocDevID, &pOneTrunk->deviceID );				
 				FreeOneFreeVoice (  &pOneTrunk->VocDevID );
 				DrawMain_VocInfo ( pOneTrunk );
+				
+				DrawMain_CallInfo( pOneTrunk );
+				
+				// start record
+				if ( SearchOneFreeVoice ( pOneTrunk,  &FreeVocDeviceID ) >= 0 )
+				{
+					pOneTrunk->VocDevID = FreeVocDeviceID;				
+					M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 				
+					DrawMain_VocInfo ( pOneTrunk );				
+					My_DualLink ( &FreeVocDeviceID, &pOneTrunk->deviceID );
+					
+					//get system time
+					CString					str;
+					CTime					tm;					
+					tm=CTime::GetCurrentTime();
+					str=tm.Format("%Y%m%d-%H%M%S");
+					sprintf ( FileName, "%s\\AnalogHizRec-%d-%d-%s.pcm", cfg_VocPath,pOneTrunk->deviceID.m_s8ModuleID,pOneTrunk->deviceID.m_s16ChannelID,str);
+					
+					//start record in the no mix way					
+					RecordFile_NoMix( &pOneTrunk->VocDevID, FileName, 8000L*3600L*24, false );		// we record for 24 hours
+					// change state
+					Change_State ( pOneTrunk, TRK_RECORDFILE );
+				}else{
+					AddMsg("No free voice device.");
+					return;
+				}
 			}
-			
-			if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_DIGITAL_REC )
+		}else{
+			AddMsg("Please start record.");
+			return;
+		}		
+		break;
+		
+	case TRK_RECORDFILE:
+		pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
+		
+		TmpDtmf = My_GetDtmfCode ( pAcsEvt );
+		if ( TmpDtmf != -1 )	
+		{
+			My_AddDtmfBuf ( pOneTrunk, TmpDtmf );
+			DrawMain_DTMF ( pOneTrunk );
+		}
+		
+		if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL )
+		{
+			StopRecordFile ( &pOneTrunk->VocDevID );			
+			ResetTrunk ( pOneTrunk, pAcsEvt );			
+			Change_State ( pOneTrunk, TRK_FREE );
+		}		
+		break;
+	}
+}
+
+
+void TrunkWork_Digital ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
+{
+	Acs_CallControl_Data *	pCallControl = NULL;
+	DeviceID_t				FreeVocDeviceID;
+	char					FileName[256];
+	char					TmpDtmf;
+	
+	switch(pOneTrunk->State)
+	{
+	case TRK_FREE:
+		if ( g_u8IsStartFlag){
+			if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )
 			{
+				pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
 				sprintf ( pOneTrunk->CalleeCode, pCallControl->m_s8CalledNum );
 				sprintf ( pOneTrunk->CallerCode, pCallControl->m_s8CallingNum );
+				DrawMain_CallInfo( pOneTrunk );
+				
+				//search free voice,digital hiz record,the voice trunk number must the same with pOneTrunk
+				VOICE_STRUCT *pOneVoice = &AllDeviceRes[pOneTrunk->deviceID.m_s8ModuleID].pVoice[pOneTrunk->deviceID.m_s16ChannelID];
+				
+				if (pOneVoice != NULL)
+				{
+					if ( pOneVoice->State != VOC_WAITOPEN && pOneVoice->State != VOC_USED)
+					{
+						FreeVocDeviceID = pOneVoice->deviceID;						
+						//use this voice device 
+						Change_Voc_State ( pOneVoice, VOC_USED);						
+						DrawCount_Voc( pOneTrunk->deviceID.m_s8ModuleID );						
+					}
+
+
+					pOneTrunk->VocDevID = FreeVocDeviceID;				
+					M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 				
+					DrawMain_VocInfo ( pOneTrunk );				
+					My_DualLink ( &FreeVocDeviceID, &pOneTrunk->deviceID );
+					
+					//get system time
+					CString					str;
+					CTime					tm;					
+					tm=CTime::GetCurrentTime();
+					str=tm.Format("%Y%m%d-%H%M%S");
+					sprintf ( FileName, "%s\\DigHizRec-%d-%d-%s.pcm", cfg_VocPath,pOneTrunk->deviceID.m_s8ModuleID,pOneTrunk->deviceID.m_s16ChannelID,str);
+					
+					//start record in the no mix way					
+					RecordFile_NoMix( &pOneTrunk->VocDevID, FileName, 8000L*3600L*24, false );// we record for 24 hours
+					
+					//change state
+					Change_State ( pOneTrunk, TRK_RECORDFILE );
+
+				}else{
+					AddMsg("No Free Voice device!");
+					return;
+				}				
 			}
-			
-			DrawMain_CallInfo( pOneTrunk );
-			
-			// start record
-			if ( SearchOneFreeVoice ( pOneTrunk,  &FreeVocDeviceID ) >= 0 )
-			{
-				pOneTrunk->VocDevID = FreeVocDeviceID;				
-				M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 				
-				DrawMain_VocInfo ( pOneTrunk );				
-				My_DualLink ( &FreeVocDeviceID, &pOneTrunk->deviceID ); 				
-				sprintf ( FileName, "%s\\HizRec.%03d", cfg_VocPath, pOneTrunk->iSeqID );
-				RecordFile_NoMix( &pOneTrunk->VocDevID, FileName, 8000L*3600L*24, false );		// we record for 24 hours
-			}
-			
-			// change state
-			Change_State ( pOneTrunk, TRK_RECORDFILE );
+		}else{
+			AddMsg("Please start record.");
+			return;
 		}
 		break;
 		
-	case TRK_RECORDFILE:		// Wait OnHook
-		pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
+	case TRK_RECORDFILE:
 		
 		TmpDtmf = My_GetDtmfCode ( pAcsEvt );
 		if ( TmpDtmf != -1 )	

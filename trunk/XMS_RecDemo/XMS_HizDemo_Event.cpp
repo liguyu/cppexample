@@ -535,8 +535,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 						TrunkWork_ISDN( pOneTrunk, pAcsEvt );
 					}
 				}	
-				else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub
-					|| XMS_DEVSUB_DIGITAL_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub )
+				else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
 					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
 					
@@ -545,6 +544,14 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 						TrunkWork_Analog( pOneTrunk, pAcsEvt );
 					}
 
+				}else if ( XMS_DEVSUB_DIGITAL_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
+				{
+					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
+					
+					if ( NULL != pOneTrunk )
+					{
+						TrunkWork_Digital( pOneTrunk, pAcsEvt );
+					}
 				}
 
 			}

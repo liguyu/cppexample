@@ -130,30 +130,9 @@ BOOL CXMS_DemoDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
-	// TODO: Add extra initialization here
-	char szBuf[100]={0};
+	//write programme name
 	char szProName[100]={0};
-	int nRet = 0;
-	unsigned long u32Size = 0;
-	HKEY hKey;
-
-	nRet = RegOpenKey(HKEY_LOCAL_MACHINE,"Software\\DJXMS",&hKey);
-	if(hKey != NULL)
-	{
-		u32Size = sizeof(szBuf);
-		nRet = RegQueryValueEx(hKey,"Product",0,NULL,(unsigned char*)szBuf,&u32Size);
-		if(nRet)
-		{
-			strcpy(szBuf,"DJKeygoe");
-		}
-	}
-	else
-	{
-		strcpy(szBuf,"DJKeygoe");
-	}
-	RegCloseKey(hKey);
-
-	sprintf(szProName,"Donjin %s TMonitor Demo System",szBuf);
+	strcpy(szProName,"DJKeygoe Record System Demo");
 	this->SetWindowText(szProName);
 
 	InitSystem();
