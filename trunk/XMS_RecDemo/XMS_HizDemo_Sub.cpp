@@ -2637,7 +2637,6 @@ void TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 	char					FileName[256];
 	char					TmpDtmf;
 	
-
 	switch(pOneTrunk->State)
 	{
 	case TRK_FREE:
