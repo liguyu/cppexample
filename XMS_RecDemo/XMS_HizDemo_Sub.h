@@ -97,7 +97,7 @@ typedef  struct
 }MonitorGroupInfo;
 
 
-// ----- decalure function -----
+// ----- declare function -----
 bool	InitSystem(void);
 void	ExitSystem(void); 
 
