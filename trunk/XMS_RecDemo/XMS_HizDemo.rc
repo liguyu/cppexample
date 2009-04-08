@@ -128,7 +128,6 @@ BEGIN
     LTEXT           "Disp Channel Per PCM:",IDC_STATIC,424,262,87,8
     CONTROL         "List4",IDC_LIST_COUNT,"SysListView32",LVS_REPORT | 
                     WS_BORDER | WS_TABSTOP,7,7,403,44
-    PUSHBUTTON      "Prepare For Remove",IDC_BUTTON_Remove,272,53,81,11
 END
 
 
