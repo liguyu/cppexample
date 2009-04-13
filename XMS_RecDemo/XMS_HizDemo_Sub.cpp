@@ -50,7 +50,8 @@ ACSHandle_t		g_acsHandle = -1;
 DJ_U8			g_u8UnitID = 15;
 RecordProperty_t	g_RecordProperty;
 CmdParamData_Voice_t	g_Voice_Param;
-
+long			g_connectNumber = 0;
+long			g_disconnectNumber = 0;
 
 // var in XMS_Demo_Event.CPP
 extern TYPE_XMS_DSP_DEVICE_RES_DEMO	AllDeviceRes[MAX_DSP_MODULE_NUMBER_OF_XMS];
@@ -2403,6 +2404,12 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 						{
 							sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
 						}
+						
+						g_connectNumber++;
+						char MsgStr[100] = {0};
+						sprintf(MsgStr, "%d", g_connectNumber);
+						pdlg->GetDlgItem(IDC_STATIC_CONNUM)->SetWindowText(MsgStr);
+
 						//start record in the mix way
 						RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
 						pOneRecordTrunk1->u8IsRecordFlag = TRUE;
@@ -2438,7 +2445,13 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				
 				sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
 					monitorFirstDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
-				AddMsg(str);	
+				AddMsg(str);
+				
+				g_disconnectNumber++;
+				char MsgStr[100] = {0};
+				sprintf(MsgStr, "%d", g_connectNumber);
+				pdlg->GetDlgItem(IDC_STATIC_DISCONNUM)->SetWindowText(MsgStr);
+
 				StopRecordFile(&pOneRecordTrunk1->VocDevID);
 				StopRecordFile(&pOneRecordTrunk2->VocDevID);
 				ResetTrunk ( pOneRecordTrunk1, pAcsEvt );

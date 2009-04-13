@@ -25,8 +25,11 @@
 #define IDC_LIST_COUNT                  1020
 #define IDC_CHECK_DEBUG                 1021
 #define IDC_BUTTON_ReOpen               1022
+#define IDC_BUTTON_Start                1022
 #define IDC_BUTTON_Remove               1023
 #define IDC_RADIO_Seq                   1026
+#define IDC_STATIC_CONNUM               1027
+#define IDC_STATIC_DISCONNUM            1028
 
 // Next default values for new objects
 // 
@@ -34,7 +37,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        129
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1027
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
