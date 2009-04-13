@@ -84,50 +84,55 @@ BEGIN
     DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
 END
 
-IDD_XMS_DEMO_DIALOG DIALOGEX 0, 0, 573, 374
+IDD_XMS_DEMO_DIALOG DIALOGEX 0, 0, 567, 394
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Donjin XMS Sig Monitor Rec Demo System"
+CAPTION "t"
 FONT 8, "Tahoma"
 BEGIN
     CONTROL         "Debug Mode On",IDC_CHECK_DEBUG,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,423,195,72,10
-    EDITTEXT        IDC_EDIT_IPADDR,493,208,63,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_IPPORT,493,227,63,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_VOCPATH,493,246,63,14,ES_AUTOHSCROLL
+                    WS_TABSTOP,423,169,72,10
+    EDITTEXT        IDC_EDIT_IPADDR,493,182,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IPPORT,493,199,63,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_VOCPATH,493,215,63,12,ES_AUTOHSCROLL
     CONTROL         "30",IDC_RADIO30,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
-                    425,273,24,10
-    CONTROL         "31",IDC_RADIO31,"Button",BS_AUTORADIOBUTTON,461,273,24,
+                    425,247,24,10
+    CONTROL         "31",IDC_RADIO31,"Button",BS_AUTORADIOBUTTON,461,247,24,
                     10
-    CONTROL         "32",IDC_RADIO32,"Button",BS_AUTORADIOBUTTON,492,273,24,
+    CONTROL         "32",IDC_RADIO32,"Button",BS_AUTORADIOBUTTON,492,247,24,
                     10
-    LTEXT           "Voice Search Rule:",IDC_STATIC,422,287,59,8
+    LTEXT           "Voice Search Rule:",IDC_STATIC,422,261,59,8
     CONTROL         "Fix",IDC_RADIO_Fix,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,530,287,23,10
+                    WS_GROUP,530,261,23,10
     CONTROL         "Same Mod",IDC_RADIO_SameModule,"Button",
-                    BS_AUTORADIOBUTTON,425,304,46,10
+                    BS_AUTORADIOBUTTON,425,278,46,10
     CONTROL         "Most First",IDC_RADIO_MostFreeFist,"Button",
-                    BS_AUTORADIOBUTTON,478,303,44,10
-    CONTROL         "Seq",IDC_RADIO_Seq,"Button",BS_AUTORADIOBUTTON,530,303,
+                    BS_AUTORADIOBUTTON,478,277,44,10
+    CONTROL         "Seq",IDC_RADIO_Seq,"Button",BS_AUTORADIOBUTTON,530,277,
                     28,10
     CONTROL         "Part Work, Module ID:",IDC_CHECK_PartWork,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,426,320,100,10
-    EDITTEXT        IDC_EDIT_ModuleID,426,332,134,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "Start",IDC_BUTTON_ReOpen,432,353,53,14
-    DEFPUSHBUTTON   "Exit",IDOK,498,353,53,14
-    GROUPBOX        "Config",IDC_STATIC,419,186,147,165
-    LTEXT           "Server IP Addr:",IDC_STATIC,423,210,64,8
-    LISTBOX         IDC_LIST3,414,7,152,172,LBS_NOINTEGRALHEIGHT | 
+                    BS_AUTOCHECKBOX | WS_TABSTOP,426,294,100,10
+    EDITTEXT        IDC_EDIT_ModuleID,426,306,134,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Start",IDC_BUTTON_ReOpen,432,373,53,14
+    DEFPUSHBUTTON   "Exit",IDOK,498,372,53,14
+    GROUPBOX        "Config",IDC_STATIC,413,160,147,165
+    LTEXT           "Server IP Addr:",IDC_STATIC,423,184,64,8
+    LISTBOX         IDC_LIST3,408,7,152,152,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
     CONTROL         "List3",IDC_LIST1,"SysListView32",LVS_REPORT | WS_BORDER | 
-                    WS_TABSTOP,7,65,401,234
+                    WS_TABSTOP,7,65,401,242
     CONTROL         "List4",IDC_LIST2,"SysListView32",LVS_REPORT | WS_BORDER | 
-                    WS_TABSTOP,7,304,402,63
-    LTEXT           "          Port:",IDC_STATIC,423,230,63,8
-    LTEXT           "    Voice Path:",IDC_STATIC,423,249,63,8
-    LTEXT           "Disp Channel Per PCM:",IDC_STATIC,424,262,87,8
+                    WS_TABSTOP,7,309,402,78
+    LTEXT           "          Port:",IDC_STATIC,423,202,63,8
+    LTEXT           "    Voice Path:",IDC_STATIC,423,218,63,8
+    LTEXT           "Disp Channel Per PCM:",IDC_STATIC,424,232,87,8
     CONTROL         "List4",IDC_LIST_COUNT,"SysListView32",LVS_REPORT | 
-                    WS_BORDER | WS_TABSTOP,7,7,403,44
+                    WS_BORDER | WS_TABSTOP,7,7,403,50
+    GROUPBOX        "Result",IDC_STATIC,414,329,146,39
+    LTEXT           "建立连接次数：",IDC_STATIC,425,340,60,8
+    LTEXT           "断开连接次数：",IDC_STATIC,426,354,56,8
+    LTEXT           "0",IDC_STATIC,490,341,59,9,0,WS_EX_CLIENTEDGE
+    LTEXT           "0",IDC_STATIC,489,354,59,9,0,WS_EX_CLIENTEDGE
 END
 
 
@@ -196,9 +201,9 @@ BEGIN
     IDD_XMS_DEMO_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 566
+        RIGHTMARGIN, 560
         TOPMARGIN, 7
-        BOTTOMMARGIN, 367
+        BOTTOMMARGIN, 387
     END
 END
 #endif    // APSTUDIO_INVOKED

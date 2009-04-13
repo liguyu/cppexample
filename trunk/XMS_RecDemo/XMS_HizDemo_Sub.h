@@ -90,10 +90,10 @@ typedef struct
 
 typedef  struct 
 {
-	DJ_U8                   m_MonitorDspModuleID;     //the dsp ID of Monitor Group
+	DJ_U8                   m_MonitorFirstDspModuleID;     //the dsp ID of Monitor Group
 	DJ_U8                   m_MonitorFirstE1;     //the first E1 number
+	DJ_U8                   m_MonitorSecondModuleID;     //the dsp ID of Monitor Group
 	DJ_U8                   m_MonitorSecondE1;     //the second E1 number
-	DJ_U8                   m_MonitorCIC;     //the monitored CIC number
 }MonitorGroupInfo;
 
 
@@ -123,8 +123,7 @@ DJ_S32	 PlayIndex ( DeviceID_t	*pVocDevID, DJ_U16 u16Index, DJ_U8 u8PlayTag, boo
 
 void	TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 void	TrunkWork_Digital ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
-void	TrunkWork_ISDN ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
-void	TrunkWork_SS7 ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
+void	TrunkWork_ISDN_SS7 ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
 void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState );
