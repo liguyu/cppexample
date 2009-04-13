@@ -14,6 +14,8 @@ static char THIS_FILE[] = __FILE__;
 #include "XMS_HizDemo_Sub.H"
 
 DJ_U8                   g_u8IsStartFlag = FALSE;
+long		            g_iTestStartTime = 0;
+
 extern int				cfg_iVoiceRule;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,19 +173,17 @@ void CXMS_DemoDlg::OnDestroy()
 
 void CXMS_DemoDlg::OnBUTTONReOpen() 
 {
-	// TODO: Add your control notification handler code here
 
-	//ReOpen_AllDevice ();
-	if ( FALSE == g_u8IsStartFlag )
-	{
-		m_BtnStart.SetWindowText("&Stop");
-		g_u8IsStartFlag = TRUE;	
-	}
-	else
-	{
-		m_BtnStart.SetWindowText("&Start");
-		g_u8IsStartFlag = FALSE;		
-	}
+	g_u8IsStartFlag = TRUE;
+	g_iTestStartTime = GetTickCount();
+
+	CString str;
+	CTime tm;					
+	tm=CTime::GetCurrentTime();
+	str=tm.Format("%Y%m%d-%H:%M:%S");
+	this->GetDlgItem(IDC_BUTTON_Start)->EnableWindow(FALSE);
+	this->GetDlgItem(IDC_BUTTON_Start)->SetWindowText(str);
+
 
 }
 	
