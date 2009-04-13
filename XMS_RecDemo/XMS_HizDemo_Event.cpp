@@ -516,26 +516,17 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 			if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH  )
 			{
 				if ( XMS_DEVSUB_HIZ_SS7 == pAcsEvt->m_DeviceID.m_s16DeviceSub 
-				  || XMS_DEVSUB_HIZ_SS7_64K_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
+				  || XMS_DEVSUB_HIZ_SS7_64K_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub
+				  || XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub 
+				  || XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
 					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
 
 					if ( NULL != pOneTrunk )
 					{
-						TrunkWork_SS7( pOneTrunk, pAcsEvt );
+						TrunkWork_ISDN_SS7( pOneTrunk, pAcsEvt );
 					}				
-				}
-				else if ( XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub 
-				  || XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
-				{
-					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
-					
-					if ( NULL != pOneTrunk )
-					{
-						TrunkWork_ISDN( pOneTrunk, pAcsEvt );
-					}
-				}	
-				else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
+				}else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
 					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
 					
