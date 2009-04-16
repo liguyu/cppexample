@@ -1,0 +1,146 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: PBXGetWay - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/PBXGetWay.res" /d "NDEBUG" "E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\PBXGetWay.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B70.tmp" with contents
+[
+/nologo /MT /W3 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Release/" /Fp"Release/PBXGetWay.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\DTrunk.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\globe.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\PBXGetWay.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\PBXGetWayDlg.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\SysConfig.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\VOIP.CPP"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\XMS_Run.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\XMS_String.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B70.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B71.tmp" with contents
+[
+/nologo /MT /W3 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Release/" /Fp"Release/PBXGetWay.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B71.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B72.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"Release/IPGateWay-V5.6-2-480.pdb" /map:"Release/IPGateWay-V5.6-2-480.map" /machine:I386 /out:"Release/IPGateWay-V5.6-2-480.exe" /mapinfo:lines 
+".\Release\DTrunk.obj"
+".\Release\globe.obj"
+".\Release\PBXGetWay.obj"
+".\Release\PBXGetWayDlg.obj"
+".\Release\StdAfx.obj"
+".\Release\SysConfig.obj"
+".\Release\VOIP.OBJ"
+".\Release\XMS_Run.obj"
+".\Release\XMS_String.obj"
+".\Release\PBXGetWay.res"
+"C:\DJKeygoe\Lib\DJAcsAPI.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B72.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+DTrunk.cpp
+globe.cpp
+PBXGetWay.cpp
+PBXGetWayDlg.cpp
+SysConfig.cpp
+VOIP.CPP
+XMS_Run.cpp
+XMS_String.cpp
+Generating Code...
+Linking...
+LINK : warning LNK4089: all references to "SHELL32.dll" discarded by /OPT:REF
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B74.tmp" with contents
+[
+/nologo /o"Release/PBXGetWay.bsc" 
+".\Release\StdAfx.sbr"
+".\Release\DTrunk.sbr"
+".\Release\globe.sbr"
+".\Release\PBXGetWay.sbr"
+".\Release\PBXGetWayDlg.sbr"
+".\Release\SysConfig.sbr"
+".\Release\VOIP.SBR"
+".\Release\XMS_Run.sbr"
+".\Release\XMS_String.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B74.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+IPGateWay-V5.6-2-480.exe - 0 error(s), 1 warning(s)
+<h3>
+--------------------Configuration: PBXGetWay - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/PBXGetWay.res" /d "_DEBUG" "E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\PBXGetWay.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B75.tmp" with contents
+[
+/nologo /MTd /W3 /WX /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR"Debug/" /Fp"Debug/PBXGetWay.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\DTrunk.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\globe.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\PBXGetWay.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\PBXGetWayDlg.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\SysConfig.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\VOIP.CPP"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\XMS_Run.cpp"
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\XMS_String.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B75.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B76.tmp" with contents
+[
+/nologo /MTd /W3 /WX /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR"Debug/" /Fp"Debug/PBXGetWay.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\东进网关新规则 不放回铃音(DTMF) 支持多个个代理\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B76.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B77.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/IPGateWay-V5.6-2-480.pdb" /debug /machine:I386 /out:"Debug/IPGateWay-V5.6-2-480.exe" /pdbtype:sept 
+".\Debug\DTrunk.obj"
+".\Debug\globe.obj"
+".\Debug\PBXGetWay.obj"
+".\Debug\PBXGetWayDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\SysConfig.obj"
+".\Debug\VOIP.OBJ"
+".\Debug\XMS_Run.obj"
+".\Debug\XMS_String.obj"
+".\Debug\PBXGetWay.res"
+"C:\DJKeygoe\Lib\DJAcsAPI.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B77.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+DTrunk.cpp
+globe.cpp
+PBXGetWay.cpp
+PBXGetWayDlg.cpp
+SysConfig.cpp
+VOIP.CPP
+XMS_Run.cpp
+XMS_String.cpp
+Generating Code...
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/PBXGetWay.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\DTrunk.sbr" ".\Debug\globe.sbr" ".\Debug\PBXGetWay.sbr" ".\Debug\PBXGetWayDlg.sbr" ".\Debug\SysConfig.sbr" ".\Debug\VOIP.SBR" ".\Debug\XMS_Run.sbr" ".\Debug\XMS_String.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+IPGateWay-V5.6-2-480.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
