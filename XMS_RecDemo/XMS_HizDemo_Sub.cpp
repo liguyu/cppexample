@@ -2310,10 +2310,11 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				monitorSecondDspModuleID = g_MonitorGroupInfo[i].m_MonitorSecondModuleID;
 				monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
 				i = g_NumbersOfMonitorGroup;				
-		}else
+		}else if (i == g_NumbersOfMonitorGroup-1)
 		{
+			sprintf(str,"DSP:%d,Chn:%d,E1:%d", pAcsEvt->m_DeviceID.m_s8ModuleID, pAcsEvt->m_DeviceID.m_s16ChannelID,pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1);
+			AddMsg(str);
 			AddMsg("The trunk not exist in the ini file.");
-			return;
 		}
 	}
 
