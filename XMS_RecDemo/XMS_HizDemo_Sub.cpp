@@ -2437,7 +2437,14 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		break;
 
 	case SMON_EVT_Call_Disconnect:	
-		
+			if (!g_u8IsStartFlag)
+			{
+				AddMsg("SMON_EVT_Call_Disconnect===please start record.");
+				break;
+			}else{
+				AddMsg("SMON_EVT_Call_Disconnect===have already record.");				
+			}
+
 			if (pOneRecordTrunk1->State == TRK_RECORDFILE && pOneRecordTrunk2->State == TRK_RECORDFILE)
 			{
 				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
