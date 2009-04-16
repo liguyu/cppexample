@@ -2365,11 +2365,19 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 			{			
 				if (pOneRecordTrunk1->State == TRK_CONNECT && pOneRecordTrunk2->State == TRK_CONNECT)
 				{
+
 					int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
 					int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+					TRUNK_STRUCT *pSearchVocTrunk;
+					if (AllDeviceRes[monitorFirstDspModuleID].lVocFreeNum >= AllDeviceRes[monitorSecondDspModuleID].lVocFreeNum )
+					{
+						pSearchVocTrunk = pOneRecordTrunk1;
+					}else{
+						pSearchVocTrunk = pOneRecordTrunk2;
+					}
 					
-					//search free voice resource		
-					int voc1Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc1DeviceID );
+					//search free voice resource in the same dsp, the dsp is monitorFirstDspModuleID or monitorSecondDspModuleID		
+					int voc1Chn = SearchOneFreeVoice ( pSearchVocTrunk,  &FreeVoc1DeviceID );
 					if ( voc1Chn >= 0 )
 					{
 						pOneRecordTrunk1->VocDevID = FreeVoc1DeviceID;
@@ -2381,7 +2389,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 						return;
 					}			
 					
-					int voc2Chn = SearchOneFreeVoice ( pEventTrunk,  &FreeVoc2DeviceID );
+					int voc2Chn = SearchOneFreeVoice ( pSearchVocTrunk,  &FreeVoc2DeviceID );
 					if (  voc2Chn >= 0 )
 					{
 						pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
