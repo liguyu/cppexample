@@ -174,7 +174,7 @@ SOURCE=.\ReadMe.txt
 # End Source File
 # Begin Source File
 
-SOURCE=C:\DJXMS\Lib\DJAcsAPI.lib
+SOURCE=C:\DJKeygoe\Lib\DJAcsAPI.lib
 # End Source File
 # End Target
 # End Project
