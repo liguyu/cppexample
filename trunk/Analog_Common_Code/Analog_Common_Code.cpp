@@ -178,72 +178,70 @@ void HandleMultiple ( char far *IDStr )
 }
 // end of multiple
 
-int	ConvertRawFskToCallerID ( unsigned char *RawFSKStr, char *IDStr, int IDStrBufLen )
+int    ConvertRawFskToCallerID ( unsigned char *RawFSKStr, char *IDStr, int IDStrBufLen )
 {
-	WORD			count;
-	WORD			i,j;
-	WORD			pos,len;
-	unsigned char	ChkSum;
-
-	count	= strlen ( (char *)RawFSKStr );
-	strcpy ( IDStr, "" );
-
-	if ( count == 0 )
-	{
-		return -1;		// not a good Caller ID
-	}
-
-	// find the Format
-	for ( i = 0; i < count; i ++ ) 
-	{
-		if ( RawFSKStr[i] == 0x04 )		// single format
-		{
-			break;
-		}
+    WORD            count;
+    WORD            i,j;
+    WORD            FSKStartPos,callerStartPos,callerLen;
+	
+    count    = strlen ((char *)RawFSKStr );
+    strcpy ( IDStr, "" );
+	
+    // find the FSK start position
+    for ( i = 0; i < count; i ++ )
+    {
+        if ( RawFSKStr[i] == 0x04 )        // single format
+        {
+            break;
+        }
+        
+        if ( RawFSKStr[i] == 0x80 ) {        // multiple format
+            break;
+        }
+    }
+    
+    if ( (i == count) || (i == count-1) )
+    {
+        return -1;        // not a good Caller ID
+    }
+	
+    // start fetch the Caller ID
+    FSKStartPos = i;
+    
+    if ( RawFSKStr[FSKStartPos] == 0x04 )
+    {
+        callerLen = RawFSKStr[FSKStartPos+1] - 8;
 		
-		if ( RawFSKStr[i] == 0x80 ) {		// multiple format
-			break;
-		}
-	}
-
-	if ( (i == count) || (i==count-1) )
-	{
-		return -1;		// not a good Caller ID
-	}
-
-	// start fetch the Caller ID
-	pos = i;
-	len = RawFSKStr[pos+1];
-
-	// "count-pos-2"    is the length of now received
-	for ( i = pos+2,j = 0; (i<(count-1)) && (j<len); i ++,j++ )
-	{
-		IDStr[j] = RawFSKStr[i] & 0x7F;
-		if ( j == IDStrBufLen - 1 )				// it will be overflow
-			break;
-	}
-	IDStr[j] = 0;
-
-	if ( (count-pos-3) < len  )
-	{
-		return -1;		// not a good Caller ID
-	}
-
-	ChkSum = 0;
-	for ( i = pos; i < pos+len+3; i ++ )
-			ChkSum += RawFSKStr[i];
-
-// multiple format
-	if ( RawFSKStr[pos] == 0x80 ) 
-	{
-		HandleMultiple ( IDStr );
-	}
-// end of multiple
-
-	if ( ChkSum == 0 )
-		return	0;		// OK
-	else
-		return -1;		// Fail
+        for ( i = 1,j = 0; i <= callerLen; i++,j++)
+        {
+            IDStr[j] = RawFSKStr[FSKStartPos + 9 + i];
+            if ( j == IDStrBufLen - 1 )                // it will be overflow
+				break;
+        }
+		
+    }else if ( RawFSKStr[FSKStartPos] == 0x80 )
+    {    
+        // find the callerStartPos multiple format
+        for ( i = 0; i < count; i ++ )
+        {
+            if ( RawFSKStr[i] == 0x02 ) {  // multiple format
+                break;
+            }
+        }
+        if ( (i == count) || (i == count-1) )
+        {
+            return -1;        // not a good Caller ID
+        }
+        callerStartPos = i;
+        callerLen = RawFSKStr[callerStartPos+1];
+        for ( i = 1,j = 0; i <= callerLen; i++,j++)
+        {
+            IDStr[j] = RawFSKStr[callerStartPos + 1 + i];
+            if ( j == IDStrBufLen - 1 )                // it will be overflow
+				break;
+        }
+    }    
+    IDStr[j] = 0;
 }
 
 int	ConvertCallerIDToRawFsk (  char *IDStr, unsigned char *RawFSKStr, int FSKStrBufLen )
