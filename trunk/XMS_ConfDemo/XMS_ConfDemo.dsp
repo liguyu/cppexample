@@ -55,7 +55,7 @@ LINK32=link.exe
 # ADD LINK32 /nologo /subsystem:windows /machine:I386
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=copy   .\release\*.exe   .\ 
+PostBuild_Cmds=copy    .\release\*.exe    .\ 
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "XMS_ConfDemo - Win32 Debug"

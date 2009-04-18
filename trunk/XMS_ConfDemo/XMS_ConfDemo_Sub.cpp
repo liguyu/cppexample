@@ -872,10 +872,18 @@ void DrawConf_DetailInfo ( CONF_STRUCT *pOneConf )
 	pdlg->m_ListConf.SetItemText ( iDispRow, 3, StateStr ); 
 
 	strcpy ( StateStr, "" );
+	
+	
 	strcpy ( TmpS, "" );
 	for ( i = 0; i < pOneConf->lMemberNum; i ++ )
 	{
-		sprintf ( TmpS, "(%s,%d,%d)", 
+		if (pOneConf->Member[i].devType == 1)
+		{
+			strcat ( StateStr, "User" );
+		}else if(pOneConf->Member[i].devType == 2){
+			strcat ( StateStr, "VOIP" );
+		}
+		sprintf ( TmpS, "(%s,%d,%d)  ", 
 			GetString_ConfModeStr(pOneConf->Member[i].lMode),
 			pOneConf->Member[i].DevID.m_s8ModuleID, pOneConf->Member[i].DevID.m_s16ChannelID );
 		strcat ( StateStr, TmpS );
@@ -2104,9 +2112,11 @@ void	My_DualUnlink ( DeviceID_t *pDev1, DeviceID_t *pDev2 )
 
 RetCode_t  My_JoinToConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID, int iMode )
 {
-	RetCode_t	r = -1;
+	char					FileName[256];
+	RetCode_t				r = -1;
 	CmdParamData_Conf_t		confParam;
 	CONF_STRUCT				*pOneConf;
+	DeviceID_t				FreeVocDeviceID_ForConf;
 
 	pOneConf = &M_OneConf (*pConfDevID);
 
@@ -2137,8 +2147,29 @@ RetCode_t  My_JoinToConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID, int iM
 
 	if ( r > 0 )
 	{
+		//start record conf
+		if ( CONF_USED != pOneConf->State)
+		{
+			if (SearchOneFreeVoice ( &FreeVocDeviceID_ForConf, SEARCH_RULE_SAME_MODULE, pConfDevID->m_s8ModuleID ) >= 0 )
+			{
+				pOneConf->VocDevID = FreeVocDeviceID_ForConf;
+				M_OneVoice(FreeVocDeviceID_ForConf).UsedDevID = pOneConf->deviceID; 
+				
+				//get system time
+				CString					str;
+				CTime					tm;					
+				tm=CTime::GetCurrentTime();
+				str=tm.Format("%Y%m%d-%H%M%S");
+				sprintf ( FileName, "%s\\ConfRec-%d-%s.pcm", cfg_VocPath,pOneConf->deviceID.m_s16ChannelID,str);
+				
+				//start record from conference
+				RecordFile_Conf( &FreeVocDeviceID_ForConf, FileName, 8000L*3600L*24, false,pConfDevID );		// we record for 24 hours				
+			}			
+		}
+
 		pOneConf->Member[pOneConf->lMemberNum].lMode = iMode; 
 		pOneConf->Member[pOneConf->lMemberNum].DevID = *pVocDevID;
+		pOneConf->Member[pOneConf->lMemberNum].devType = 1;
 		pOneConf->lMemberNum ++;
 		if ( iMode == CONF_MODE_LISTEN )
 		{
@@ -2223,6 +2254,56 @@ RetCode_t  My_LeaveFromConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID, int
 		AddMsg ( "XMS_ctsLeaveFromConf() Fail in My_LeaveFromConf()!" );
 	}
 
+	return	r;
+}
+
+RetCode_t  My_LeaveFromConf_VOIP ( DeviceID_t *pConfDevID, DeviceID_t *pOneVOIP, int iMode )
+{
+	int						i, j;
+	RetCode_t				r = -1;
+	CONF_STRUCT				*pOneConf;
+	CmdParamData_Conf_t		confParam = {0};  //voip leave conference the confparam ignore
+	
+	pOneConf = &M_OneConf(*pConfDevID);
+	if ( iMode != CONF_MODE_PLAY )
+		confParam.m_u8InputOpt = XMS_CONF_INPUT_OPT_NORMAL;
+	else
+		confParam.m_u8InputOpt = XMS_CONF_INPUT_OPT_PLAY;
+
+	r = XMS_ctsLeaveFromConf ( g_acsHandle, pConfDevID, pOneVOIP, &confParam, NULL);
+	
+	if ( r > 0 )
+	{
+		for ( i = 0; i < pOneConf->lMemberNum; i ++ )
+		{
+			if ( ( pOneConf->Member[i].lMode == iMode ) && IsDeviceEqual(&pOneConf->Member[i].DevID, pOneVOIP) )
+				break;
+		}
+		
+		if ( i < pOneConf->lMemberNum )
+		{
+			if ( i < (pOneConf->lMemberNum-1) )
+			{
+				for ( j = i; j < pOneConf->lMemberNum-1; j ++ )		// move
+					pOneConf->Member[j] = pOneConf->Member[j+1];  
+			}
+			
+			if ( pOneConf->lMemberNum > 0 )
+				pOneConf->lMemberNum --;
+			if ( pOneConf->lListenNum > 0 )
+				pOneConf->lListenNum --;
+			
+			DrawConf_DetailInfo ( pOneConf );
+			
+			if ( pOneConf->lMemberNum == 0 )
+				FreeOneConf ( &pOneConf->deviceID );
+		}
+	}
+	else
+	{
+		AddMsg ( "XMS_ctsLeaveFromConf() Fail in My_LeaveFromConf()!" );
+	}
+	
 	return	r;
 }
 
@@ -2338,11 +2419,13 @@ int		SearchOneFreeConf ( DeviceID_t *pFreeConfDeviceID )
 int		FreeOneConf (  DeviceID_t *pFreeConfDeviceID )
 {
 	DJ_S8	s8ModID;
+	CONF_STRUCT *pOneConf = &M_OneConf(*pFreeConfDeviceID);
+	StopRecordFile(&pOneConf->VocDevID);
 
 	s8ModID = pFreeConfDeviceID->m_s8ModuleID;
 	if ( AllDeviceRes[s8ModID].lFlag == 1 )
 	{
-		Change_Conf_State ( &M_OneConf(*pFreeConfDeviceID), CONF_FREE);
+		Change_Conf_State ( pOneConf, CONF_FREE);
 
 		AllDeviceRes[pFreeConfDeviceID->m_s8ModuleID].lConfFreeNum++;
 		g_iTotalConfFree ++;
@@ -2521,7 +2604,6 @@ void	InitConfChannel ( CONF_STRUCT *pOneConf )
 
 	pOneConf->lMemberNum = 0;
 	pOneConf->lListenNum = 0;
-	memset ( &pOneConf->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc Device
 	memset ( pOneConf->Member, 0,	sizeof(MEMBER_STRUCT)*MAX_MEMBER_PER_CONF_GROUP );
 
 	DrawConf_DetailInfo( pOneConf );
@@ -2575,6 +2657,15 @@ void	Do_JoinConf ( TRUNK_STRUCT *pOneTrunk, DeviceID_t *pConfDevID )
 		DrawMain_VocInfo ( pOneTrunk );
 		DrawMain_ConfInfo ( pOneTrunk );
 
+// 		//加入回声抑制功能
+ 		CmdParamData_Voice_t    VocMixParam = {0};		
+ 		VocMixParam.m_u8InputCtrlValid = 1;
+ 		VocMixParam.m_VocInputControl.m_u8EcEnable = 1;
+ 		VocMixParam.m_VocInputControl.m_u8EcRefType = 1;
+        VocMixParam.m_VocInputControl.m_u16FixGain = 1024;
+ 		VocMixParam.m_VocInputControl.m_u16EcRefCh = pOneTrunk->VocDevID.m_s16ChannelID;
+ 		XMS_ctsSetParam(g_acsHandle, &pOneTrunk->VocDevID,VOC_PARAM_UNIPARAM, sizeof(VocMixParam), &VocMixParam);
+
 		switch ( pOneTrunk->iConfSelect )
 		{
 		case 1:		// add
@@ -2613,26 +2704,7 @@ void	Do_JoinConf ( TRUNK_STRUCT *pOneTrunk, DeviceID_t *pConfDevID )
 			My_JoinToConf ( pConfDevID, &FreeVocDeviceID_ForConf, CONF_MODE_SPEAKONLY );
 			break;
 		}
-
-		//start record conf
-		if ( 0 == pOneConf->VocDevID.m_s16ChannelID)
-		{
-			if (SearchOneFreeVoice ( &FreeVocDeviceID_ForConf, SEARCH_RULE_SAME_MODULE, pConfDevID->m_s8ModuleID ) >= 0 )
-			{
-				pOneConf->VocDevID = FreeVocDeviceID_ForConf;
-				M_OneVoice(FreeVocDeviceID_ForConf).UsedDevID = pOneConf->deviceID; 
-				
-				//get system time
-				CString					str;
-				CTime					tm;					
-				tm=CTime::GetCurrentTime();
-				str=tm.Format("%Y%m%d-%H%M%S");
-				sprintf ( FileName, "%s\\ConfRec-%d-%s.pcm", cfg_VocPath,pOneConf->deviceID.m_s16ChannelID,str);
-				
-				//start record from conference
-				RecordFile_Conf( &pOneConf->VocDevID, FileName, 8000L*3600L*24, false,pConfDevID );		// we record for 24 hours				
-			}			
-		}
+		
 	}
 }
 
@@ -2640,7 +2712,6 @@ void	Do_JoinConf_VOIP ( VOIP_STRUCT *pOneVOIP, DeviceID_t *pConfDevID )
 {
 	char					FileName[256];
 	DeviceID_t				FreeVocDeviceID;
-	int						i;
 	CONF_STRUCT				*pOneConf;
 	RetCode_t				ret;
 	CmdParamData_Conf_t confParam = {0};	
@@ -2689,6 +2760,26 @@ void	Do_JoinConf_VOIP ( VOIP_STRUCT *pOneVOIP, DeviceID_t *pConfDevID )
 	}
 	if ( ret > 0 )
 	{
+		//start record conf
+		if ( pOneConf->State != CONF_USED)
+		{
+			if (SearchOneFreeVoice ( &FreeVocDeviceID, SEARCH_RULE_SAME_MODULE, pConfDevID->m_s8ModuleID ) >= 0 )
+			{
+				pOneConf->VocDevID = FreeVocDeviceID;
+				M_OneVoice(FreeVocDeviceID).UsedDevID = pOneConf->deviceID; 
+				
+				//get system time
+				CString					str;
+				CTime					tm;					
+				tm=CTime::GetCurrentTime();
+				str=tm.Format("%Y%m%d-%H%M%S");
+				sprintf ( FileName, "%s\\ConfRec-%d-%s.pcm", cfg_VocPath,pOneConf->deviceID.m_s16ChannelID,str);
+				
+				//start record from conference
+				RecordFile_Conf( &FreeVocDeviceID, FileName, 8000L*3600L*24, false,pConfDevID );		// we record for 24 hours				
+			}			
+		}
+
 		pOneConf->Member[pOneConf->lMemberNum].lMode = pOneVOIP->iConfSelect; 
 		pOneConf->Member[pOneConf->lMemberNum].DevID = pOneVOIP->deviceID;
 		pOneConf->Member[pOneConf->lMemberNum].devType = 2;
@@ -2702,25 +2793,7 @@ void	Do_JoinConf_VOIP ( VOIP_STRUCT *pOneVOIP, DeviceID_t *pConfDevID )
 			OccupyOneConf ( pOneConf );
 		}
 		DrawConf_DetailInfo ( pOneConf );
-		//start record conf
-		if ( 0 == pOneConf->VocDevID.m_s16ChannelID)
-		{
-			if (SearchOneFreeVoice ( &FreeVocDeviceID, SEARCH_RULE_SAME_MODULE, pConfDevID->m_s8ModuleID ) >= 0 )
-			{
-				pOneConf->VocDevID = FreeVocDeviceID;
-				M_OneVoice(FreeVocDeviceID).UsedDevID = pOneConf->deviceID; 
-			
-				//get system time
-				CString					str;
-				CTime					tm;					
-				tm=CTime::GetCurrentTime();
-				str=tm.Format("%Y%m%d-%H%M%S");
-				sprintf ( FileName, "%s\\ConfRec-%d-%s.pcm", cfg_VocPath,pOneConf->deviceID.m_s16ChannelID,str);
-				
-				//start record from conference
-				RecordFile_Conf( &pOneConf->VocDevID, FileName, 8000L*3600L*24, false,pConfDevID );		// we record for 24 hours				
-			}			
-		}
+		
 	}	
 	Change_VOIP_State ( pOneVOIP, VOIP_CONF_CONFING );
 }
@@ -2763,6 +2836,39 @@ void	Do_LeaveConf ( TRUNK_STRUCT *pOneTrunk )
 
 	if ( pOneConf->lMemberNum == 0 )
 		XMS_ctsClearConf ( g_acsHandle, &pOneConf->deviceID, NULL );
+}
+
+void	Do_LeaveConf_VOIP ( VOIP_STRUCT *pOneVOIP )
+{
+	CONF_STRUCT				*pOneConf;
+	
+	pOneConf = &M_OneConf(pOneVOIP->ConfDevID);
+	switch ( pOneVOIP->iConfSelect )
+	{
+	case 1:		// add
+		My_LeaveFromConf_VOIP ( &pOneVOIP->ConfDevID, &pOneVOIP->deviceID, CONF_MODE_ADD );
+		break;
+		
+	case 2:		// listen
+		My_LeaveFromConf_VOIP ( &pOneVOIP->ConfDevID, &pOneVOIP->deviceID, CONF_MODE_LISTEN );
+		break;
+		
+	case 3:		// Karaok
+		My_LeaveFromConf_VOIP ( &pOneVOIP->ConfDevID, &pOneVOIP->deviceID, CONF_MODE_ADD );
+		My_LeaveFromConf_VOIP ( &pOneVOIP->ConfDevID, &pOneVOIP->deviceID, CONF_MODE_PLAY );
+		
+		//StopPlayFile ( &pOneTrunk->VocDevID );
+		//StopRecordFile ( &pOneTrunk->VocDevID );
+		break;
+		
+	case 4:	    // speak only
+		My_LeaveFromConf_VOIP ( &pOneVOIP->ConfDevID, &pOneVOIP->deviceID, CONF_MODE_SPEAKONLY );
+		break;
+	}
+	
+	if ( pOneConf->lMemberNum == 0 ){
+		XMS_ctsClearConf ( g_acsHandle, &pOneConf->deviceID, NULL );
+	}
 }
 
 // Special code for CAS(SS1)
@@ -3050,7 +3156,18 @@ void TrunkWork_VOIP ( VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt )
 	char					TmpDtmf, TmpGtd;
 	int						iConfNo;
 	
-	
+	if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL )	/*Clear Call*/
+	{
+		if ( (pOneVOIP->State != VOIP_FREE) && (pOneVOIP->State != VOIP_WAIT_REMOVE) )
+		{
+			if ( ( pOneVOIP->State == VOIP_CONF_CONFING ) || ( pOneVOIP->State == VOIP_CONF_KARAOK ) )
+			{
+				Do_LeaveConf_VOIP(pOneVOIP);
+			}			
+			InitVOIPChannel(pOneVOIP);
+			return ; 
+		}
+	}
 	switch(pOneVOIP->State)
 	{
 	case VOIP_FREE:
@@ -3098,6 +3215,7 @@ void TrunkWork_VOIP ( VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt )
 				MixerControlParam_t paramMixer = {0};
 				paramMixer.m_u8SRC1_Ctrl = XMS_MIXER_FROM_PLAY;
 				paramMixer.m_u16SRC_ChID1 = FreeVocDeviceID.m_s16ChannelID;
+			
 				
 				// send SetParam command
 				RetCode_t ret = XMS_ctsSetParam(g_acsHandle, &pOneVOIP->deviceID,
@@ -3134,7 +3252,7 @@ void TrunkWork_VOIP ( VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt )
 		
 		StopPlayFile ( &pOneVOIP->VocDevID );
 		
-		if ( (TmpDtmf >= '1') && (TmpDtmf <= '4') )	 // "1: Add Conf" "2: Listen Conf" "3: Karaok" "4 Speak Only"
+		if ( TmpDtmf == '1' || TmpDtmf == '2' )	 // "1: Add Conf" "2: Listen Conf" "3: Karaok" "4 Speak Only"
 		{
 			My_InitDtmfBuf_VOIP( pOneVOIP );
 			
@@ -3148,18 +3266,18 @@ void TrunkWork_VOIP ( VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt )
 			Change_VOIP_State ( pOneVOIP, VOIP_CONF_INPUTGROUP );
 		}	
 		
-		if ( TmpDtmf == '3' )		// Karaok
-		{
-			if ( SearchOneFreeConf ( &FreeConfDeviceID ) >= 0 )
-			{
-			 	Do_JoinConf_VOIP ( pOneVOIP, &FreeConfDeviceID );
-				Change_VOIP_State ( pOneVOIP, VOIP_CONF_KARAOK );
-			}
-			else
-			{
-				Change_VOIP_State ( pOneVOIP, VOIP_CONF_ERROR );
-			}
-		}
+// 		if ( TmpDtmf == '3' )		// Karaok
+// 		{
+// 			if ( SearchOneFreeConf ( &FreeConfDeviceID ) >= 0 )
+// 			{
+// 			 	Do_JoinConf_VOIP ( pOneVOIP, &FreeConfDeviceID );
+// 				Change_VOIP_State ( pOneVOIP, VOIP_CONF_KARAOK );
+// 			}
+// 			else
+// 			{
+// 				Change_VOIP_State ( pOneVOIP, VOIP_CONF_ERROR );
+// 			}
+// 		}
 		break;
 	case VOIP_CONF_INPUTGROUP:
 		
@@ -3193,7 +3311,21 @@ void TrunkWork_VOIP ( VOIP_STRUCT *pOneVOIP, Acs_Evt_t *pAcsEvt )
 			Change_VOIP_State ( pOneVOIP, VOIP_CONF_CONFING );
 		}
 		break;
-
+	case VOIP_CONF_CONFING:
+		break;
+		
+	case VOIP_CONF_KARAOK:
+		//
+		TmpDtmf = My_GetDtmfCode_VOIP( pAcsEvt );
+		if ( TmpDtmf != -1 )								/*DTMF*/
+		{
+			My_AddDtmfBuf_VOIP( pOneVOIP, TmpDtmf );
+			DrawIP_DTMF( pOneVOIP );
+			
+			StopPlayFile ( &pOneVOIP->VocDevID );
+		}
+		Change_VOIP_State( pOneVOIP, VOIP_CONF_PLAYBACK );
+		break;
 	}
 		
 }

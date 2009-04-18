@@ -6,13 +6,25 @@
 --------------------Configuration: XMS_ConfDemo - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP253.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_ConfDemo.res" /d "_DEBUG" /d "_AFXDLL" "D:\cppexample\XMS_ConfDemo\XMS_ConfDemo.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE7.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_ConfDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMS_ConfDemo\XMS_ConfDemo.cpp"
+"D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Event.cpp"
+"D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_String.cpp"
 "D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Sub.cpp"
+"D:\cppexample\XMS_ConfDemo\XMS_ConfDemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP253.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP254.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE7.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE8.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_ConfDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\XMS_ConfDemo\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE8.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE9.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_ConfDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_ConfDemo.exe" /pdbtype:sept 
 .\Debug\CAS_Common_Cfg.obj
@@ -25,12 +37,20 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP254.tmp" with con
 .\Debug\XMS_ConfDemo.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP254.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE9.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+CAS_Common_Cfg.CPP
+XMS_ConfDemo.cpp
+XMS_ConfDemo_Event.cpp
+XMS_ConfDemo_String.cpp
 XMS_ConfDemo_Sub.cpp
-D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Sub.cpp(2643) : warning C4101: 'i' : unreferenced local variable
-D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Sub.cpp(3050) : warning C4101: 'TmpGtd' : unreferenced local variable
+D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Sub.cpp(3156) : warning C4101: 'TmpGtd' : unreferenced local variable
+XMS_ConfDemoDlg.cpp
+Generating Code...
 Linking...
 Creating command line "bscmake.exe /nologo /o"Debug/XMS_ConfDemo.bsc"  .\Debug\StdAfx.sbr .\Debug\CAS_Common_Cfg.sbr .\Debug\XMS_ConfDemo.sbr .\Debug\XMS_ConfDemo_Event.sbr .\Debug\XMS_ConfDemo_String.sbr .\Debug\XMS_ConfDemo_Sub.sbr .\Debug\XMS_ConfDemoDlg.sbr"
 Creating browse info file...
@@ -39,7 +59,7 @@ Creating browse info file...
 
 
 <h3>Results</h3>
-XMS_ConfDemo.exe - 0 error(s), 2 warning(s)
+XMS_ConfDemo.exe - 0 error(s), 1 warning(s)
 </pre>
 </body>
 </html>

@@ -69,7 +69,6 @@ enum CONF_STATE {
 	CONF_WAITOPEN,
 	CONF_FREE,
 	CONF_USED,
-
 	CONF_WAIT_REMOVE,
 };
 
@@ -164,8 +163,8 @@ typedef struct
 	
 	DeviceID_t		UsedDevID;
 	CONF_STATE		State;
-	DeviceID_t		VocDevID;  //voice device
 
+	DeviceID_t		VocDevID;
 	long			lMemberNum;
 	long			lListenNum;
 	MEMBER_STRUCT	Member[MAX_MEMBER_PER_CONF_GROUP];
@@ -199,7 +198,7 @@ void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk );
 
 void	InitConfChannel ( CONF_STRUCT *pOneConf );
 void	InitVOIPChannel ( VOIP_STRUCT *pOneVOIP );
-
+int		SearchOneFreeVoice (  DeviceID_t *pFreeVocDeviceID, SEARCH_RULE SearchRule, DJ_S8 s8RefModID );
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
 void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState );
 void	Change_Conf_State ( CONF_STRUCT *pOneConf, CONF_STATE NewState );
