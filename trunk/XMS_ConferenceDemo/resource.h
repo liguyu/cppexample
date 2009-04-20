@@ -21,6 +21,7 @@
 #define IDC_BUTTON_ReOpen               1011
 #define IDC_BUTTON_Remove               1012
 #define IDC_CHECK_DEBUG2                1013
+#define IDC_CHECK_CONFRECON             1013
 
 // Next default values for new objects
 // 
