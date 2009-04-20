@@ -242,6 +242,7 @@ int    ConvertRawFskToCallerID ( unsigned char *RawFSKStr, char *IDStr, int IDSt
         }
     }    
     IDStr[j] = 0;
+	return 1;
 }
 
 int	ConvertCallerIDToRawFsk (  char *IDStr, unsigned char *RawFSKStr, int FSKStrBufLen )
