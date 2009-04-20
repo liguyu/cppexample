@@ -1738,18 +1738,24 @@ char My_GetGtdCode ( Acs_Evt_t *pAcsEvt )
 	return -1;	// not a good GTD
 }
 
-void SetGtD_AnalogTrunk(DeviceID_t* pDevId)
+void SetVocParam_AnalogTrunk(DeviceID_t* pDevId)
 {
-	//========Set GTG Begin========
 	CmdParamData_Voice_t cmdVoc;
 	memset(&cmdVoc,0,sizeof(cmdVoc));
+	
+	//========Set GTG Begin========
 	cmdVoc.m_u8GtdCtrlValid = 1 ;						//Enable GTD
 	cmdVoc.m_VocGtdControl.m_u8ChannelEnable = 1;		//Enable Gtd channel
 	cmdVoc.m_VocGtdControl.m_u8DTMFEnable = 1;			// Detect DTMF
 	cmdVoc.m_VocGtdControl.m_u8GTDEnable = 1;			// Detect GTD 
 	cmdVoc.m_VocGtdControl.m_u8FSKEnable = 1;			// Detect FSK for receive CallerID
 
-	//cmdVoc.m_VocGtdControl.m_u8EXTEnable = 0x2;		// Enable PVD Detect
+ 	cmdVoc.m_u8InputCtrlValid = 1;
+ 	cmdVoc.m_VocInputControl.m_u8AgcEnable = 1;
+ 	cmdVoc.m_VocInputControl.m_u16FixGain = 1024;
+ 	cmdVoc.m_VocInputControl.m_u8EcEnable = 1;
+	cmdVoc.m_VocInputControl.m_u8EcRefType = 1;
+ 	cmdVoc.m_VocInputControl.m_u8TadEnable = 1;	
 
 	strcpy((char*)&cmdVoc.m_VocGtdControl.m_u8GTDID[0],"GHIJK");	// Detect Busy Tone
 
@@ -1758,8 +1764,50 @@ void SetGtD_AnalogTrunk(DeviceID_t* pDevId)
 	void* p = (void*) &cmdVoc;
 
 	int r = XMS_ctsSetParam( g_acsHandle,pDevId,u16ParamType,u16ParamSize,(void*)p);
-
-	//========Set GTG End  ========
+}
+int		SearchOneFreeVoice (  DeviceID_t *pFreeVocDeviceID, SEARCH_RULE SearchRule, DJ_S8 s8RefModID )
+{
+	int				i;
+	static	int		iLoopStart = 0;
+	VOICE_STRUCT	*pOneVoice;
+	DJ_S8			s8SearchModID;
+	long			lNowMaxFreeNum;
+	
+	if ( SearchRule == SEARCH_RULE_SAME_MODULE )			// Search in Same Module
+	{
+		s8SearchModID = s8RefModID;
+	}
+	else		// Search in Max free resource module
+	{
+		s8SearchModID = -1;
+		lNowMaxFreeNum = -1;
+		for ( i = 0; i < g_iTotalModule; i ++ )
+		{
+			if ( AllDeviceRes[MapTable_Module[i]].lVocFreeNum > lNowMaxFreeNum )
+			{
+				s8SearchModID = MapTable_Module[i];
+				lNowMaxFreeNum = AllDeviceRes[MapTable_Module[i]].lVocFreeNum;
+			}
+		}
+	}
+	
+	for ( i = 0; i < AllDeviceRes[s8SearchModID].lVocNum; i ++ )
+	{
+		pOneVoice = &AllDeviceRes[s8SearchModID].pVoice[i];
+		if ( pOneVoice->State == VOC_FREE )
+		{
+			*pFreeVocDeviceID = pOneVoice->deviceID;
+			
+			// use this voice device 
+			Change_Voc_State ( &AllDeviceRes[s8SearchModID].pVoice[i], VOC_USED);
+			AllDeviceRes[s8SearchModID].lVocFreeNum--;
+			g_iTotalVoiceFree --;
+			DrawCount_Voc ( s8SearchModID );
+			return i;
+		}
+	}
+	
+	return -1;
 }
 
 void	My_DualLink ( DeviceID_t *pDev1, DeviceID_t *pDev2 )
@@ -1777,8 +1825,10 @@ void	My_DualUnlink ( DeviceID_t *pDev1, DeviceID_t *pDev2 )
 RetCode_t  My_JoinToConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID)
 {
 	RetCode_t				r = -1;
+	char					FileName[256];
 	CmdParamData_Conf_t		confParam = {0};
 	CONF_STRUCT				*pOneConf;
+	DeviceID_t				FreeVocDeviceID;
 
 	confParam.m_u8InputOpt = XMS_CONF_INPUT_OPT_NORMAL;
 	confParam.m_u8OutputOpt = XMS_CONF_OUTPUT_OPT_NORMAL;	
@@ -1788,7 +1838,32 @@ RetCode_t  My_JoinToConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID)
 	if ( r > 0 )
 	{
 		pOneConf = &M_OneConf (*pConfDevID);
+		
+		if ( pOneConf->State == CONF_FREE)
+		{
+			if (SearchOneFreeVoice ( &FreeVocDeviceID, SEARCH_RULE_SAME_MODULE, pConfDevID->m_s8ModuleID ) >= 0 )
+			{
+				pOneConf->vocDevID = FreeVocDeviceID;
+				M_OneVoice(FreeVocDeviceID).UsedDevID = pOneConf->deviceID; 
+				
+				CmdParamData_Conf_t		confParam = {0};
+				confParam.m_u8InputOpt = XMS_CONF_INPUT_OPT_PLAY;
+				confParam.m_u8OutputOpt = XMS_CONF_OUTPUT_OPT_NORMAL;	
+				
+				r = XMS_ctsJoinToConf ( g_acsHandle, pConfDevID, &FreeVocDeviceID, &confParam, NULL);
 
+				//get system time
+				CString					str;
+				CTime					tm;					
+				tm=CTime::GetCurrentTime();
+				str=tm.Format("%Y%m%d-%H%M%S");
+				sprintf ( FileName, "%s\\ConferenceRec-%d-%s.pcm", cfg_VocPath,pOneConf->deviceID.m_s16ChannelID,str);
+				
+				//start record from conference
+				RecordFile_Conf( &FreeVocDeviceID, FileName, 8000L*3600L*24, false,pConfDevID );		// we record for 24 hours				
+			}			
+		}
+		
 		pOneConf->Member[pOneConf->memberNum] = *pVocDevID;
 		pOneConf->memberNum ++;
 	
@@ -1869,50 +1944,7 @@ RetCode_t  My_LeaveFromConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID)
 	return	r;
 }
 
-int		SearchOneFreeVoice (  DeviceID_t *pFreeVocDeviceID, SEARCH_RULE SearchRule, DJ_S8 s8RefModID )
-{
-	int				i;
-	static	int		iLoopStart = 0;
-	VOICE_STRUCT	*pOneVoice;
-	DJ_S8			s8SearchModID;
-	long			lNowMaxFreeNum;
 
-	if ( SearchRule == SEARCH_RULE_SAME_MODULE )			// Search in Same Module
-	{
-		s8SearchModID = s8RefModID;
-	}
-	else		// Search in Max free resource module
-	{
-		s8SearchModID = -1;
-		lNowMaxFreeNum = -1;
-		for ( i = 0; i < g_iTotalModule; i ++ )
-		{
-			if ( AllDeviceRes[MapTable_Module[i]].lVocFreeNum > lNowMaxFreeNum )
-			{
-				s8SearchModID = MapTable_Module[i];
-				lNowMaxFreeNum = AllDeviceRes[MapTable_Module[i]].lVocFreeNum;
-			}
-		}
-	}
-
-	for ( i = 0; i < AllDeviceRes[s8SearchModID].lVocNum; i ++ )
-	{
-		pOneVoice = &AllDeviceRes[s8SearchModID].pVoice[i];
-		if ( pOneVoice->State == VOC_FREE )
-		{
-			*pFreeVocDeviceID = pOneVoice->deviceID;
-
-			// use this voice device 
-			Change_Voc_State ( &AllDeviceRes[s8SearchModID].pVoice[i], VOC_USED);
-			AllDeviceRes[s8SearchModID].lVocFreeNum--;
-			g_iTotalVoiceFree --;
-			DrawCount_Voc ( s8SearchModID );
-			return i;
-		}
-	}
-
-	return -1;
-}
 
 int		FreeOneVoice (  DeviceID_t *pFreeVocDeviceID )
 {
@@ -2071,14 +2103,13 @@ void	PrepareForCallerID ( TRUNK_STRUCT *pOneTrunk )
 	
 	if (SearchOneFreeVoice ( &FreeVocDeviceID, SEARCH_RULE_SAME_MODULE, pOneTrunk->deviceID.m_s8ModuleID ) >= 0 )
 	{
-		pOneTrunk->VocDevID = FreeVocDeviceID;
-		
-		M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 
-		
-		DrawMain_VocInfo ( pOneTrunk );
-		
+		pOneTrunk->VocDevID = FreeVocDeviceID;		
+		M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 		
+		DrawMain_VocInfo ( pOneTrunk );		
 		My_DualLink ( &FreeVocDeviceID, &pOneTrunk->deviceID );
-		SetGtD_AnalogTrunk(&FreeVocDeviceID);
+	
+		SetVocParam_AnalogTrunk(&FreeVocDeviceID);
+
 	}else{
 		AddMsg("No free voc for PrepareForCallerID...");
 	}
@@ -2089,6 +2120,7 @@ void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk )
 
 	pOneTrunk->CallerCode[0]=0;
 	pOneTrunk->CalleeCode[0]=0;
+	DrawMain_CallInfo(pOneTrunk);
 
 	My_InitDtmfBuf ( pOneTrunk );
 	DrawMain_DTMF ( pOneTrunk );
@@ -2122,7 +2154,9 @@ void ResetTrunk ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 		memset ( &pOneTrunk->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc  Device
 		DrawMain_VocInfo ( pOneTrunk );
 	}
-	InitTrunkChannel ( pOneTrunk );
+	InitTrunkChannel (pOneTrunk);
+	PrepareForCallerID(pOneTrunk);
+
 }
 
 void	InitConfChannel ( CONF_STRUCT *pOneConf )
@@ -2191,8 +2225,10 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 	DeviceID_t				FreeVocDeviceID;
 	DeviceID_t				FreeConfDeviceID;
 	char					FileName[256];
+	char					strTemp[100];
 	char					TmpDtmf, TmpGtd;
 	int						iConfNo;
+	int						ret;
 
 	if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL )	/*Clear Call*/
 	{
@@ -2226,13 +2262,13 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
         {
             unsigned char     *p;
 			
-            p = My_GetFskCode ( pAcsEvt );//recv FSK  callerid
+            p = My_GetFskCode ( pAcsEvt );//recv FSK  caller id
             if ( p != NULL )
             {
                 ConvertRawFskToCallerID ( p, pOneTrunk->CallerCode, 20 );
             }    
 			
-            TmpDtmf = My_GetDtmfCode(pAcsEvt);//recv Dtmf  callerid
+            TmpDtmf = My_GetDtmfCode(pAcsEvt);//recv Dtmf  caller id
             if ( TmpDtmf != -1 )                        
             {
                 My_AddCallerBuf( pOneTrunk, TmpDtmf);
@@ -2275,17 +2311,187 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 			}			
 			FreeConfDeviceID = M_OneConf(MapTable_Conf[iConfNo]).deviceID;	
 			pOneTrunk->ConfDevID = FreeConfDeviceID;
-			My_JoinToConf ( &FreeConfDeviceID, &pOneTrunk->VocDevID);	
-			Change_State ( pOneTrunk, TRK_CONF_CONFING );
+			ret = My_JoinToConf ( &FreeConfDeviceID, &pOneTrunk->VocDevID);	
+			if (ret > 0)
+			{
+				int i = 0;
+				while (pOneTrunk->CallerCode[i] != 0)
+				{
+					switch (pOneTrunk->CallerCode[i++])
+					{
+					case '0':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D0");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '1':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D1");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '2':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D2");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '3':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D3");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '4':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D4");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '5':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D5");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '6':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D6");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '7':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D7");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '8':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D8");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					case '9':
+						strcpy ( FileName, cfg_VocPath );
+						strcat ( FileName, "\\D9");
+						PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						break;
+					}
+				}
+				
+				strcpy ( FileName, cfg_VocPath );
+				strcat ( FileName, "\\JoinToConf.pcm");
+				PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+				Change_State ( pOneTrunk, TRK_CONF_CONFING );
+
+			}
 		}
 		break;
 
 	case TRK_CONF_CONFING:
+		TmpDtmf = My_GetDtmfCode ( pAcsEvt );
+		if ( TmpDtmf == -1 )								/*DTMF*/
+			break;
+		
+		My_AddDtmfBuf ( pOneTrunk, TmpDtmf );
+		DrawMain_DTMF ( pOneTrunk );
+		if (pOneTrunk->DtmfCount >= 3)
+		{
+			for (int i=0; i <= pOneTrunk->DtmfCount-3; i++)
+			{
+				if (pOneTrunk->DtmfBuf[i] =='*' && pOneTrunk->DtmfBuf[i+1] == '#')
+				{
+					switch (pOneTrunk->DtmfBuf[i+2])
+					{
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+						iConfNo = atoi(&pOneTrunk->DtmfBuf[i+2]);
+						
+						if ( (iConfNo < 0) || (iConfNo >= g_iTotalConf) )
+						{
+							Change_State ( pOneTrunk, TRK_CONF_ERROR );
+							break;
+						}
+						if ( (M_OneConf(MapTable_Conf[iConfNo]).State != CONF_FREE)
+							&& (M_OneConf(MapTable_Conf[iConfNo]).State != CONF_USED) )
+						{
+							Change_State ( pOneTrunk, TRK_CONF_ERROR );
+							break;
+						}			
+						FreeConfDeviceID = M_OneConf(MapTable_Conf[iConfNo]).deviceID;	
+						pOneTrunk->ConfDevID = FreeConfDeviceID;
+						ret = My_JoinToConf ( &FreeConfDeviceID, &pOneTrunk->VocDevID);	
+						if (ret > 0)
+						{
+							int i = 0;
+							while (pOneTrunk->CallerCode[i] != 0)
+							{
+								switch (pOneTrunk->CallerCode[i++])
+								{
+								case '0':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D0");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '1':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D1");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '2':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D2");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '3':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D3");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '4':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D4");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '5':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D5");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '6':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D6");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '7':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D7");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '8':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D8");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+								case '9':
+									strcpy ( FileName, cfg_VocPath );
+									strcat ( FileName, "\\D9");
+									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+									
+								}
+							}
+							
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\JoinToConf.pcm");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+							Change_State ( pOneTrunk, TRK_CONF_CONFING );
+							
+							sprintf(strTemp,"Join to another conference %d ......",iConfNo);
+							AddMsg(strTemp);
+						}
+						break;
+					}
+				}
+			}
+		}
+		
 		break;
 
 	case TRK_CONF_ERROR:
 		break;
 
 	}
+	
 }
-
