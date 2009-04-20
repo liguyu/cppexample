@@ -2381,113 +2381,113 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 		}
 		break;
 
-	case TRK_CONF_CONFING:
-		TmpDtmf = My_GetDtmfCode ( pAcsEvt );
-		if ( TmpDtmf == -1 )								/*DTMF*/
+			case TRK_CONF_CONFING:
+			TmpDtmf = My_GetDtmfCode ( pAcsEvt );
+			if ( TmpDtmf == -1 )								/*DTMF*/
 			break;
-		
-		My_AddDtmfBuf ( pOneTrunk, TmpDtmf );
-		DrawMain_DTMF ( pOneTrunk );
-		if (pOneTrunk->DtmfCount >= 3)
-		{
+
+			My_AddDtmfBuf ( pOneTrunk, TmpDtmf );
+			DrawMain_DTMF ( pOneTrunk );
+			if (pOneTrunk->DtmfCount >= 3)
+			{
 			for (int i=0; i <= pOneTrunk->DtmfCount-3; i++)
 			{
-				if (pOneTrunk->DtmfBuf[i] =='*' && pOneTrunk->DtmfBuf[i+1] == '#')
+			if (pOneTrunk->DtmfBuf[i] =='*' && pOneTrunk->DtmfBuf[i+1] == '#')
+			{
+			switch (pOneTrunk->DtmfBuf[i+2])
+			{
+			case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				iConfNo = atoi(&pOneTrunk->DtmfBuf[i+2]);
+				
+				if ( (iConfNo < 0) || (iConfNo >= g_iTotalConf) )
 				{
-					switch (pOneTrunk->DtmfBuf[i+2])
-					{
-					case '0':
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-						iConfNo = atoi(&pOneTrunk->DtmfBuf[i+2]);
-						
-						if ( (iConfNo < 0) || (iConfNo >= g_iTotalConf) )
-						{
-							Change_State ( pOneTrunk, TRK_CONF_ERROR );
-							break;
-						}
-						if ( (M_OneConf(MapTable_Conf[iConfNo]).State != CONF_FREE)
-							&& (M_OneConf(MapTable_Conf[iConfNo]).State != CONF_USED) )
-						{
-							Change_State ( pOneTrunk, TRK_CONF_ERROR );
-							break;
-						}			
-						FreeConfDeviceID = M_OneConf(MapTable_Conf[iConfNo]).deviceID;	
-						pOneTrunk->ConfDevID = FreeConfDeviceID;
-						ret = My_JoinToConf ( &FreeConfDeviceID, &pOneTrunk->VocDevID);	
-						if (ret > 0)
-						{
-							int i = 0;
-							while (pOneTrunk->CallerCode[i] != 0)
-							{
-								switch (pOneTrunk->CallerCode[i++])
-								{
-								case '0':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D0");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '1':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D1");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '2':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D2");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '3':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D3");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '4':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D4");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '5':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D5");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '6':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D6");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '7':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D7");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '8':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D8");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-								case '9':
-									strcpy ( FileName, cfg_VocPath );
-									strcat ( FileName, "\\D9");
-									PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-									
-								}
-							}
-							
-							strcpy ( FileName, cfg_VocPath );
-							strcat ( FileName, "\\JoinToConf.pcm");
-							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
-							Change_State ( pOneTrunk, TRK_CONF_CONFING );
-							
-							sprintf(strTemp,"Join to another conference %d ......",iConfNo);
-							AddMsg(strTemp);
-						}
-						break;
-					}
+					Change_State ( pOneTrunk, TRK_CONF_ERROR );
+					break;
 				}
+				if ( (M_OneConf(MapTable_Conf[iConfNo]).State != CONF_FREE)
+					&& (M_OneConf(MapTable_Conf[iConfNo]).State != CONF_USED) )
+				{
+					Change_State ( pOneTrunk, TRK_CONF_ERROR );
+					break;
+				}			
+				FreeConfDeviceID = M_OneConf(MapTable_Conf[iConfNo]).deviceID;	
+				pOneTrunk->ConfDevID = FreeConfDeviceID;
+				ret = My_JoinToConf ( &FreeConfDeviceID, &pOneTrunk->VocDevID);	
+				if (ret > 0)
+				{
+					int i = 0;
+					while (pOneTrunk->CallerCode[i] != 0)
+					{
+						switch (pOneTrunk->CallerCode[i++])
+						{
+						case '0':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D0");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '1':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D1");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '2':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D2");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '3':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D3");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '4':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D4");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '5':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D5");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '6':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D6");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '7':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D7");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '8':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D8");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+						case '9':
+							strcpy ( FileName, cfg_VocPath );
+							strcat ( FileName, "\\D9");
+							PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+							
+						}
+					}
+					
+					strcpy ( FileName, cfg_VocPath );
+					strcat ( FileName, "\\JoinToConf.pcm");
+					PlayFile ( &M_OneConf(FreeConfDeviceID).vocDevID, FileName, pOneTrunk->u8PlayTag, true );
+					Change_State ( pOneTrunk, TRK_CONF_CONFING );
+					
+					sprintf(strTemp,"Join to another conference %d ......",iConfNo);
+					AddMsg(strTemp);
+				}
+				break;
 			}
-		}
-		
-		break;
+			}
+			}
+			}
+
+			break;
 
 	case TRK_CONF_ERROR:
 		break;
