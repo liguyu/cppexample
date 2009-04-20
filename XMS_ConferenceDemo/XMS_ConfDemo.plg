@@ -6,13 +6,26 @@
 --------------------Configuration: XMS_ConfDemo - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP135.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_ConfDemo.res" /d "_DEBUG" /d "_AFXDLL" "D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemo.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP144.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_ConfDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp"
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemo.cpp"
+"D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemo_Event.cpp"
+"D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemo_String.cpp"
 "D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemo_Sub.cpp"
+"D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP135.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP136.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP144.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP145.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_ConfDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\XMS_ConferenceDemo\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP145.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP146.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_ConfDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_ConfDemo.exe" /pdbtype:sept 
 .\Debug\Analog_Common_Code.obj
@@ -26,13 +39,23 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP136.tmp" with con
 .\Debug\XMS_ConfDemo.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP136.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP146.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+Analog_Common_Code.cpp
+CAS_Common_Cfg.CPP
+XMS_ConfDemo.cpp
+XMS_ConfDemo_Event.cpp
+XMS_ConfDemo_String.cpp
 XMS_ConfDemo_Sub.cpp
 D:\cppexample\XMS_ConferenceDemo\XMS_ConfDemo_Sub.cpp(2228) : warning C4101: 'FreeVocDeviceID' : unreferenced local variable
+XMS_ConfDemoDlg.cpp
+Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP137.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP148.tmp" with contents
 [
 /nologo /o"Debug/XMS_ConfDemo.bsc" 
 .\Debug\StdAfx.sbr
@@ -43,7 +66,7 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP137.tmp" with con
 .\Debug\XMS_ConfDemo_String.sbr
 .\Debug\XMS_ConfDemo_Sub.sbr
 .\Debug\XMS_ConfDemoDlg.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP137.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP148.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 
