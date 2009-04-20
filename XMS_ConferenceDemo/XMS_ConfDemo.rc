@@ -113,8 +113,8 @@ BEGIN
     EDITTEXT        IDC_EDIT_VOCPATH,448,259,101,14,ES_AUTOHSCROLL
     CONTROL         "Debug Mode On",IDC_CHECK_DEBUG,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,409,290,67,10
-    CONTROL         "Record On",IDC_CHECK_DEBUG2,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,409,275,66,10
+    CONTROL         "Conf Record On",IDC_CHECK_CONFRECON,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,409,275,66,10
 END
 
 
