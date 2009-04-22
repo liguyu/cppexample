@@ -60,6 +60,10 @@ extern int						g_iTotalPcm;
 extern int						g_iTotalPcmOpened;
 extern TYPE_CHANNEL_MAP_TABLE	MapTable_Pcm[MAX_PCM_NUM_IN_THIS_DEMO];
 
+extern int						g_iTotalSS7Link;
+extern int						g_iTotalSS7LinkOpened;
+extern TYPE_CHANNEL_MAP_TABLE	MapTable_SS7Link[MAX_PCM_NUM_IN_THIS_DEMO];
+
 extern int						g_iTotalTrunk;
 extern int						g_iTotalTrunkOpened;
 extern TYPE_CHANNEL_MAP_TABLE	MapTable_Trunk[MAX_TRUNK_NUM_IN_THIS_DEMO];
@@ -79,6 +83,7 @@ void	InitTextBox(void);
 
 void	InitListMain(void);
 void	InitListPcm(void);
+void	InitListSS7Link(void);
 void	InitListMsg(void);
 
 void	My_DualLink ( DeviceID_t *pDev1, DeviceID_t *pDev2 );
@@ -106,7 +111,43 @@ void	InitListMsg(void)
 
 	pdlg->m_ListMsg.SetHorizontalExtent ( i + 1000 );
 }
-
+void	InitComboISUPMsgType(void)
+{
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_BLO");// 阻断
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CGB");// 电路群阻断
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CGU");// 电路群阻断消除
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CPG");// 呼叫进展
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CQM");// 电路群问讯
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_GRS");// 电路群复原
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_INF");// 信息
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_INR");// 信息请求
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_RES");// 恢复	
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_RSC");// 电路复原
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SAM");// 后续地址
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SGM");// 分段
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SUS");// 暂停
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_UBL");// 阻断消除
+	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_USR");// 用户至用户信息
+	pdlg->m_ComboISUPMsgType.SetCurSel(0);
+}
+void	InitComboTUPMsgType(void)
+{
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_SAM"); // 后续地址信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_SAO"); // 带有一个地址的后续地址信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_GSM"); // 一般前向建立信息信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_GRQ"); // 一般请求信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_BLO"); // 闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_UBL"); // 解除闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_RSC"); // 电路复原信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_MGB"); // 面向维护的群闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_MGU"); // 面向维护的群解除闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_HGB"); // 面向硬件故障的群闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_HGU"); // 面向硬件故障的群解除闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_GRS"); // 电路群复原信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_SGB"); // 软件产生的群闭塞信号
+	pdlg->m_ComboTUPMsgType.AddString("TUP_SM_SGU"); // 软件产生的群解除闭塞消信号
+	pdlg->m_ComboTUPMsgType.SetCurSel(4);           
+}
 void AddMsg ( char *str)
 {
 	static	int		iTotal_ListMsg = 0;
@@ -174,10 +215,6 @@ void	InitListTrunk(void)
 	lvc.cx = 60;
 	pdlg->m_ListTrunk.InsertColumn ( 7, &lvc ); 
 
-	lvc.iSubItem = 8;
-	lvc.pszText = "VocInfo" ;
-	lvc.cx = 70;
-	pdlg->m_ListTrunk.InsertColumn ( 8, &lvc ); 
 }
 
 int		CalDispRow ( int iSeqID )
@@ -310,6 +347,29 @@ void	InitListPCM(void)
 	lvc.cx = 85;
 	pdlg->m_ListPCM.InsertColumn ( 5, &lvc ); 
 }
+// -------------------------------------------------------------------------------------------------
+void	InitListSS7Link(void)
+{
+	LV_COLUMN	lvc;
+	DWORD dwExStyle;
+	
+	dwExStyle = LVS_EX_FULLROWSELECT | /*LVS_EX_GRIDLINES | LVS_EX_SUBITEMIMAGES |*/
+		LVS_EX_HEADERDRAGDROP;// | LVS_EX_TRACKSELECT;
+	pdlg->m_ListSS7Link.SendMessage(LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LPARAM(dwExStyle));	
+	
+	lvc.mask =  LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	
+	lvc.iSubItem = 0;
+	lvc.pszText = "SS7LinkID" ;
+	lvc.cx = 80;
+	pdlg->m_ListSS7Link.InsertColumn ( 0, &lvc ); 
+
+	lvc.iSubItem = 1;
+	lvc.pszText = "...." ;
+	lvc.cx = 80;
+	pdlg->m_ListSS7Link.InsertColumn ( 1, &lvc ); 
+	
+}
 
 void DrawPCM_TypeAndAlarm ( PCM_STRUCT *pOnePcm )
 {
@@ -345,7 +405,17 @@ void DrawPCM_TypeAndAlarm ( PCM_STRUCT *pOnePcm )
 		pdlg->m_ListPCM.SetItemText ( iDispRow, 5, "O" ); 
 	
 }
-
+void DrawSS7Link_Type ( SS7LINK_STRUCT *pOneSS7Link )
+{
+	char StateStr[100];
+	int	 iDispRow;
+	
+	iDispRow = pOneSS7Link->iSeqID; 
+	
+	sprintf ( StateStr, "%d", pOneSS7Link->u8E1Type) ;
+	pdlg->m_ListSS7Link.SetItemText ( iDispRow, 1, StateStr ); 
+	
+}
 // -------------------------------------------------------------------------------------------------
 void	ReDrawAll (void)
 {
@@ -385,7 +455,18 @@ void	ReDrawAll (void)
 
 		// Changed content
 		DrawPCM_TypeAndAlarm ( &M_OnePcm(MapTable_Pcm[i]) );
-	}	
+	}
+	
+	// m_ListSS7Link
+	pdlg->m_ListSS7Link.DeleteAllItems ();
+	for ( i = 0; i < g_iTotalSS7Link; i ++ )
+	{
+		sprintf ( TmpStr, "%3d", i );
+		pdlg->m_ListSS7Link.InsertItem ( i, TmpStr );
+		// Changed content
+		DrawSS7Link_Type ( &M_OneSS7Link(MapTable_SS7Link[i]) );
+		
+	}
 }
 
 // --------------------------------------------------------------------------------
@@ -422,9 +503,18 @@ bool	InitSystem()
 
 	// Init m_ListPcm
 	InitListPCM();
+	
+	// Init m_ListSS7Link
+	InitListSS7Link();
 
 	// Init m_ListMsg
 	InitListMsg();
+
+	// Init m_ComboISUPMsgType
+	InitComboISUPMsgType();
+
+	// Init m_ComboTUPMsgType
+	InitComboTUPMsgType();
 
 	// now open ACS Server
 	/* Call acsOpenStream() to connect with ACS Server */
@@ -515,7 +605,19 @@ void	OpenPcmDevice ( PCM_STRUCT *pOnePcm )
 		}
 	}
 }
-
+void	OpenSS7LinkDevice ( SS7LINK_STRUCT *pOneSS7Link )
+{
+	RetCode_t	r;
+	
+	if ( pOneSS7Link->bOpenFlag == false )		// not Open yet
+	{
+		r = XMS_ctsOpenDevice ( g_acsHandle, &pOneSS7Link->deviceID, NULL );
+		if ( r < 0 )
+		{
+			AddMsg ( "XMS_ctsOpenDevice Fail in OpenSS7LinkDevice()!" );
+		}
+	}
+}
 void	OpenBoardDevice (  DJ_S8 s8DspModID )
 {
 	RetCode_t	r;
@@ -541,6 +643,10 @@ void	OpenAllDevice_Dsp ( DJ_S8 s8DspModID )
 	for ( i = 0; i < AllDeviceRes[s8DspModID].lPcmNum; i++ )
 	{
 		OpenPcmDevice ( &AllDeviceRes[s8DspModID].pPcm[i] );
+	}
+	for ( i = 0; i < AllDeviceRes[s8DspModID].lSS7LinkNum; i++ )
+	{
+		OpenSS7LinkDevice ( &AllDeviceRes[s8DspModID].pSS7Link[i] );
 	}
 	for ( i = 0; i < AllDeviceRes[s8DspModID].lTrunkNum; i++ )
 	{
@@ -594,6 +700,21 @@ void	OpenDeviceOK ( DeviceID_t *pDevice )
 		// moidfy the count
 		g_iTotalPcmOpened ++;
 		AllDeviceRes[pDevice->m_s8ModuleID].lPcmOpened ++;
+	}
+
+	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_SS7_LINK)
+	{
+		M_OneSS7Link(*pDevice).deviceID.m_CallID = pDevice->m_CallID;		// this is very important
+		M_OneSS7Link(*pDevice).bOpenFlag = true;
+		
+		// init the Device: Pcm
+		XMS_ctsResetDevice ( g_acsHandle, pDevice, NULL );
+		XMS_ctsGetDevState ( g_acsHandle, pDevice, NULL );
+		DrawSS7Link_Type( &M_OneSS7Link(*pDevice) );
+		
+		// moidfy the count
+		g_iTotalSS7LinkOpened ++;
+		AllDeviceRes[pDevice->m_s8ModuleID].lSS7LinkOpened ++;
 	}
 }
 
@@ -715,27 +836,116 @@ void	HandleDevState ( Acs_Evt_t *pAcsEvt )
 	}
 
 }
-
-void SendDataToPCM(void){
+void SendSigMsgToTrunk(void){
 	char			tmpStr[256];
 	char			datatStr[256];
+	int				ret;
 	int				selTrunk;
-	PCM_STRUCT		pOnePCM;
 	TRUNK_STRUCT	pOneTrunk;
+	
 	selTrunk = pdlg->m_ListTrunk.GetSelectionMark();
 	if(selTrunk == -1){
-		AddMsg("Please select trunk first!!!");
+		AddMsg("Please select Trunk first!!!");
 		return;
 	}
+	
+	pOneTrunk = AllDeviceRes[cfg_iPartWorkModuleID].pTrunk[selTrunk];
+	if (pOneTrunk.deviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_TUP)
+	{
+		int nIndex = pdlg->m_ComboTUPMsgType.GetCurSel();
+		ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, TUP_SM_BLO);
 
-	pdlg->GetDlgItem ( IDC_EDIT_CMD )->GetWindowText (datatStr, 256);
+	}else if (pOneTrunk.deviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_ISUP)
+	{
+		switch (pdlg->m_ComboISUPMsgType.GetCurSel())
+		{
+		case 0:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_BLO);// 阻断
+			break;
+		case 1:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_CGB);// 阻断
+			break;
+		case 2:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_CGU);  //电路群阻断消除
+			break;
+		case 3:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_CPG);// 呼叫进展
+			break;
+		case 4:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_CQM);// 电路群问讯
+			break;
+		case 5:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_GRS);// 电路群复原
+			break;
+		case 6:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_INF);// 信息
+			break;
+		case 7:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_INR);// 信息请求
+			break;
+		case 8:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_RES);// 恢复	
+			break;
+		case 9:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_RSC);// 电路复原
+			break;
+		case 10:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_SAM);// 后续地址
+			break;
+		case 11:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_SGM);// 分段
+			break;
+		case 12:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_SUS);// 暂停
+			break;
+		case 13:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_UBL);// 阻断消除
+			break;
+		case 14:
+			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_USR);// 用户至用户信息
+			break;
+		
+		}
+		
+		
+
+	}else{
+		AddMsg("The Trunk device type is wrong.");
+	}
 	
-	sprintf ( tmpStr, "Send CMD to Trunk%d: %s", selTrunk ,datatStr);
-	pOnePCM = AllDeviceRes[2].pPcm[0];
-	pOneTrunk = AllDeviceRes[2].pTrunk[1];
-	int ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, TUP_SM_SGB);
 	
-	AddMsg(tmpStr);
+	//AddMsg(tmpStr);
+}
+void	SendRawDataToSS7Link(void){
+	char			tmpStr[256];
+	char			dataStr[256];
+	int				selTrunk;
+	TRUNK_STRUCT	pOneTrunk;
+	DJ_U16			u16FrameSize;
+	DJ_Void			*pData;
+
+	selTrunk = pdlg->m_ListTrunk.GetSelectionMark();
+	if(selTrunk == -1){
+		AddMsg("Please select SS7 Link first!!!");
+		return;
+	}
+	
+	pOneTrunk = AllDeviceRes[cfg_iPartWorkModuleID].pTrunk[selTrunk];
+
+	if (pOneTrunk.deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK)
+	{
+		pdlg->GetDlgItem ( IDC_EDIT_CMD )->GetWindowText (dataStr, 256);
+		sprintf ( tmpStr, "Success...Send RawData to SS7 Link %d: %s", selTrunk ,dataStr);
+
+		int ret = XMS_ctsSendRawFrame(g_acsHandle, &pOneTrunk.deviceID,256,(DJ_Void *)dataStr); 
+		if (ret >0)
+		{
+			AddMsg(tmpStr);
+		}
+	}else{
+		AddMsg("The Trunk Sub Device Type is wrong!!!");
+	}
+	
 }
 
 void	CheckRemoveReady ( DJ_S8 s8DspModID )
