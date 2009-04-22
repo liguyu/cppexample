@@ -36,6 +36,15 @@ typedef struct
 	DJ_S32		s32AlarmVal;
 } PCM_STRUCT;
 
+typedef struct
+{
+	DeviceID_t	deviceID;
+	int			iSeqID;
+	bool		bOpenFlag;		// flag of OpenDevice OK
+	DJ_U8		u8E1Type;
+	DJ_S32		s32AlarmVal;
+} SS7LINK_STRUCT;
+
 // ----- Declare Function -----
 bool	InitSystem(void);
 void	ExitSystem(void); 
@@ -49,7 +58,8 @@ void	ReDrawAll (void);
 void	OpenDeviceOK ( DeviceID_t *pDevice );
 void	CloseDeviceOK ( DeviceID_t *pDevice );
 void	Remove_OneDsp(void);
-void	SendDataToPCM(void);
+void	SendRawDataToSS7Link(void);
+void	SendSigMsgToTrunk(void);
 void	TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
 

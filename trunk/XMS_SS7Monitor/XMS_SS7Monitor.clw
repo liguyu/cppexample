@@ -30,7 +30,7 @@ ImplementationFile=XMS_SS7MonitorDlg.cpp
 Filter=D
 BaseClass=CDialog
 VirtualFilter=dWC
-LastObject=CXMS_SS7MonitorDlg
+LastObject=IDC_COMBO_ISUPMSGTYPE
 
 [CLS:CAboutDlg]
 Type=0
@@ -50,11 +50,17 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_XMS_SS7MONITOR_DIALOG]
 Type=1
 Class=CXMS_SS7MonitorDlg
-ControlCount=6
+ControlCount=12
 Control1=IDOK,button,1342242817
 Control2=IDC_LIST_PCM,SysListView32,1350631425
 Control3=IDC_LIST_TRUNK,SysListView32,1350631433
-Control4=IDC_LIST_MSG,listbox,1352728835
+Control4=IDC_LIST_MSG,listbox,1353777411
 Control5=IDC_BUTTON_SEND,button,1342242816
 Control6=IDC_EDIT_CMD,edit,1350631552
+Control7=IDC_LIST_SS7LINK,SysListView32,1350631425
+Control8=IDC_BUTTON_SENDSIGMSG,button,1342242816
+Control9=IDC_STATIC,static,1342308352
+Control10=IDC_COMBO_ISUPMSGTYPE,combobox,1344340226
+Control11=IDC_COMBO_TUPMSGTYPE,combobox,1344340226
+Control12=IDC_STATIC,static,1342308352
 
