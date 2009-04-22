@@ -12,6 +12,7 @@ static char THIS_FILE[] = __FILE__;
 #include "DJAcsAPIDef.h"
 #include "DJAcsDevState.h"
 #include "DJAcsTUPDef.h"
+#include "DJAcsISUPDef.h"
 
 #include "XMS_SS7Monitor_Sub.H"
 #include "XMS_SS7Monitor_Event.H"
@@ -577,12 +578,7 @@ void	OpenDeviceOK ( DeviceID_t *pDevice )
 
 		// modify the count
 		g_iTotalTrunkOpened ++;
-		AllDeviceRes[pDevice->m_s8ModuleID].lTrunkOpened ++;
-
-		if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK )
-		{
-			
-		}
+		AllDeviceRes[pDevice->m_s8ModuleID].lTrunkOpened ++;	
 	}	
 
 	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_DIGITAL_PORT )
@@ -719,11 +715,13 @@ void	HandleDevState ( Acs_Evt_t *pAcsEvt )
 	}
 
 }
-//
-void SendDataToTrunk(void){
-	char		tmpStr[256];
-	char		datatStr[256];
-	int			selTrunk;
+
+void SendDataToPCM(void){
+	char			tmpStr[256];
+	char			datatStr[256];
+	int				selTrunk;
+	PCM_STRUCT		pOnePCM;
+	TRUNK_STRUCT	pOneTrunk;
 	selTrunk = pdlg->m_ListTrunk.GetSelectionMark();
 	if(selTrunk == -1){
 		AddMsg("Please select trunk first!!!");
@@ -733,10 +731,13 @@ void SendDataToTrunk(void){
 	pdlg->GetDlgItem ( IDC_EDIT_CMD )->GetWindowText (datatStr, 256);
 	
 	sprintf ( tmpStr, "Send CMD to Trunk%d: %s", selTrunk ,datatStr);
+	pOnePCM = AllDeviceRes[2].pPcm[0];
+	pOneTrunk = AllDeviceRes[2].pTrunk[1];
+	int ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, TUP_SM_SGB);
+	
 	AddMsg(tmpStr);
 }
 
-// -------------------------------------------------------------------------------------------------
 void	CheckRemoveReady ( DJ_S8 s8DspModID )
 {
 	int			i;

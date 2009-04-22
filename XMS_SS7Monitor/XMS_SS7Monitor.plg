@@ -6,9 +6,11 @@
 --------------------Configuration: XMS_SS7Monitor - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP540.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11B.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_SS7Monitor.pdb" /debug /machine:I386 /out:"Debug/XMS_SS7Monitor.exe" /pdbtype:sept 
+.\Debug\Analog_Common_Code.obj
+.\Debug\CAS_Common_Cfg.obj
 .\Debug\StdAfx.obj
 .\Debug\XMS_SS7Monitor.obj
 .\Debug\XMS_SS7Monitor_Event.obj
@@ -17,10 +19,8 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP540.tmp" with con
 .\Debug\XMS_SS7MonitorDlg.obj
 .\Debug\XMS_SS7Monitor.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
-.\Debug\Analog_Common_Code.obj
-.\Debug\CAS_Common_Cfg.obj
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP540.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11B.tmp"
 <h3>Output Window</h3>
 Linking...
 

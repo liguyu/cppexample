@@ -49,7 +49,7 @@ void	ReDrawAll (void);
 void	OpenDeviceOK ( DeviceID_t *pDevice );
 void	CloseDeviceOK ( DeviceID_t *pDevice );
 void	Remove_OneDsp(void);
-void	SendDataToTrunk(void);
+void	SendDataToPCM(void);
 void	TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
 
