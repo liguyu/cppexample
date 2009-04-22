@@ -179,5 +179,5 @@ HCURSOR CXMS_SS7MonitorDlg::OnQueryDragIcon()
 
 void CXMS_SS7MonitorDlg::OnButtonSend() 
 {
-	SendDataToTrunk();
+	SendDataToPCM();
 }

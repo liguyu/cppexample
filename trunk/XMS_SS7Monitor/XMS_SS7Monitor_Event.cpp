@@ -27,10 +27,6 @@ int						g_iTotalTrunk = 0;
 int						g_iTotalTrunkOpened = 0;
 TYPE_CHANNEL_MAP_TABLE	MapTable_Trunk[MAX_TRUNK_NUM_IN_THIS_DEMO];
 
-int						g_iTotalVoice = 0;
-int						g_iTotalVoiceOpened = 0;
-int						g_iTotalVoiceFree = 0;
-TYPE_CHANNEL_MAP_TABLE	MapTable_Voice[MAX_TRUNK_NUM_IN_THIS_DEMO];
 // ----------------------------------------------------------------------------------------------------
 void	DispEventInfo ( Acs_Evt_t *pAcsEvt )
 {
@@ -92,10 +88,6 @@ void	InitAllDeviceRes (void)
 
 	g_iTotalTrunk = 0;
 	g_iTotalTrunkOpened = 0;
-
-	g_iTotalVoice = 0;
-	g_iTotalVoiceOpened = 0;
-	g_iTotalVoiceFree = 0;
 
 }
 
@@ -171,7 +163,6 @@ void	RefreshMapTable ( void )
 
 	g_iTotalModule = ModuleCount;
 	g_iTotalTrunk = TrkCount;
-	g_iTotalVoice = VocCount;
 	g_iTotalPcm = PcmCount;
 
 }
