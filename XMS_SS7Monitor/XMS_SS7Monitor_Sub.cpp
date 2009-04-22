@@ -922,7 +922,7 @@ void	SendRawDataToSS7Link(void){
 	int				selTrunk;
 	TRUNK_STRUCT	pOneTrunk;
 	DJ_U16			u16FrameSize;
-	DJ_Void			*pData;
+	Acs_SS7RawFrame_Data			*pData=NULL;
 
 	selTrunk = pdlg->m_ListTrunk.GetSelectionMark();
 	if(selTrunk == -1){
@@ -937,7 +937,17 @@ void	SendRawDataToSS7Link(void){
 		pdlg->GetDlgItem ( IDC_EDIT_CMD )->GetWindowText (dataStr, 256);
 		sprintf ( tmpStr, "Success...Send RawData to SS7 Link %d: %s", selTrunk ,dataStr);
 
-		int ret = XMS_ctsSendRawFrame(g_acsHandle, &pOneTrunk.deviceID,256,(DJ_Void *)dataStr); 
+// 		pData->m_u8UserType = XMS_SS7_USER_ISUP;
+// 		pData->m_u8LinkType = XMS_SS7_LINK_CHINA;
+// 		pData->m_u8InfoType = XMS_SS7_MSG_DATA;
+// 		pData->m_u8InfoLen = 255;
+// 		pData->m_u8Info[0] = 0;
+// 		pData->m_u8Info[1] = 6;
+// 		pData->m_u8Info[2] = 5;
+// 		pData->m_u8Info[3] = 4;
+// 		strcat(pData, dataStr);
+
+		int ret = XMS_ctsSendRawFrame(g_acsHandle, &pOneTrunk.deviceID,256,(void *)dataStr); 
 		if (ret >0)
 		{
 			AddMsg(tmpStr);
