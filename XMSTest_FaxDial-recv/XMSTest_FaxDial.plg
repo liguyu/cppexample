@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: XMSTest_FaxDial - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA0.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "X:" /I "X:\DJITPCom" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\work\00 new test dail & demo\XMSTest_FaxDial-recv\XMS_FaxDial_Sub.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA0.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA1.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMSTest_FaxDial.pdb" /debug /machine:I386 /out:"Debug/XMSTest_FaxDial.exe" /pdbtype:sept 
+".\Debug\StdAfx.obj"
+".\Debug\XMS_FaxDial_Event.obj"
+".\Debug\XMS_FaxDial_String.obj"
+".\Debug\XMS_FaxDial_Sub.obj"
+".\Debug\XMSTest_FaxDial.obj"
+".\Debug\XMSTest_FaxDialDlg.obj"
+".\Debug\XMSTest_FaxDial.res"
+"C:\DJKeygoe\Lib\DJAcsAPI.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA1.tmp"
+<h3>Output Window</h3>
+Compiling...
+XMS_FaxDial_Sub.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/XMSTest_FaxDial.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\XMS_FaxDial_Event.sbr" ".\Debug\XMS_FaxDial_String.sbr" ".\Debug\XMS_FaxDial_Sub.sbr" ".\Debug\XMSTest_FaxDial.sbr" ".\Debug\XMSTest_FaxDialDlg.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+XMSTest_FaxDial.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

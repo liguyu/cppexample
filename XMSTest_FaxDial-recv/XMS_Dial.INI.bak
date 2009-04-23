@@ -1,0 +1,16 @@
+[ConfigInfo]
+IpAddr=192.168.12.59
+VocPath=..\VOC\
+Port=9000
+CalledLen=5
+CallingNum=83636988
+CallOutRule=0
+SimCalledRNum=12345
+VoiceRule=0
+PartWorkModuleID=2
+RecvFaxPath=C:\DJKeygoe\Temp
+SendFaxPath=C:\DJKeygoe\Temp
+FaxHandle=0
+DebugOn=0
+RecordSwitch=1
+TestTime=2.000000
