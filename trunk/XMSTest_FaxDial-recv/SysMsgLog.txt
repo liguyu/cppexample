@@ -1,0 +1,38 @@
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:41  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:42  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:43  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:44  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:44  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:44  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/24/09 17:23:44  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/25/09 09:42:58  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/25/09 09:43:37  XMS_ctsSendFax ( C:\DJXMS\Temp\sendfax3.tif ) Fail! ret=-5
+02/25/09 09:43:37  BindOneFaxResToTrunk (2, 2) Fail!
+02/25/09 09:43:37  XMS_ctsMakeCallOut() FAIL! ret = -5
+02/25/09 10:07:23  RecvFax (2, 2) Fail!
+02/26/09 17:18:44  RecvFax (2, 2) Fail!
+02/26/09 18:45:11  RecvFax (2, 1) Fail!
+02/26/09 18:54:34  RecvFax (2, 1) Fail!
+02/26/09 18:54:50  RecvFax (2, 3) Fail!
+02/27/09 15:57:40  BindOneFaxResToTrunk (2, 1) Fail!
+02/27/09 15:59:19  BindOneFaxResToTrunk (2, 1) Fail!
+02/27/09 16:00:13  BindOneFaxResToTrunk (2, 1) Fail!
+02/27/09 16:01:48  BindOneFaxResToTrunk (2, 1) Fail!

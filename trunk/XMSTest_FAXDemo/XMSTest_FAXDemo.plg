@@ -1,0 +1,62 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: XMSTest_FAXDemo - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMSTest_FAXDemo.res" /d "_DEBUG" /d "_AFXDLL" "D:\work\00 new test dail & demo\XMSTest_FAXDemo\XMSTest_FAXDemo.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP15.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "X:" /I "X:\DJITPCom" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMSTest_FAXDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\work\00 new test dail & demo\XMSTest_FAXDemo\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP15.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "X:" /I "X:\DJITPCom" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\work\00 new test dail & demo\XMSTest_FAXDemo\XMS_FaxDemo_Event.cpp"
+"D:\work\00 new test dail & demo\XMSTest_FAXDemo\XMS_FaxDemo_String.cpp"
+"D:\work\00 new test dail & demo\XMSTest_FAXDemo\XMS_FaxDemo_Sub.cpp"
+"D:\work\00 new test dail & demo\XMSTest_FAXDemo\XMSTest_FAXDemo.cpp"
+"D:\work\00 new test dail & demo\XMSTest_FAXDemo\XMSTest_FAXDemoDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMSTest_FAXDemo.pdb" /debug /machine:I386 /out:"Debug/XMSTest_FAXDemo.exe" /pdbtype:sept /libpath:"C:\DJKeygoe\Lib" 
+".\Debug\StdAfx.obj"
+".\Debug\XMS_FaxDemo_Event.obj"
+".\Debug\XMS_FaxDemo_String.obj"
+".\Debug\XMS_FaxDemo_Sub.obj"
+".\Debug\XMSTest_FAXDemo.obj"
+".\Debug\XMSTest_FAXDemoDlg.obj"
+".\Debug\XMSTest_FAXDemo.res"
+"C:\DJKeygoe\Lib\DJAcsAPI.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+XMS_FaxDemo_Event.cpp
+XMS_FaxDemo_String.cpp
+XMS_FaxDemo_Sub.cpp
+d:\work\00 new test dail & demo\xmstest_faxdemo\xms_faxdemo_sub.cpp(1591) : warning C4101: 'lNowMaxFreeNum' : unreferenced local variable
+XMSTest_FAXDemo.cpp
+XMSTest_FAXDemoDlg.cpp
+Generating Code...
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/XMSTest_FAXDemo.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\XMS_FaxDemo_Event.sbr" ".\Debug\XMS_FaxDemo_String.sbr" ".\Debug\XMS_FaxDemo_Sub.sbr" ".\Debug\XMSTest_FAXDemo.sbr" ".\Debug\XMSTest_FAXDemoDlg.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+XMSTest_FAXDemo.exe - 0 error(s), 1 warning(s)
+</pre>
+</body>
+</html>
