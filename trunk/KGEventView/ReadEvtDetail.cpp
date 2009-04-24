@@ -9,6 +9,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+bool	isEnglish = TRUE;
+
 ReadEvtDetail::ReadEvtDetail(DJ_Void *pkt, int nNumRecv)
 {
       m_pkt=pkt;
@@ -40,22 +42,46 @@ int ReadEvtDetail::GetString_EvtData()
 	 memset(tempstr,0,__MAX_PACKET__DATA);
 	 HextoStr((DJ_U8*)m_pkt,tempstr,sizeof(DJ_S8));
 	 m_Submsg.n_MSgSrc[m_Submsg.nNUm].Format(tempstr);
-     m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT标志");
+     if (isEnglish)
+     {
+		 m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT FLAG");
+     }else{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT标志");
+	 }
+     
      m_Submsg.n_Msg[m_Submsg.nNUm].Format("PKG_EVT");
 
 	 m_Submsg.nNUm++;
 	 m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pAcsEvt->m_s32EventType),sizeof(EventType_t));
-	 m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件类型");
+	 if (isEnglish)
+	 {
+		 m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT TYPE");
+	 }else{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件类型");
+	 }
+	 
      m_Submsg.n_Msg[m_Submsg.nNUm].Format(rpkt.m_convert.msg);
 
 	 m_Submsg.nNUm++;
 	 m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pAcsEvt->m_DeviceID),sizeof(DeviceID_t));
-     m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("设备资源");
+     if (isEnglish)
+     {
+		 m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("Device Resource");
+     }else{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("设备资源");
+	 }
+	 
      m_Submsg.n_Msg[m_Submsg.nNUm].Format(rpkt.m_convert.dev);
 
 	 m_Submsg.nNUm++;
 	 m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pAcsEvt->m_s32EvtSize),sizeof(DJ_S32));
-     m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件包长度");
+     if (isEnglish)
+     {
+		 m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT Package Length");
+
+     }else{
+		 m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件包长度");
+	 }
      m_Submsg.n_Msg[m_Submsg.nNUm].Format("%d",pAcsEvt->m_s32EvtSize);
 
 	 switch(pAcsEvt->m_s32EventType)
@@ -257,17 +283,37 @@ int     ReadEvtDetail::GetString_GeneralData()
 
 	m_Submsg.nNUm++;
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pGenalData->m_s32AcsEvtErrCode),sizeof(Acs_Evt_ErrCode_t));
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件错误码");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT Err Code");
+	}else{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件错误码");
+	}
+	
     m_Submsg.n_Msg[m_Submsg.nNUm].Format("%d",pGenalData->m_s32AcsEvtErrCode);
 
 	m_Submsg.nNUm++;
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pGenalData->m_s32AcsEvtState),sizeof(Acs_Evt_State_t));
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件状态码(1: 事件成功  0: 事件失败)");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("EVT State Code(1: EVT Success 0: EVT Fail)");
+	}else{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("事件状态码(1: 事件成功  0: 事件失败)");
+	}
+
     m_Submsg.n_Msg[m_Submsg.nNUm].Format("%d",pGenalData->m_s32AcsEvtState);
 
 	m_Submsg.nNUm++;
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pGenalData->m_s32DeviceState),sizeof(DJ_S32));
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("设备状态");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("Dev State");
+	} 
+	else
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("设备状态");
+	}
+	
     m_Submsg.n_Msg[m_Submsg.nNUm].Format("%d",pGenalData->m_s32DeviceState);
 	
 	return  m_Submsg.nNUm;

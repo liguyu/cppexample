@@ -8,6 +8,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+extern bool isEnglish;
 
 ReadAPIDetail::ReadAPIDetail(DJ_Void *pkt, int nNumRecv)
 {
@@ -46,22 +47,52 @@ CString  ReadAPIDetail::GetString_APIData()
 	memset(tempstr,0,__MAX_PACKET__DATA);
 	HextoStr((DJ_U8*)m_pkt,tempstr,sizeof(DJ_U8));
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm].Format(tempstr);
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("API标志");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("API Flag");
+	} 
+	else
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("API标志");
+	}
 	m_Submsg.n_Msg[m_Submsg.nNUm].Format("PKG_API");
 	
 	m_Submsg.nNUm++;
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pAcsCmd->m_s32CmdType),sizeof(AcsCmdTye_t));     
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("命令类型");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("CMD TYPE");
+	} 
+	else
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("命令类型");
+	}
 	m_Submsg.n_Msg[m_Submsg.nNUm].Format(rpkt.m_convert.msg);
 	
 	m_Submsg.nNUm++;
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pAcsCmd->m_ITPDeviceID),sizeof(DeviceID_t));    
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("设备资源");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("Device Resource");
+	} 
+	else
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("设备资源");
+	}
+	
 	m_Submsg.n_Msg[m_Submsg.nNUm].Format("%s",GetString_DeviceAll(&pAcsCmd->m_ITPDeviceID));
 	
 	m_Submsg.nNUm++;
 	m_Submsg.n_MSgSrc[m_Submsg.nNUm]=HextotoStr((DJ_Void *)&(pAcsCmd->m_s32PackSize),sizeof(ParmSize_t));
-	m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("命令包长度");
+	if (isEnglish)
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("CMD Package Length");
+	} 
+	else
+	{
+		m_Submsg.n_MsgAnly[m_Submsg.nNUm].Format("命令包长度");
+	}
+	
     m_Submsg.n_Msg[m_Submsg.nNUm].Format("%d",pAcsCmd->m_s32PackSize);
 
 	m_Submsg.nNUm++;

@@ -12,6 +12,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+extern bool isEnglish;
 /////////////////////////////////////////////////////////////////////////////
 // CInfoDetail
 
@@ -81,17 +82,41 @@ void CInfoDetail::OnInitialUpdate()
 
 //	cInfolt->SetBkColor(RGB(190,190,190)); 
 	lvc.iSubItem = 0;
-	lvc.pszText = "消息";
+	if (isEnglish)
+	{
+		lvc.pszText = "MSG";
+	} 
+	else
+	{
+		lvc.pszText = "消息";
+	}
+	
 	lvc.cx = 250;
 	ls.InsertColumn(0,&lvc);
 
 	lvc.iSubItem = 1;
- 	lvc.pszText = "分析";
+	if (isEnglish)
+	{
+		lvc.pszText = "Analysis";
+	} 
+	else
+	{
+		lvc.pszText = "分析";
+	}
+ 	
  	lvc.cx = 280;
  	ls.InsertColumn(1,&lvc);
 
 	lvc.iSubItem = 2;
-	lvc.pszText = "值";
+	if (isEnglish)
+	{
+		lvc.pszText = "Value";
+	} 
+	else
+	{
+		lvc.pszText = "值";
+	}
+	
 	lvc.cx = 220;
  	ls.InsertColumn(2,&lvc);
 

@@ -644,12 +644,12 @@ void CXKTcpSocket::DetectErrorConnect(int* errCode,string& errMsg)
 
 	*errCode = WSAGetLastError();
 	
-	if ( *errCode == WSANOTINITIALISED )
+	if ( *errCode == WSANOTINITIALISED ){
 		errMsg.append("A successful WSAStartup must occur before using this function.");
 		TRACE0("A successful WSAStartup must occur before using this function.");
+	}
 	else if ( *errCode == WSAENETDOWN )
 		errMsg.append("The network subsystem has failed.");
-
 	else if ( *errCode == WSAEADDRINUSE )
 	{
 		errMsg.append("The socket's local address is already in use and the socket\n");
