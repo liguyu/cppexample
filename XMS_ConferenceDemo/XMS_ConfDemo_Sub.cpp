@@ -1954,9 +1954,6 @@ RetCode_t  My_LeaveFromConf ( DeviceID_t *pConfDevID, DeviceID_t *pVocDevID)
 				}
 			}
 			break;		
-		}else{
-			AddMsg("No the conference member");
-			return -1;
 		}		
 	}
 	return	r;
