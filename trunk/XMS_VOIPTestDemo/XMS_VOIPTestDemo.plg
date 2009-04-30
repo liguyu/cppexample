@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: XMS_VOIPTestDemo - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC8.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_VOIPTestDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"G:\DJXMS_Sample\XMS_VOIPTestDemo\XMS_VOIPDemo_Sub.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC8.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC9.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_VOIPTestDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_VOIPTestDemo.exe" /pdbtype:sept 
+.\Debug\StdAfx.obj
+.\Debug\XMS_VOIPDemo_Event.obj
+.\Debug\XMS_VOIPDemo_String.obj
+.\Debug\XMS_VOIPDemo_Sub.obj
+.\Debug\XMS_VOIPTestDemo.obj
+.\Debug\XMS_VOIPTestDemoDlg.obj
+.\Debug\XMS_VOIPTestDemo.res
+C:\DJKeygoe\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC9.tmp"
+<h3>Output Window</h3>
+Compiling...
+XMS_VOIPDemo_Sub.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/XMS_VOIPTestDemo.bsc"  .\Debug\StdAfx.sbr .\Debug\XMS_VOIPDemo_Event.sbr .\Debug\XMS_VOIPDemo_String.sbr .\Debug\XMS_VOIPDemo_Sub.sbr .\Debug\XMS_VOIPTestDemo.sbr .\Debug\XMS_VOIPTestDemoDlg.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+XMS_VOIPTestDemo.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
