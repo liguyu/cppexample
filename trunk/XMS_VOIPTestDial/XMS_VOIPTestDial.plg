@@ -1,0 +1,112 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: XMS_VOIPTestDial - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Release/XMS_VOIPTestDial.res" /d "NDEBUG" /d "_AFXDLL" "D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPTestDial.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C3.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/XMS_VOIPTestDial.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPDial_Event.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPDial_String.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPDial_Sub.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPTestDial.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPTestDialDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C3.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C4.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/XMS_VOIPTestDial.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\DJXMS_Sample\XMS_VOIPTestDial\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C4.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C5.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"Release/XMS_VOIPTestDial.pdb" /machine:I386 /out:"Release/XMS_VOIPTestDial.exe" 
+.\Release\StdAfx.obj
+.\Release\XMS_VOIPDial_Event.obj
+.\Release\XMS_VOIPDial_String.obj
+.\Release\XMS_VOIPDial_Sub.obj
+.\Release\XMS_VOIPTestDial.obj
+.\Release\XMS_VOIPTestDialDlg.obj
+.\Release\XMS_VOIPTestDial.res
+C:\DJKeygoe\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C5.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+XMS_VOIPDial_Event.cpp
+XMS_VOIPDial_String.cpp
+XMS_VOIPDial_Sub.cpp
+XMS_VOIPTestDial.cpp
+XMS_VOIPTestDialDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+XMS_VOIPTestDial.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: XMS_VOIPTestDial - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_VOIPTestDial.res" /d "_DEBUG" "D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPTestDial.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C7.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_VOIPTestDial.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPDial_Event.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPDial_String.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPDial_Sub.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPTestDial.cpp"
+"D:\DJXMS_Sample\XMS_VOIPTestDial\XMS_VOIPTestDialDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C7.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C8.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_VOIPTestDial.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\DJXMS_Sample\XMS_VOIPTestDial\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C8.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C9.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_VOIPTestDial.pdb" /debug /machine:I386 /out:"Debug/XMS_VOIPTestDial.exe" /pdbtype:sept 
+.\Debug\StdAfx.obj
+.\Debug\XMS_VOIPDial_Event.obj
+.\Debug\XMS_VOIPDial_String.obj
+.\Debug\XMS_VOIPDial_Sub.obj
+.\Debug\XMS_VOIPTestDial.obj
+.\Debug\XMS_VOIPTestDialDlg.obj
+.\Debug\XMS_VOIPTestDial.res
+C:\DJKeygoe\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1C9.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+XMS_VOIPDial_Event.cpp
+XMS_VOIPDial_String.cpp
+XMS_VOIPDial_Sub.cpp
+XMS_VOIPTestDial.cpp
+XMS_VOIPTestDialDlg.cpp
+Generating Code...
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/XMS_VOIPTestDial.bsc"  .\Debug\StdAfx.sbr .\Debug\XMS_VOIPDial_Event.sbr .\Debug\XMS_VOIPDial_String.sbr .\Debug\XMS_VOIPDial_Sub.sbr .\Debug\XMS_VOIPTestDial.sbr .\Debug\XMS_VOIPTestDialDlg.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+XMS_VOIPTestDial.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
