@@ -572,7 +572,7 @@ try
 					if(PSTNToVOIPCallout(pCallerNum, pCalledNum, &pOneVOIP->deviceID, pOneTrunk) < 0)
 					{	
 						XMS_ctsClearCall(g_acsHandle, &pOneTrunk->deviceID, 0, NULL);
-						TRACE("3 ClearCall SS7\n");;
+						TRACE("3 ClearCall SS7\n");
 						Change_DTrunkState(pOneTrunk, TRK_HANGUP);
 
 						if (g_logfp != NULL)

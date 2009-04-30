@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_TestDial.res" /d "_DEBUG" "D:\cppexample\XMS_TestDial\XMS_TestDial.rc"" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1FF.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP274.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/XMS_TestDial.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\cppexample\XMS_TestDial\CAS_Common_Cfg.CPP"
@@ -17,8 +17,8 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1FF.tmp" with con
 "D:\cppexample\XMS_TestDial\XMS_TestDial.cpp"
 "D:\cppexample\XMS_TestDial\XMS_TestDialDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1FF.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP200.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP274.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP275.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_TestDial.pdb" /debug /machine:I386 /out:"Debug/XMS_TestDial.exe" /pdbtype:sept 
 .\Debug\CAS_Common_Cfg.obj
@@ -30,7 +30,7 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP200.tmp" with con
 .\Debug\XMS_TestDial.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP200.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP275.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
