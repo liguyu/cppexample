@@ -1,0 +1,278 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\XMS_VOIPTestDial.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\XMS_VOIPTestDial.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 XMS_VOIPTestDial"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "XMS_VOIPTestDial 1.0 版",IDC_STATIC,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2007",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_XMS_VOIPTESTDIAL_DIALOG DIALOGEX 0, 0, 536, 501
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "XMS_VOIPTestDial"
+FONT 8, "新宋体"
+BEGIN
+    CONTROL         "List1",IDC_LIST_Count,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,7,7,326,80
+    CONTROL         "List1",IDC_LIST_Main,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,7,88,326,406
+    LISTBOX         IDC_LIST_Msg,335,7,194,164,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    GROUPBOX        "Config",IDC_STATIC,333,176,196,187
+    CONTROL         "H323",IDC_RADIO_H323,"Button",BS_AUTORADIOBUTTON,337,
+                    204,45,11
+    CONTROL         "SIP",IDC_RADIO_SIP,"Button",BS_AUTORADIOBUTTON,394,204,
+                    45,11
+    RTEXT           "Callee Address:",IDC_STATIC,337,218,61,13,
+                    SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLEE_ADDR,401,218,73,13,ES_AUTOHSCROLL
+    RTEXT           ":",IDC_STATIC,477,218,8,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLEE_PORT,488,218,35,13,ES_AUTOHSCROLL
+    RTEXT           "Server Address:",IDC_STATIC,337,188,61,13,
+                    SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IPADDR,401,188,73,13,ES_AUTOHSCROLL
+    RTEXT           ":",IDC_STATIC,477,188,8,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IPPORT,488,188,35,13,ES_AUTOHSCROLL
+    RTEXT           "Callee UserID:",IDC_STATIC,337,250,61,13,SS_CENTERIMAGE
+    RTEXT           "Callee TelNo:",IDC_STATIC,337,282,61,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLEE_USERID,402,250,94,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_CALLEE_TELNO,402,282,94,13,ES_AUTOHSCROLL
+    RTEXT           "Voice Path:",IDC_STATIC,337,314,45,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_VOCPATH,389,313,134,13,ES_AUTOHSCROLL
+    LTEXT           "Dsp Module(1,2,3):",IDC_STATIC,337,330,136,13,
+                    SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_ModuleID,337,346,186,13,ES_AUTOHSCROLL
+    LTEXT           "Test Mod:",IDC_STATIC,337,366,45,13,SS_CENTERIMAGE
+    CONTROL         "DTMF检测",IDC_RADIO_Voice,"Button",BS_AUTORADIOBUTTON,
+                    337,380,45,11
+    CONTROL         "纯信令接续",IDC_RADIO_NoVoice,"Button",
+                    BS_AUTORADIOBUTTON,394,379,45,11
+    GROUPBOX        "Result",IDC_STATIC,333,393,196,80
+    RTEXT           "呼  叫   次   数:",IDC_STATIC,340,403,70,13,
+                    SS_CENTERIMAGE
+    RTEXT           "呼损:",IDC_STATIC,340,416,24,13,SS_CENTERIMAGE
+    RTEXT           "失 败 率(呼损/误码):",IDC_STATIC,340,429,70,13,
+                    SS_CENTERIMAGE
+    RTEXT           "平均呼叫建立时间:",IDC_STATIC,340,442,70,13,
+                    SS_CENTERIMAGE
+    RTEXT           "误码:",IDC_STATIC,434,416,24,13,SS_CENTERIMAGE
+    RTEXT           "测  试  时  间:",IDC_STATIC,340,455,70,13,
+                    SS_CENTERIMAGE
+    LTEXT           "0",IDC_STATIC_Count,410,402,113,13,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "0",IDC_STATIC_Fail,372,416,55,13,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "0",IDC_STATIC_DtmfErr,468,416,55,13,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "0",IDC_STATIC_SucRate,409,429,113,13,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "0",IDC_STATIC_AvsSetUp,409,442,113,13,SS_CENTERIMAGE,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "00:00:00",IDC_STATIC_TestTimer,409,455,113,13,
+                    SS_CENTERIMAGE,WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "Start",IDC_BUTTON_Start,339,475,52,15,0,
+                    WS_EX_CLIENTEDGE
+    RTEXT           "Caller TelNo:",IDC_STATIC,337,298,61,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLER_TELNO,402,297,94,13,ES_AUTOHSCROLL
+    RTEXT           "Caller UserID:",IDC_STATIC,337,266,61,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLER_USERID,402,266,94,13,ES_AUTOHSCROLL
+    RTEXT           "Caller Address:",IDC_STATIC,337,234,61,13,
+                    SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLER_ADDR,401,234,73,13,ES_AUTOHSCROLL
+    RTEXT           ":",IDC_STATIC,477,234,8,13,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_CALLER_PORT,488,234,35,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FROM,423,475,30,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_To,485,475,30,14,ES_AUTOHSCROLL
+    CTEXT           "from",IDC_STATIC,395,475,24,13,SS_CENTERIMAGE
+    CTEXT           "from",IDC_STATIC,457,475,24,13,SS_CENTERIMAGE
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "XMS_VOIPTestDial Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "XMS_VOIPTestDial\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2007\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "XMS_VOIPTestDial.EXE\0"
+            VALUE "ProductName", "XMS_VOIPTestDial 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_XMS_VOIPTESTDIAL_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 529
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 494
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 XMS_VOIPTestDial(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\XMS_VOIPTestDial.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
