@@ -1,0 +1,10 @@
+[ConfigInfo]
+IpAddr=192.168.10.131
+UserName=
+PassWord=
+Port=9000
+Protocol=1
+VocPath=C:\PlayVoc
+PartWorkModuleID=2
+VoiceCheck=0
+
