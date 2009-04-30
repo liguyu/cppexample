@@ -1915,7 +1915,7 @@ DJ_S32   SendFax(TRUNK_STRUCT *pOneTrunk)
     
     if ((pOneTrunk->VocDevID.m_s8ModuleID >0)&&(pOneTrunk->FaxDevID.m_s8ModuleID > 0))
     {		
-	sprintf(FileName, "%s\\sendfax%d.tif", cfg_SendFaxPath, (pOneTrunk->iSeqID)%4+1);
+//	sprintf(FileName, "%s\\sendfax%d.tif", cfg_SendFaxPath, (pOneTrunk->iSeqID)%4+1);
 	sprintf(FileName, "%s\\sendfax1.tif", cfg_SendFaxPath);
 	DrawFax_FilePath(&M_OneFax(pOneTrunk->FaxDevID), FileName);
 	
@@ -2291,8 +2291,8 @@ DWORD WINAPI ThreadFunc(VOID)
 	
 	LeaveCriticalSection(&CriticalSection);	
 	
-	if ((iCallCount == 0) 
-	    && ((GetTickCount()-g_iTestStartTime)<=(cfg_iTestTime*60*60*1000))
+	if (/*(iCallCount == 0) 
+	    &&*/ ((GetTickCount()-g_iTestStartTime)<=(cfg_iTestTime*60*60*1000))
 	    && (g_iTotalCall<=MAXLONGLONG))
 	{
 	    iCount++;

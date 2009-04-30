@@ -6,13 +6,41 @@
 --------------------Configuration: KGEventView - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP153.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/KGEventView.res" /d "_DEBUG" "D:\cppexample\KGEventView\KGEventView.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF6.tmp" with contents
 [
 /nologo /MTd /W3 /Gm /GX /ZI /Od /I "inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "__NO_DLL_IMPL__" /FR"Debug/" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\KGEventView\CheckComboBox.cpp"
+"D:\cppexample\KGEventView\commontool.cpp"
+"D:\cppexample\KGEventView\DialogRun.cpp"
+"D:\cppexample\KGEventView\EditTxt.cpp"
 "D:\cppexample\KGEventView\InfoDetail.cpp"
+"D:\cppexample\KGEventView\InfoRaw.cpp"
+"D:\cppexample\KGEventView\KGEventView.cpp"
+"D:\cppexample\KGEventView\KGEventViewDoc.cpp"
+"D:\cppexample\KGEventView\KGEventViewView.cpp"
+"D:\cppexample\KGEventView\MainFrm.cpp"
+"D:\cppexample\KGEventView\MyDlgBar.cpp"
+"D:\cppexample\KGEventView\ReadAPIDetail.cpp"
+"D:\cppexample\KGEventView\ReadEvtDetail.cpp"
+"D:\cppexample\KGEventView\ReadPacket.cpp"
+"D:\cppexample\KGEventView\SAStatusLog.cpp"
+"D:\cppexample\KGEventView\src\xkexception.cpp"
+"D:\cppexample\KGEventView\src\xkhostinfo.cpp"
+"D:\cppexample\KGEventView\src\xkmsgqueue.cpp"
+"D:\cppexample\KGEventView\src\xknetunit.cpp"
+"D:\cppexample\KGEventView\src\xksocket.cpp"
+"D:\cppexample\KGEventView\src\xkthread.cpp"
+"D:\cppexample\KGEventView\src\xkthreadqueue.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP153.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP154.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF6.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF7.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /I "inc" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "__NO_DLL_IMPL__" /FR"Debug/" /Fp"Debug/KGEventView.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\KGEventView\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF7.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF8.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/KGEventView.pdb" /debug /machine:I386 /out:"Debug/KGEventView.exe" /pdbtype:sept /libpath:"lib" 
 .\Debug\CheckComboBox.obj
@@ -40,12 +68,39 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP154.tmp" with con
 .\Debug\xkthreadqueue.obj
 .\Debug\KGEventView.res
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP154.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF8.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+CheckComboBox.cpp
+commontool.cpp
+DialogRun.cpp
+EditTxt.cpp
 InfoDetail.cpp
+InfoRaw.cpp
+KGEventView.cpp
+KGEventViewDoc.cpp
+KGEventViewView.cpp
+MainFrm.cpp
+MyDlgBar.cpp
+ReadAPIDetail.cpp
+ReadEvtDetail.cpp
+ReadPacket.cpp
+SAStatusLog.cpp
+xkexception.cpp
+xkhostinfo.cpp
+xkmsgqueue.cpp
+xknetunit.cpp
+xksocket.cpp
+Generating Code...
+Compiling...
+xkthread.cpp
+xkthreadqueue.cpp
+Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP155.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPFA.tmp" with contents
 [
 /nologo /o"Debug/KGEventView.bsc" 
 .\Debug\StdAfx.sbr
@@ -71,7 +126,7 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP155.tmp" with con
 .\Debug\xksocket.sbr
 .\Debug\xkthread.sbr
 .\Debug\xkthreadqueue.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP155.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPFA.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 

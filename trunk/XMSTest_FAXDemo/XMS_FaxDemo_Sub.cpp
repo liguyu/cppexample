@@ -2566,7 +2566,7 @@ void VoipWork ( VOIP_STRUCT *pOneVoip, Acs_Evt_t *pAcsEvt )
 	{
 	    pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
 	    
-	    ASSERT(pCallControl->m_PrivData.m_u32DataSize == sizeof(VoIPCallPrivate_t));
+//	    ASSERT(pCallControl->m_PrivData.m_u32DataSize == sizeof(VoIPCallPrivate_t));
 	    voipCallPrivate = (VoIPCallPrivate_t *)&(pCallControl->m_PrivData);
 	    
 	    XMS_ctsAlertCall ( g_acsHandle, &pOneVoip->deviceID, NULL );
