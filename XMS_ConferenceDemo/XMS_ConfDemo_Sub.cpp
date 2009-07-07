@@ -43,6 +43,12 @@ int				cfg_iPartWorkModuleID;
 int				cfg_s32DebugOn;
 int				cfg_ConfRecordOn;
 
+int				cfg_VocInputControlm_u8AgcEnable;
+int				cfg_VocInputControlm_u16FixGain;
+int				cfg_VocInputControlm_u8EcEnable;
+int				cfg_VocInputControlm_u8EcRefType;
+int				cfg_VocInputControlm_u8TadEnable;
+
 // var about work
 ACSHandle_t		g_acsHandle = -1;
 DJ_U8			g_u8UnitID = 4;
@@ -114,6 +120,11 @@ void	ReadFromConfig(void)
 	cfg_s32DebugOn = GetPrivateProfileInt ( "ConfigInfo", "DebugOn", 0, cfg_IniName);
 	cfg_ConfRecordOn = GetPrivateProfileInt ( "ConfigInfo", "ConfRecordOn", 1, cfg_IniName);
 
+	cfg_VocInputControlm_u8AgcEnable = GetPrivateProfileInt ( "ConfigInfo", "VocInputControlm_u8AgcEnable", 1, cfg_IniName);
+	cfg_VocInputControlm_u16FixGain = GetPrivateProfileInt ( "ConfigInfo", "VocInputControlm_u16FixGain", 1024, cfg_IniName);
+	cfg_VocInputControlm_u8EcEnable = GetPrivateProfileInt ( "ConfigInfo", "VocInputControlm_u8EcEnable", 1, cfg_IniName);
+	cfg_VocInputControlm_u8EcRefType = GetPrivateProfileInt ( "ConfigInfo", "VocInputControlm_u8EcRefType", 1, cfg_IniName);
+	cfg_VocInputControlm_u8TadEnable = GetPrivateProfileInt ( "ConfigInfo", "VocInputControlm_u8TadEnable", 1, cfg_IniName);
 }
 
 void	WriteToConfig(void)
@@ -1768,11 +1779,11 @@ void SetVocParam_AnalogTrunk(DeviceID_t* pDevId)
 	cmdVoc.m_VocGtdControl.m_u8FSKEnable = 1;			// Detect FSK for receive CallerID
 
  	cmdVoc.m_u8InputCtrlValid = 1;
- 	cmdVoc.m_VocInputControl.m_u8AgcEnable = 1;
- 	cmdVoc.m_VocInputControl.m_u16FixGain = 1024;
- 	cmdVoc.m_VocInputControl.m_u8EcEnable = 1;
-	cmdVoc.m_VocInputControl.m_u8EcRefType = 1;
- 	cmdVoc.m_VocInputControl.m_u8TadEnable = 1;	
+	cmdVoc.m_VocInputControl.m_u8AgcEnable = cfg_VocInputControlm_u8AgcEnable;
+	cmdVoc.m_VocInputControl.m_u16FixGain = cfg_VocInputControlm_u16FixGain;
+	cmdVoc.m_VocInputControl.m_u8EcEnable = cfg_VocInputControlm_u8EcEnable;
+	cmdVoc.m_VocInputControl.m_u8EcRefType = cfg_VocInputControlm_u8EcRefType;
+	cmdVoc.m_VocInputControl.m_u8TadEnable = cfg_VocInputControlm_u8TadEnable;	
 
 	strcpy((char*)&cmdVoc.m_VocGtdControl.m_u8GTDID[0],"GHIJK");	// Detect Busy Tone
 

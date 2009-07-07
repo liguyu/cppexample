@@ -22,7 +22,6 @@ public:
 	enum { IDD = IDD_XMS_SS7MONITOR_DIALOG };
 	CComboBox	m_ComboTUPMsgType;
 	CComboBox	m_ComboISUPMsgType;
-	CListCtrl	m_ListSS7Link;
 	CListCtrl	m_ListTrunk;
 	CListCtrl	m_ListPCM;
 	CListBox	m_ListMsg;

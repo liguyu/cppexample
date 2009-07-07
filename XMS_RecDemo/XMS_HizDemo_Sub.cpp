@@ -45,6 +45,8 @@ int				cfg_iPartWorkModuleID[256] = {0};
 char            cfg_chPartWorkModuleID[256] = {0};
 int				cfg_s32DebugOn;
 
+int				cfg_oneRecFileEachTrunk;
+
 // var about work
 ACSHandle_t		g_acsHandle = -1;
 DJ_U8			g_u8UnitID = 15;
@@ -521,6 +523,7 @@ void	ReadFromConfig(void)
 	cfg_iVoiceRule = GetPrivateProfileInt ( "ConfigInfo", "VoiceRule", 0, cfg_IniName);
 	cfg_iPartWork = GetPrivateProfileInt ( "ConfigInfo", "PartWork", 0, cfg_IniName);
 	cfg_s32DebugOn = GetPrivateProfileInt ( "ConfigInfo", "DebugOn", 0, cfg_IniName);
+	cfg_oneRecFileEachTrunk = GetPrivateProfileInt ( "ConfigInfo", "OneRecFileEachTrunk", 0, cfg_IniName);
 
 	GetPrivateProfileString("ConfigInfo", "PartWorkModuleID","",cfg_chPartWorkModuleID, sizeof(cfg_chPartWorkModuleID), cfg_IniName); 
 	strncpy(strTmp, cfg_chPartWorkModuleID, sizeof(strTmp));
@@ -2170,6 +2173,7 @@ void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk )
 	My_InitDtmfBuf ( pOneTrunk );
 	DrawMain_DTMF ( pOneTrunk );
 
+	pOneTrunk->u8RecordCounter = 0;
 	pOneTrunk->u8IsRecordFlag = FALSE;
 
 	memset ( &pOneTrunk->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc Voc Device
@@ -2275,6 +2279,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	DeviceID_t				FreeVoc2DeviceID;
 	char					FileName[256] = {0};
 	char                    str[20] = {0};
+	char					MsgStr[100] = {0};
 	DeviceID_t *            pDev = &pAcsEvt->m_DeviceID;
 	PSMON_EVENT             SMevt= NULL;
     static  DJ_U32          m_u32Counter = 0;
@@ -2286,7 +2291,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		
 	
 	if ( XMS_EVT_SIGMON != pAcsEvt->m_s32EventType){
-		AddMsg("Event type Error");
+		AddMsg("Event type != XMS_EVT_SIGMON ");
 		return;
 	}
 
@@ -2315,6 +2320,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 			sprintf(str,"DSP:%d,Chn:%d,E1:%d", pAcsEvt->m_DeviceID.m_s8ModuleID, pAcsEvt->m_DeviceID.m_s16ChannelID,pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1);
 			AddMsg(str);
 			AddMsg("The trunk not exist in the ini file.");
+			return;
 		}
 	}
 
@@ -2350,17 +2356,21 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 
 				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
 			}else{
-				AddMsg("trunk state is wrong!");
+				TRACE("trunk state is wrong!");
 				return;
 			}	
 		}else
 		{
-			AddMsg("please start record");
+			TRACE("please start record");
 			return;
 		}			
 		
 		break;
 	case SMON_EVT_Call_Connect:
+			g_connectNumber++;			
+			sprintf(MsgStr, "%d", g_connectNumber);
+			pdlg->GetDlgItem(IDC_STATIC_CONNUM)->SetWindowText(MsgStr);
+
 			if ( g_u8IsStartFlag)
 			{			
 				if (pOneRecordTrunk1->State == TRK_CONNECT && pOneRecordTrunk2->State == TRK_CONNECT)
@@ -2406,25 +2416,29 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 						if ( XMS_DEVSUB_HIZ_SS7 == pAcsEvt->m_DeviceID.m_s16DeviceSub 
 							|| XMS_DEVSUB_HIZ_SS7_64K_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 						{
-							sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
-
+							if (cfg_oneRecFileEachTrunk)
+							{
+								sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+							}else{
+								sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+							}
 						}else if ( XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub 
 							|| XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 						{
-							sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
-						}
+							if (cfg_oneRecFileEachTrunk)
+							{
+								sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+							}else{
+								sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+							}								
+						}					
 						
-						g_connectNumber++;
-						char MsgStr[100] = {0};
-						sprintf(MsgStr, "%d", g_connectNumber);
-						pdlg->GetDlgItem(IDC_STATIC_CONNUM)->SetWindowText(MsgStr);
-
 						//start record in the mix way
 						RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
 						pOneRecordTrunk1->u8IsRecordFlag = TRUE;
 						pOneRecordTrunk2->u8IsRecordFlag = TRUE;
-						pOneRecordTrunk1->u8RecordCounter = (++pOneRecordTrunk1->u8RecordCounter)%0x10;
-						pOneRecordTrunk2->u8RecordCounter = (++pOneRecordTrunk2->u8RecordCounter)%0x10;
+						++pOneRecordTrunk1->u8RecordCounter;
+						++pOneRecordTrunk2->u8RecordCounter;
 					}
 					
 					Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
@@ -2433,19 +2447,23 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 					TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
 				
 				}else{
-					AddMsg("trunk state is wrong.");
+					TRACE("trunk state is wrong.");					
 					return;
 				}				
 
 			}else
 			{
-				AddMsg("please start record");
+				TRACE("please start record");
 				return;
 			}			
 						
 		break;
 
 	case SMON_EVT_Call_Disconnect:	
+			g_disconnectNumber++;
+			sprintf(MsgStr, "%d", g_connectNumber);
+			pdlg->GetDlgItem(IDC_STATIC_DISCONNUM)->SetWindowText(MsgStr);
+
 			if (!g_u8IsStartFlag)
 			{
 				AddMsg("SMON_EVT_Call_Disconnect===please start record.");
@@ -2463,11 +2481,6 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 					monitorFirstDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
 				AddMsg(str);
 				
-				g_disconnectNumber++;
-				char MsgStr[100] = {0};
-				sprintf(MsgStr, "%d", g_connectNumber);
-				pdlg->GetDlgItem(IDC_STATIC_DISCONNUM)->SetWindowText(MsgStr);
-
 				StopRecordFile(&pOneRecordTrunk1->VocDevID);
 				StopRecordFile(&pOneRecordTrunk2->VocDevID);
 				ResetTrunk ( pOneRecordTrunk1, pAcsEvt );

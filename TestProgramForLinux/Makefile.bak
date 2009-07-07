@@ -1,0 +1,17 @@
+TARGET=DJMonitor
+OBJS=KeygoeMonitor.o KeygoeEvent.o mycur.o strconvert.o
+INC=/usr/keygoe/inc
+LIBPATH=/usr/keygoe/dll
+
+%.o:%.cpp
+	g++ -c -g -I$(INC) -I. $< -o $@ 
+
+$(TARGET):$(OBJS)
+	$(CC) $(OBJS) -L$(LIBPATH) -lncurses -lDJITPCom -lDJAcsAPI -o $(TARGET)
+
+.PHONY:clean
+
+clean:
+	rm *.o $(TARGET)
+	
+	

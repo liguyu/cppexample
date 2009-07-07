@@ -76,7 +76,6 @@ void CXMS_SS7MonitorDlg::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CXMS_SS7MonitorDlg)
 	DDX_Control(pDX, IDC_COMBO_TUPMSGTYPE, m_ComboTUPMsgType);
 	DDX_Control(pDX, IDC_COMBO_ISUPMSGTYPE, m_ComboISUPMsgType);
-	DDX_Control(pDX, IDC_LIST_SS7LINK, m_ListSS7Link);
 	DDX_Control(pDX, IDC_LIST_TRUNK, m_ListTrunk);
 	DDX_Control(pDX, IDC_LIST_PCM, m_ListPCM);
 	DDX_Control(pDX, IDC_LIST_MSG, m_ListMsg);
@@ -183,6 +182,7 @@ HCURSOR CXMS_SS7MonitorDlg::OnQueryDragIcon()
 
 void CXMS_SS7MonitorDlg::OnButtonSend() 
 {
+	
 	SendRawDataToSS7Link();
 }
 
@@ -190,3 +190,4 @@ void CXMS_SS7MonitorDlg::OnButtonSendsigmsg()
 {
 	SendSigMsgToTrunk();
 }
+

@@ -56,7 +56,7 @@ char * GetString_EventType ( EventType_t EvtType )
 	case XMS_EVT_SENDIODATA:		return "SENDIODATA";
 	case XMS_EVT_RECVIODATA:		return "RECVIODATA";
 
-	case XMS_EVT_CHGMONITORFILTER:	return "CHGMONITORFILTER";
+//	case XMS_EVT_CHGMONITORFILTER:	return "CHGMONITORFILTER";
 
 	case XMS_EVT_UNIFAILURE:		return "UNIFAILURE";
 	}

@@ -6,13 +6,24 @@
 --------------------Configuration: XMS_VOIPTestDemo - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC8.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_VOIPTestDemo.res" /d "_DEBUG" "D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPTestDemo.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1D9.tmp" with contents
 [
 /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_VOIPTestDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"G:\DJXMS_Sample\XMS_VOIPTestDemo\XMS_VOIPDemo_Sub.cpp"
+"D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPDemo_Event.cpp"
+"D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPDemo_String.cpp"
+"D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPDemo_Sub.cpp"
+"D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPTestDemo.cpp"
+"D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPTestDemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC8.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC9.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1D9.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DA.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_VOIPTestDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\XMS_VOIPTestDemo\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DA.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DB.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_VOIPTestDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_VOIPTestDemo.exe" /pdbtype:sept 
 .\Debug\StdAfx.obj
@@ -24,11 +35,21 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC9.tmp" with con
 .\Debug\XMS_VOIPTestDemo.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPAC9.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DB.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+XMS_VOIPDemo_Event.cpp
+XMS_VOIPDemo_String.cpp
+D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPDemo_String.cpp(54) : error C2065: 'XMS_EVT_CHGMONITORFILTER' : undeclared identifier
+D:\cppexample\XMS_VOIPTestDemo\XMS_VOIPDemo_String.cpp(54) : error C2051: case expression not constant
 XMS_VOIPDemo_Sub.cpp
-Linking...
+XMS_VOIPTestDemo.cpp
+XMS_VOIPTestDemoDlg.cpp
+Generating Code...
+Error executing cl.exe.
 Creating command line "bscmake.exe /nologo /o"Debug/XMS_VOIPTestDemo.bsc"  .\Debug\StdAfx.sbr .\Debug\XMS_VOIPDemo_Event.sbr .\Debug\XMS_VOIPDemo_String.sbr .\Debug\XMS_VOIPDemo_Sub.sbr .\Debug\XMS_VOIPTestDemo.sbr .\Debug\XMS_VOIPTestDemoDlg.sbr"
 Creating browse info file...
 <h3>Output Window</h3>
@@ -36,7 +57,7 @@ Creating browse info file...
 
 
 <h3>Results</h3>
-XMS_VOIPTestDemo.exe - 0 error(s), 0 warning(s)
+XMS_VOIPTestDemo.exe - 2 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

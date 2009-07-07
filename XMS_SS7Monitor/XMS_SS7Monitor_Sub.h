@@ -36,15 +36,6 @@ typedef struct
 	DJ_S32		s32AlarmVal;
 } PCM_STRUCT;
 
-typedef struct
-{
-	DeviceID_t	deviceID;
-	int			iSeqID;
-	bool		bOpenFlag;		// flag of OpenDevice OK
-	DJ_U8		u8E1Type;
-	DJ_S32		s32AlarmVal;
-} SS7LINK_STRUCT;
-
 // ----- Declare Function -----
 bool	InitSystem(void);
 void	ExitSystem(void); 
@@ -59,8 +50,17 @@ void	OpenDeviceOK ( DeviceID_t *pDevice );
 void	CloseDeviceOK ( DeviceID_t *pDevice );
 void	Remove_OneDsp(void);
 void	SendRawDataToSS7Link(void);
+int     convertStrMsgISUP_SM_BLO(char *tmpStr, char *DPC,char *OPC,char *CIC);
+int		convertStrMsgISUP_SM_CGB(char *tmpStr, char *DPC,char *OPC,char *CIC);
+int		convertStrMsgISUP_SM_CGU(char *tmpStr, char *DPC,char *OPC,char *CIC);
+int     convertStrMsgISUP_SM_GRS(char *tmpStr, char *DPC,char *OPC,char *CIC);
+int		convertStrMsgISUP_SM_RSC(char *tmpStr, char *DPC,char *OPC,char *CIC);
+int		convertStrMsgISUP_SM_UBL(char *tmpStr, char *DPC,char *OPC,char *CIC);
+
 void	SendSigMsgToTrunk(void);
 void	TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
+void	DrawPCM_AllItems( PCM_STRUCT *pOnePcm ,ACS_Digital_PortState_Data * pDigitState);
+void	AutoRefresh(void);
 
 #endif

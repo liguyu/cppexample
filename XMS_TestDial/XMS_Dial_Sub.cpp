@@ -1712,7 +1712,6 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 		XMS_ctsClearCall ( g_acsHandle, &pOneTrunk->deviceID, 0 ,NULL );
 
 		return;
-		//
 	}
 
 	if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL )	/*²ğÏßÊÂ¼ş*/

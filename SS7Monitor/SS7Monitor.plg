@@ -1,0 +1,104 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: SS7Monitor - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP13D.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/SS7Monitor.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+"D:\cppexample\SS7Monitor\SS7Monitor.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP13D.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP13E.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/SS7Monitor.pdb" /debug /machine:I386 /out:"Debug/SS7Monitor.exe" /pdbtype:sept 
+.\Debug\StdAfx.obj
+.\Debug\SS7Monitor.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP13E.tmp"
+<h3>Output Window</h3>
+Compiling...
+SS7Monitor.cpp
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(68) : error C2065: 'CRect' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(68) : error C2146: syntax error : missing ';' before identifier 'rect'
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(68) : error C2065: 'rect' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(69) : error C2065: 'CExListCtrl' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(69) : error C2146: syntax error : missing ';' before identifier 'listctrl'
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(69) : error C2065: 'listctrl' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(70) : error C2228: left of '.Create' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(73) : error C2065: 'LVS_REPORT' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(74) : error C2065: 'LVS_SHOWSELALWAYS' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(75) : error C2065: 'LVS_SINGLESEL' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(76) : error C2065: 'LVS_OWNERDRAWFIXED' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(77) : error C2065: 'LVS_NOLABELWRAP' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(80) : error C2673: 'main' : global functions do not have 'this' pointers
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(81) : error C2065: 'IDC_LIST' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(82) : error C2228: left of '.SetExtendedStyle' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(82) : error C2065: 'LVS_EX_GRIDLINES' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(82) : error C2065: 'LVS_EX_FULLROWSELECT' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(83) : error C2228: left of '.SetBkColor' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(86) : error C2065: 'LV_COLUMN' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(86) : error C2146: syntax error : missing ';' before identifier 'lvc'
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(86) : error C2065: 'lvc' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(87) : error C2228: left of '.mask' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(87) : error C2065: 'LVCF_TEXT' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(87) : error C2065: 'LVCF_SUBITEM' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(87) : error C2065: 'LVCF_WIDTH' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(89) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(89) : error C2065: '_T' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(90) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(91) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(93) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(94) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(95) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(97) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(98) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(99) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(101) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(102) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(103) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(105) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(106) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(107) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(109) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(110) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(111) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(113) : error C2228: left of '.pszText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(114) : error C2228: left of '.cx' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(115) : error C2228: left of '.InsertColumn' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(116) : error C2065: 'SetTextBkColor' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(117) : error C2660: 'SetTextColor' : function does not take 1 parameters
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(118) : error C2065: 'InsertItem' : undeclared identifier
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(119) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(120) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(121) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(122) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(123) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(124) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(126) : error C2660: 'SetTextColor' : function does not take 1 parameters
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(128) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(129) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(130) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(131) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(132) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(133) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(135) : error C2660: 'SetTextColor' : function does not take 1 parameters
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(137) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(138) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(139) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(140) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(141) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(142) : error C2228: left of '.SetItemText' must have class/struct/union type
+D:\cppexample\SS7Monitor\SS7Monitor.cpp(144) : warning C4508: 'main' : function should return a value; 'void' return type assumed
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+SS7Monitor.exe - 70 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

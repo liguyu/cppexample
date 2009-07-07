@@ -12,11 +12,15 @@
 #define IDC_LIST_MSG                    1004
 #define IDC_BUTTON_SEND                 1005
 #define IDC_EDIT_CMD                    1006
+#define IDC_EDIT_DPC                    1006
 #define IDC_LIST1                       1007
-#define IDC_LIST_SS7LINK                1007
+#define IDC_EDIT_OPC                    1008
 #define IDC_BUTTON_SENDSIGMSG           1009
+#define IDC_EDIT_CIC                    1010
 #define IDC_COMBO_ISUPMSGTYPE           1012
 #define IDC_COMBO_TUPMSGTYPE            1013
+#define IDC_RADIO_TUP                   1017
+#define IDC_RADIO_ISUP                  1018
 
 // Next default values for new objects
 // 
@@ -24,7 +28,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        129
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1013
+#define _APS_NEXT_CONTROL_VALUE         1018
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

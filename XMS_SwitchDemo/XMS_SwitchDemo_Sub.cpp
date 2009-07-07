@@ -1837,7 +1837,7 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 
 	if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL ) /*当前状态USER_RING,坐席挂机事件User Offhook Event*/
 	{
-		if(pOneUser->UserState != USER_FREE && pOneUser->UserState != USER_CONNECT)
+		if(pOneUser->UserState != USER_FREE)// && pOneUser->UserState != USER_CONNECT)
 		{
 			ResetUser( pOneUser, pAcsEvt );
 			return;
@@ -2086,19 +2086,32 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 
 int	 GetOutUserID (  char *pDtmf, DeviceID_t *pUserDeviceID )
 {
+	int		iTmp;
 	DJ_S8	s8ModID;
 	DJ_S16	s16ChID;
-	for (int i=0; i<g_iTotalUser; i++)
+	static	int	iLoopStart = 0;
+	
+	if ( cfg_iCallOutRule == 2 || cfg_iCallOutRule == 3)		// Select a Fix Channel by DTMF's tail 3
 	{
-		s8ModID = MapTable_User[i].m_s8ModuleID;
-		s16ChID = MapTable_User[i].m_s16ChannelID;		
+		iTmp = 0;
+		sscanf ( pDtmf, "%d", &iTmp ); 
+		iTmp %= 1000;
+		
+		s8ModID = MapTable_Trunk[iTmp].m_s8ModuleID;
+		s16ChID = MapTable_Trunk[iTmp].m_s16ChannelID;
+		
+		if ( iTmp >= g_iTotalTrunk )
+			return -1;
+		
 		if ( ( AllDeviceRes[s8ModID].pTrunk[s16ChID].iLineState == DCS_FREE )
 			&& ( AllDeviceRes[s8ModID].pTrunk[s16ChID].deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER ) )
 		{
 			*pUserDeviceID = AllDeviceRes[s8ModID].pTrunk[s16ChID].deviceID;
-			return 2;
+			return iTmp;
 		}
+		return -1;
 	}
+	
 	return -1;
 }
 int	 SearchOneFreeTrunk( char *pDtmf, DeviceID_t *pFreeTrkDeviceID )

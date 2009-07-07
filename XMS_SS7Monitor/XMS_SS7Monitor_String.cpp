@@ -20,6 +20,7 @@ char * GetString_EventType ( EventType_t EvtType )
 	case XMS_EVT_CLOSE_DEVICE:		return "CLOSE_DEVICE";
 	case XMS_EVT_RESET_DEVICE:		return "RESET_DEVICE";
 	case XMS_EVT_DEVICESTATE:		return "DEVICESTATE";
+	case XMS_EVT_E1STATE:			return "E1STATE";
 	case XMS_EVT_SETDEV_GROUP:		return "SETDEV_GROUP";
 	case XMS_EVT_SETPARAM:			return "SETPARAM";
 	case XMS_EVT_GETPARAM:			return "GETPARAM";
@@ -57,7 +58,7 @@ char * GetString_EventType ( EventType_t EvtType )
 	case XMS_EVT_SENDIODATA:		return "SENDIODATA";
 	case XMS_EVT_RECVIODATA:		return "RECVIODATA";
 
-	case XMS_EVT_CHGMONITORFILTER:	return "CHGMONITORFILTER";
+	//case XMS_EVT_CHGMONITORFILTER:	return "CHGMONITORFILTER";
 
 	case XMS_EVT_UNIFAILURE:		return "UNIFAILURE";
 	}
@@ -161,8 +162,15 @@ void	GetString_LineState ( char *StateStr, int iLineState )
 	case DCS_CONNECT:						strcpy ( StateStr, "S_CONNECT");		break;
 	case DCS_DISCONNECT:					strcpy ( StateStr, "S_DISCONNECT");		break;
 	case DCS_WAIT_FREE:						strcpy ( StateStr, "S_WAIT_FREE");		break;
+
+	case DES_SS7_LST_CONNECTING:	strcpy ( StateStr, "Connecting");		break;		
+	case DES_SS7_LST_ACTIVE:		strcpy ( StateStr, "Active");			break;
+	case DES_SS7_LST_FAILED:		strcpy ( StateStr, "Failed");			break;		
+	case DES_SS7_LST_WAITCON:		strcpy ( StateStr, "WaitConn");			break;	
+	case DES_SS7_LST_SUSPEND:		strcpy ( StateStr, "Suspend");			break;		
+
 	default:
-		sprintf ( StateStr, "0x%X", iLineState );
+		sprintf ( StateStr, "", iLineState );//0x%X
 		break;
 	}
 }

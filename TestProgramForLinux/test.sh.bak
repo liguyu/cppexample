@@ -1,0 +1,4 @@
+#!bash
+date
+ps -e
+cd /
