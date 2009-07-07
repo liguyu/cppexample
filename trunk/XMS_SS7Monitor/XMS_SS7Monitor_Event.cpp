@@ -23,10 +23,6 @@ int						g_iTotalPcm = 0;
 int						g_iTotalPcmOpened = 0;
 TYPE_CHANNEL_MAP_TABLE	MapTable_Pcm[MAX_PCM_NUM_IN_THIS_DEMO];
 
-int						g_iTotalSS7Link = 0;
-int						g_iTotalSS7LinkOpened = 0;
-TYPE_CHANNEL_MAP_TABLE	MapTable_SS7Link[MAX_PCM_NUM_IN_THIS_DEMO];
-
 int						g_iTotalTrunk = 0;
 int						g_iTotalTrunkOpened = 0;
 TYPE_CHANNEL_MAP_TABLE	MapTable_Trunk[MAX_TRUNK_NUM_IN_THIS_DEMO];
@@ -47,6 +43,12 @@ void	DispEventInfo ( Acs_Evt_t *pAcsEvt )
 	case XMS_EVT_OPEN_STREAM:
 		break;
 
+	case XMS_EVT_DEVICESTATE:
+		//strcat ( TmpStr, "XMS_EVT_DEVICESTATE" );
+		break;
+	case XMS_EVT_E1STATE:
+		//strcat ( TmpStr, "XMS_EVT_E1STATE" );
+		break;
 	case XMS_EVT_QUERY_DEVICE:
 		pAcsDevList = (Acs_Dev_List_Head_t *) FetchEventData(pAcsEvt);
 		sprintf ( TmpS, " (%s,%2d,%3d)", 
@@ -75,7 +77,6 @@ void	DispEventInfo ( Acs_Evt_t *pAcsEvt )
 		break;
 
 	}
-
 	AddMsg ( TmpStr );
 }
 
@@ -123,11 +124,11 @@ void	FreeAllDeviceRes (void)
 void	RefreshMapTable ( void )
 {
 	int		i, j;
-	int		TrkCount, VocCount, PcmCount, ModuleCount,SS7LinkCount;
+	int		TrkCount, VocCount, PcmCount, ModuleCount;
 	int		iModSeqID;
 
 	// Remember the AllDeviceRes's Interface,Voice,PCM channel
-	ModuleCount = TrkCount = VocCount = PcmCount = SS7LinkCount = 0;
+	ModuleCount = TrkCount = VocCount = PcmCount = 0;
 	for ( i = 0; i < MAX_DSP_MODULE_NUMBER_OF_XMS; i ++ )
 	{
 		 if ( AllDeviceRes[i].lFlag == 1 )
@@ -147,14 +148,6 @@ void	RefreshMapTable ( void )
 				PcmCount ++;
 			 }
 
-			 // SS7Link Channel
-			 for ( j = 0; j < AllDeviceRes[i].lSS7LinkNum; j ++ )
-			 {
-				 AllDeviceRes[i].pSS7Link[j].iSeqID = SS7LinkCount;
-				 MapTable_SS7Link[SS7LinkCount].m_s8ModuleID = AllDeviceRes[i].pSS7Link[j].deviceID.m_s8ModuleID;
-				 MapTable_SS7Link[SS7LinkCount].m_s16ChannelID = AllDeviceRes[i].pSS7Link[j].deviceID.m_s16ChannelID;
-				 SS7LinkCount ++;
-			 }
 			 // Interface Channel
 			 iModSeqID = 0;
 			 for ( j = 0; j < AllDeviceRes[i].lTrunkNum; j ++ )
@@ -176,7 +169,6 @@ void	RefreshMapTable ( void )
 	g_iTotalModule = ModuleCount;
 	g_iTotalTrunk = TrkCount;
 	g_iTotalPcm = PcmCount;
-	g_iTotalSS7Link = SS7LinkCount;
 }
 
 void	AddDeviceRes_Trunk ( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
@@ -184,12 +176,11 @@ void	AddDeviceRes_Trunk ( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
 	DJ_S32	s32Num;
 	int		i;
 	char	TmpStr[256];
-
+	
 	s32Num = pAcsDevList->m_s32DeviceNum;
-
-	if ( (AllDeviceRes[s8DspModID].lTrunkNum == 0) && (s32Num > 0) )		// the resources new added
+	
+	if ( (AllDeviceRes[s8DspModID].lTrunkNum == 0) && (s32Num > 0) ) // the resources new added
 	{
-		// 
 		AllDeviceRes[s8DspModID].pTrunk = new TRUNK_STRUCT[s32Num];
 		if( !AllDeviceRes[s8DspModID].pTrunk )
 		{
@@ -288,58 +279,7 @@ void	AddDeviceRes_Pcm ( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
 	}
 
 }
-void	AddDeviceRes_SS7Link( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
-{
-	DJ_S32	s32Num;
-	int		i;
-	char	TmpStr[256];
-	
-	s32Num = pAcsDevList->m_s32DeviceNum;
-	
-	if ( (AllDeviceRes[s8DspModID].lSS7LinkNum == 0) && (s32Num > 0) )		// the resources new added
-	{
-		AllDeviceRes[s8DspModID].pSS7Link = new SS7LINK_STRUCT[s32Num];
-		if( !AllDeviceRes[s8DspModID].pSS7Link )
-		{
-			AllDeviceRes[s8DspModID].lSS7LinkNum = 0;
-			AllDeviceRes[s8DspModID].lSS7LinkOpened = 0;
-			
-			// alloc fail, maybe disp this error in your log
-			sprintf ( TmpStr, "new SS7LINK_STRUCT[%d] fail in AddDeviceRes_SS7Link()" );
-			AddMsg ( TmpStr );
-		}
-		else
-		{
-			memset ( AllDeviceRes[s8DspModID].pSS7Link, 0, sizeof(SS7LINK_STRUCT)*s32Num );
-			AllDeviceRes[s8DspModID].lSS7LinkNum = s32Num;
-			AllDeviceRes[s8DspModID].lSS7LinkOpened = 0;
-			
-			DeviceID_t	 *pDev;
-			pDev = (DeviceID_t *)((BYTE *)pAcsDevList + sizeof(Acs_Dev_List_Head_t));
-			for ( i = 0; i < s32Num; i ++ )
-			{
-				AllDeviceRes[s8DspModID].pSS7Link[i].deviceID = pDev[i];
-				AllDeviceRes[s8DspModID].pSS7Link[i].bOpenFlag = false;
-			}
-		}
-	}
-	else if ( (AllDeviceRes[s8DspModID].lSS7LinkNum > 0) && (s32Num == 0) )		// delete this resource
-	{
-		// if some devices did not close, close them
-		for ( i = 0; i < AllDeviceRes[s8DspModID].lSS7LinkNum; i ++ )
-		{
-			if ( AllDeviceRes[s8DspModID].pSS7Link[i].bOpenFlag != false )
-				CloseDeviceOK ( &AllDeviceRes[s8DspModID].pSS7Link[i].deviceID );
-		}
-		
-		AllDeviceRes[s8DspModID].lSS7LinkNum = 0;
-		AllDeviceRes[s8DspModID].lSS7LinkOpened = 0;
-		
-		delete [] AllDeviceRes[s8DspModID].pSS7Link;
-		AllDeviceRes[s8DspModID].pSS7Link = NULL;
-	}
-	
-}
+
 void	AddDeviceRes_Board ( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
 {
 	DJ_S32	s32Num;
@@ -383,13 +323,7 @@ void	AddDeviceRes ( Acs_Dev_List_Head_t *pAcsDevList )
 	{
 		case XMS_DEVMAIN_SS7_LINK:
 			AddMsg("123456ss*************************************************");
-			AddMsg("123456ss*************************************************");
-			AddMsg("123456ss*************************************************");
-			AddMsg("123456ss*************************************************");
-			AddMsg("123456ss*************************************************");
-			AddMsg("123456ss*************************************************");
-			AddMsg("123456ss*************************************************");
-			AddDeviceRes_SS7Link(s8DspModID, pAcsDevList);
+			//AddDeviceRes_SS7Link(s8DspModID, pAcsDevList);
 			break;
 		case XMS_DEVMAIN_DIGITAL_PORT:
 			AddDeviceRes_Pcm ( s8DspModID, pAcsDevList );
@@ -420,8 +354,8 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 {
 	Acs_Evt_t *			    pAcsEvt = NULL;
 	Acs_Dev_List_Head_t * pAcsDevList = NULL;
-
-
+	ACS_Digital_PortState_Data *pDigitState = NULL;
+	PCM_STRUCT		*pOnePcm = NULL;
 	pAcsEvt = (Acs_Evt_t *) esrParam;
 	DispEventInfo ( pAcsEvt );
 
@@ -431,7 +365,6 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 			if ( ( cfg_iPartWork == 0 ) || (pAcsEvt->m_DeviceID.m_s8ModuleID == cfg_iPartWorkModuleID) )
 			{
 				pAcsDevList = ( Acs_Dev_List_Head_t *) FetchEventData(pAcsEvt);
-
 				// receive the event of Device Resources changed, Add/Delete this Device Resources
 				AddDeviceRes ( pAcsDevList );
 			}
@@ -470,12 +403,28 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 		case XMS_EVT_DEVICESTATE:
 			HandleDevState ( pAcsEvt );
 			break;
+	
+		case XMS_EVT_E1STATE:
+			pOnePcm = &M_OnePcm(pAcsEvt->m_DeviceID);
+			pDigitState = (ACS_Digital_PortState_Data *)FetchEventData(pAcsEvt);
+			DrawPCM_AllItems(pOnePcm,pDigitState);
 
 		case XMS_EVT_UNIFAILURE:
 			// must handle this event in your real System
 			break;
 
-		default:
+		case XMS_EVT_DEV_TIMER:
+			pOnePcm = &M_OnePcm(pAcsEvt->m_DeviceID);
+			break;
+		case XMS_EVT_SS7SendRawFrame:   			 
+			break;
+		case XMS_EVT_SS7RawFrame:
+// 			{
+// 				Acs_SS7RawFrame_Data *raw_data = NULL;
+// 				raw_data = (Acs_SS7RawFrame_Data *)FetchEventData(pAcsEvt);
+// 			}
+			break;
+   		default:
 			if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH  )
 			{
 				TrunkWork ( &M_OneTrunk(pAcsEvt->m_DeviceID), pAcsEvt );

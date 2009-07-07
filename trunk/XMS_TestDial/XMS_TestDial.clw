@@ -30,7 +30,7 @@ ImplementationFile=XMS_TestDialDlg.cpp
 Filter=D
 BaseClass=CDialog
 VirtualFilter=dWC
-LastObject=IDC_EDIT_ModuleID
+LastObject=IDC_EDIT_Start
 
 [CLS:CAboutDlg]
 Type=0

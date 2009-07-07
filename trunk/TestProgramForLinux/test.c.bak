@@ -1,0 +1,11 @@
+#include <ncurses.h>
+int main()
+{
+	initscr();
+	printw("I loveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee china ddd!!!\n");
+	refresh();
+	getchar();
+	endwin();
+
+	return 0;
+}

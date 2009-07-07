@@ -36,7 +36,7 @@ typedef struct
 	DeviceID_t	VocDevID;
 	DJ_U8		u8PlayTag;
 	DJ_U8       u8IsRecordFlag;
-    DJ_U8       u8RecordCounter;
+    DJ_U8       u8RecordCounter;   //record voice file number
 
 	// -----------------
 	DJ_U8       u8IsBGFlag;        //TRUE: this channel is the BG channel, FALSE: this channel is not the BG channel

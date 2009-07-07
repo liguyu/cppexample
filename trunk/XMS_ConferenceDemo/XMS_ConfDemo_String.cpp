@@ -57,8 +57,6 @@ char * GetString_EventType ( EventType_t EvtType )
 	case XMS_EVT_SENDIODATA:		return "SENDIODATA";
 	case XMS_EVT_RECVIODATA:		return "RECVIODATA";
 
-	case XMS_EVT_CHGMONITORFILTER:	return "CHGMONITORFILTER";
-
 	case XMS_EVT_UNIFAILURE:		return "UNIFAILURE";
 	}
 
@@ -118,7 +116,6 @@ char *GetString_DeviceSub ( DJ_S32	s32DeviceSub )
 	case XMS_DEVSUB_ANALOG_REC:					return "A_REC";
 	case XMS_DEVSUB_DIGITAL_REC:				return "D_REC";
 	case XMS_DEVSUB_HIZ_HDLC_N64K_LINK:			return "HDLC_N64_LINK";
-	case XMS_DEVSUB_3G_324:						return "3G_324";
 	}
 
 	return "UNKNOWN";

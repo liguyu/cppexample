@@ -15,5 +15,5 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 
 void HelloWorld()
 {
-	MessageBox( NULL, TEXT("Hello World"), TEXT("In a DLL"), MB_OK);
+	MessageBox( NULL, TEXT("Hello World!"), TEXT("This is My First DLL Example"), MB_OK);
 }
