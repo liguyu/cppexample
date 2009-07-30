@@ -68,6 +68,7 @@ DJ_Void			EvtHandler(DJ_U32 esrParam);	//回调函数，所有Keygoe时间返回到此函数
 int main(int argc,char **argv)
 {
 	printf("DONJIN Keygoe HelloKeygoe Sample...Copyright 2009.\n");
+	printf("press q or ctrl+c exit programmer\n");
 	printf("=======================================================\n");
 	
 	strcpy(cfg_ServerID.m_s8ServerIp,"192.168.11.111");
@@ -127,18 +128,18 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 	switch ( pAcsEvt->m_s32EventType )
 	{
 	case XMS_EVT_QUERY_DEVICE:			//每次返回此事件，可获取DSP上一种类型的可用设备
-		if (s8DspModID == cfg_iPartWorkModuleID)
+		if (s8DspModID == cfg_iPartWorkModuleID)//判断DSP模块ID是否为指定的
 		{
 			pAcsDevList = ( Acs_Dev_List_Head_t *) FetchEventData(pAcsEvt);	
 			AddDeviceRes ( pAcsDevList );//添加可用设备到全局数组AllDeviceRes[]
 		}	
 		break; 
 	case XMS_EVT_QUERY_ONE_DSP_END:		//一个DSP上的资源搜索完毕
-		if (s8DspModID == cfg_iPartWorkModuleID)
+		if (s8DspModID == cfg_iPartWorkModuleID)//判断DSP模块ID是否为指定的
 		{
 			AllDeviceRes[s8DspModID].lFlag = 1;		//此DSP可用
 			AllDeviceRes[s8DspModID].bErrFlag = false;
-			OpenDeviceRes ( s8DspModID );			//代开需要用到的设备资源			
+			OpenDeviceRes ( s8DspModID );			//打开需要用到的设备资源			
 		}
 		break;
 	case XMS_EVT_QUERY_REMOVE_ONE_DSP_END:		
@@ -179,24 +180,23 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 			}			
 		}
 		break;
-	}
+	}//end of switch
 }
+//重置坐席设备-------------------------------
 void ResetUser ( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 {
 	VOICE_STRUCT * pOneVoice;
 	if ( pOneUser->VocDevID.m_s16DeviceMain != 0 )//如果有语音设备与此中继连接，则断开连接释放语音资源
 	{
+		//解除时隙连接
 		XMS_ctsUnlinkDevice ( g_acsHandle, &pOneUser->VocDevID, &pOneUser->deviceID, NULL ); 
-		XMS_ctsUnlinkDevice ( g_acsHandle, &pOneUser->deviceID, &pOneUser->VocDevID, NULL ); 
 		pOneVoice = &AllDeviceRes[pOneUser->VocDevID.m_s8ModuleID].pVoice[pOneUser->VocDevID.m_s16ChannelID];
-		pOneVoice->State = VOC_FREE;
-		AllDeviceRes[pOneVoice->deviceID.m_s8ModuleID].lVocFreeNum++;
+		pOneVoice->State = VOC_FREE;//更改语音设备状态为空闲
+		AllDeviceRes[pOneVoice->deviceID.m_s8ModuleID].lVocFreeNum++;//空闲语音数加1
 	}
-
-	pOneUser->State = TRK_FREE;
+	pOneUser->State = TRK_FREE;//更改坐席设备状态为空闲
 	memset( &pOneUser->VocDevID, 0, sizeof(DeviceID_t) );
 }
-
 //坐席设备事件处理------------------------------------------------------------
 void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 {
@@ -206,10 +206,10 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 	VOICE_STRUCT			*pOneVoice = NULL;
 	PlayProperty_t			playProperty;	
 	
-	if( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL ){	//拆线处理
+	if( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL ){	//拆线处理,坐席挂机事件
 		if(pOneUser->State != TRK_FREE)
 		{
-			ResetUser(pOneUser,pAcsEvt);
+			ResetUser(pOneUser,pAcsEvt);//重置坐席设备
 			printf("ResetUser()---(User %d,%d)---坐席挂机\n",
 				pOneUser->deviceID.m_s8ModuleID,pOneUser->deviceID.m_s16ChannelID);
 			return;
@@ -221,84 +221,77 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 	case TRK_FREE:
 		if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN ) //当前状态TRK_FREE,坐席摘机事件
 		{
+			pOneUser->State = USER_OFFHOOK;//更改坐席逻辑状态
 			printf("(User %d,%d) OFFHOOK\n",pOneUser->deviceID.m_s8ModuleID,pOneUser->deviceID.m_s16ChannelID);
+			//查找空闲语音资源(坐席通道对应的语音)
 			pOneVoice = &AllDeviceRes[pOneUser->deviceID.m_s8ModuleID].pVoice[pOneUser->deviceID.m_s16ChannelID];
-			if ( pOneVoice->State == VOC_FREE ){
-				pOneVoice->State = VOC_USED;
-				AllDeviceRes[pOneUser->deviceID.m_s8ModuleID].lVocFreeNum--;
-				
+			if ( pOneVoice->State == VOC_FREE ){//如果语音设备空闲
+				pOneVoice->State = VOC_USED;//将语音设备状态置为使用
+				AllDeviceRes[pOneUser->deviceID.m_s8ModuleID].lVocFreeNum--;//空闲语音数减1
+				//空闲语音和坐席建立时隙连接，语音的输出为坐席的输入，确保坐席能够听到语音的放音				
+				XMS_ctsLinkDevice ( g_acsHandle, &pOneVoice->deviceID, &pOneUser->deviceID, NULL ); 
+				//设置关联关系
 				pOneUser->VocDevID = pOneVoice->deviceID;
 				pOneVoice->UsedDevID = pOneUser->deviceID;
-				
-				XMS_ctsLinkDevice ( g_acsHandle, &pOneUser->deviceID, &pOneVoice->deviceID, NULL ); 
-				XMS_ctsLinkDevice ( g_acsHandle, &pOneVoice->deviceID, &pOneUser->deviceID, NULL ); 
-				
+			
 				memset(&playProperty,0,sizeof(playProperty));
 				playProperty.m_u16PlayType = XMS_PLAY_TYPE_FILE;	
 				strcpy ( playProperty.m_s8PlayContent, "C:\\DJKeygoe\\Samples\\Voc\\Bank.001");
-				r = XMS_ctsPlay ( g_acsHandle, &pOneVoice->deviceID, &playProperty, NULL );
+				r = XMS_ctsPlay ( g_acsHandle, &pOneVoice->deviceID, &playProperty, NULL );//放音操作
 				if (r < 0)
 				{
-					printf("XMS_ctsPlay fail!\n") ;
+					printf("XMS_ctsPlay() fail!\n") ;
 				}else{
 					printf("(VOC %d,%d) play voice: 这里是东进电话银行演示系统\n",
-						pOneVoice->deviceID.m_s8ModuleID,pOneVoice->deviceID.m_s16ChannelID);
-					pOneUser->State = USER_OFFHOOK;					
+						pOneVoice->deviceID.m_s8ModuleID,pOneVoice->deviceID.m_s16ChannelID);						
 				}				
 			}else{
 				printf("No free voice device!\n");
-			}			
+			}	
 		}
 		break;
 		
 	case USER_OFFHOOK:
-		if ( pAcsEvt->m_s32EventType == XMS_EVT_PLAY ){
-			ResetUser(pOneUser,pAcsEvt);
+		if ( pAcsEvt->m_s32EventType == XMS_EVT_PLAY ){//放音结束事件
+			ResetUser(pOneUser,pAcsEvt);//重置坐席设备
 			printf("ResetUser()---(User %d,%d)---放音结束\n",
 				pOneUser->deviceID.m_s8ModuleID,pOneUser->deviceID.m_s16ChannelID);
 		}	
 		break;		
 	}
 }
-
+//打开设备成功---------------------------------------
 void	OpenDeviceOK ( DeviceID_t *pDevice )
 {
 	TRUNK_STRUCT *	pOneTrunk;
 	VOICE_STRUCT *	pOneVoice;	
 	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 	{
-		pOneTrunk = &AllDeviceRes[(*pDevice).m_s8ModuleID].pTrunk[(*pDevice).m_s16ChannelID];
-		
-		pOneTrunk->deviceID.m_CallID = pDevice->m_CallID;		// this line is very important, must before all operation
-		
-		// init this Device: Trunk
-		pOneTrunk->State = TRK_FREE;
-
+		pOneTrunk = &AllDeviceRes[(*pDevice).m_s8ModuleID].pTrunk[(*pDevice).m_s16ChannelID];		
+		pOneTrunk->deviceID.m_CallID = pDevice->m_CallID;//回填m_CallID
+		pOneTrunk->State = TRK_FREE;//设备逻辑状态置为FREE
 		memset ( &pOneTrunk->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc Voc Device
-		
 		XMS_ctsResetDevice ( g_acsHandle, pDevice, NULL );
-		XMS_ctsGetDevState ( g_acsHandle, pDevice, NULL );
-				
+		XMS_ctsGetDevState ( g_acsHandle, pDevice, NULL );				
+		if (pDevice->m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER)
+		{
+			printf("(User %d,%d) open ok\n",pDevice->m_s8ModuleID,pDevice->m_s16ChannelID);
+		}		
 		AllDeviceRes[pDevice->m_s8ModuleID].lTrunkOpened ++;		
 	}
 	
 	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_VOICE )
 	{
 		pOneVoice = &AllDeviceRes[(*pDevice).m_s8ModuleID].pVoice[(*pDevice).m_s16ChannelID];
-		pOneVoice->deviceID.m_CallID = pDevice->m_CallID;		// this line is very important, must before all operation
-		
-		// init this Device: Voice
-		pOneVoice->State = VOC_FREE;
-		
+		pOneVoice->deviceID.m_CallID = pDevice->m_CallID;//回填m_CallID
+		pOneVoice->State = VOC_FREE;//设备逻辑状态置为FREE		
 		XMS_ctsResetDevice ( g_acsHandle, pDevice, NULL );
-		XMS_ctsGetDevState ( g_acsHandle, pDevice, NULL );	
-		
+		XMS_ctsGetDevState ( g_acsHandle, pDevice, NULL );		
 		AllDeviceRes[pDevice->m_s8ModuleID].lVocOpened ++;
 		AllDeviceRes[pDevice->m_s8ModuleID].lVocFreeNum ++;	
-	}
-	
+	}	
 }
-
+//退出系统-----------------------------------------
 void	ExitSystem() 
 {
 	int			i;
@@ -312,13 +305,11 @@ void	ExitSystem()
 	for ( i = 0; i < AllDeviceRes[cfg_iPartWorkModuleID].lVocNum; i++ )
 	{
 		XMS_ctsCloseDevice ( g_acsHandle, &AllDeviceRes[cfg_iPartWorkModuleID].pVoice[i].deviceID, NULL );		
-	}	
-	
-	r = XMS_acsCloseStream ( g_acsHandle, NULL );//关闭与Keygoe的连接
-	
+	}		
+	r = XMS_acsCloseStream ( g_acsHandle, NULL );//关闭与Keygoe的连接	
 	memset ( AllDeviceRes, 0, sizeof(AllDeviceRes) );
 }
-
+//添加可用设备资源-------------------------------------
 void	AddDeviceRes ( Acs_Dev_List_Head_t *pAcsDevList )
 {
 	DJ_S8	s8DspModID;
@@ -326,7 +317,6 @@ void	AddDeviceRes ( Acs_Dev_List_Head_t *pAcsDevList )
 	
 	s32Num = pAcsDevList->m_s32DeviceNum;	
 	s8DspModID = (DJ_S8) pAcsDevList->m_s32ModuleID;
-
 	if ( (s8DspModID < 0) || (s8DspModID >= MAX_DSP_MODULE_NUMBER_OF_XMS) )	return;	// 非法DSP单元ID
 	
 	switch ( pAcsDevList->m_s32DeviceMain )
