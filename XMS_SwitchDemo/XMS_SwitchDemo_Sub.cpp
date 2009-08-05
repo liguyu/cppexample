@@ -1439,7 +1439,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 	char					TmpDtmf, TmpGtd;
 	RetCode_t		        r;
 	TRUNK_STRUCT *pLinkUser;
-	/*XMS_EVT_CLEARCALL 触发条件: 调用XMS_ctsClearCall()：成功发送挂机信号后返回
+	/*XMS_EVT_CLEARCALL触发条件: 调用XMS_ctsClearCall()：成功发送挂机信号后返回
 	被动挂机完成后返回的事件;对于Analog Trunk在调用API函数XMS_ctsClearCall()成功后返回;
 	对于Analog User在调用API函数XMS_ctsClearCall()成功后，或在检测到对方挂机时候返回。*/
 	if( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL ){	
@@ -1825,7 +1825,7 @@ void InitUserChannel( TRUNK_STRUCT *pOneUser )
 	DrawUser_FailReason(pOneUser," ");
 }
 
-void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
+uvoid UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 {
 	char					TmpDtmf;
 	DeviceID_t				FreeVocDeviceID, FreeTrkDeviceID, OutUserDeviceID;

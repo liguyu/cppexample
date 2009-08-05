@@ -648,7 +648,7 @@ void	OpenTrunkDevice ( TRUNK_STRUCT *pOneTrunk )
 {
 	RetCode_t	r;
 	
-	if ( pOneTrunk->State == TRK_WAITOPEN && pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK)		// not Open yet
+	if ( pOneTrunk->State == TRK_WAITOPEN && pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK) // not Open yet
 	{
 		r = XMS_ctsOpenDevice ( g_acsHandle, &pOneTrunk->deviceID, NULL );
 		if ( r < 0 )
