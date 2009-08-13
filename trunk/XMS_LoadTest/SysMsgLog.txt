@@ -4286,3 +4286,694 @@
 08/05/09 13:58:30  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 125),  44 ?=? 36+8
 08/05/09 13:58:30  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 126),  44 ?=? 36+8
 08/05/09 13:58:30  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 127),  44 ?=? 36+8
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:29  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/05/09 17:17:30  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:50:42  XMS_acsOpenStream(192.168.11.111,9000) OK!
+08/12/09 09:50:42  XMS_acsSetESR() OK!
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 0),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 16),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 32),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 33),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 34),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 35),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 36),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 37),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 38),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 39),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 40),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 41),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 42),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 43),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 44),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 45),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 46),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 47),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 48),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 49),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 50),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 51),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 52),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 53),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 54),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 55),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 56),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 57),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 58),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 59),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 60),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 61),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 62),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 63),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 64),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 65),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 66),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 67),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 68),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 69),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 70),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 71),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 72),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 73),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 74),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 75),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 76),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 77),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 78),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 79),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 80),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 81),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 82),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 83),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 84),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 85),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 86),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 87),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 88),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 89),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 90),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 91),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 92),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 93),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 94),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 95),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 96),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 97),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 98),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 99),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 100),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 101),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 102),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 103),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 104),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 105),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 106),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 107),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 108),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 109),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 110),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 111),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 112),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 113),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 114),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 115),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 116),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 117),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 118),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 119),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 120),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 121),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 122),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 123),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 124),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 125),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 126),  44 ?=? 36+8
+08/12/09 09:50:42  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 127),  44 ?=? 36+8
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:20  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 09:53:21  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:47  XMS_acsOpenStream(192.168.11.111,9000) OK!
+08/12/09 10:06:47  XMS_acsSetESR() OK!
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 0),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 16),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 32),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 33),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 34),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 35),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 36),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 37),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 38),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 39),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 40),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 41),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 42),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 43),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 44),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 45),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 46),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 47),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 48),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 49),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 50),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 51),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 52),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 53),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 54),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 55),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 56),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 57),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 58),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 59),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 60),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 61),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 62),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 63),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 64),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 65),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 66),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 67),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 68),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 69),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 70),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 71),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 72),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 73),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 74),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 75),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 76),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 77),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 78),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 79),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 80),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 81),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 82),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 83),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 84),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 85),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 86),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 87),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 88),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 89),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 90),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 91),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 92),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 93),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 94),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 95),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 96),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 97),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 98),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 99),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 100),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 101),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 102),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 103),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 104),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 105),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 106),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 107),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 108),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 109),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 110),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 111),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 112),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 113),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 114),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 115),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 116),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 117),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 118),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 119),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 120),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 121),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 122),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 123),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 124),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 125),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 126),  44 ?=? 36+8
+08/12/09 10:06:47  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 127),  44 ?=? 36+8
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:06:52  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:07:14  XMS_acsOpenStream(192.168.11.111,9000) OK!
+08/12/09 10:07:14  XMS_acsSetESR() OK!
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 0),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 16),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 32),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 33),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 34),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 35),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 36),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 37),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 38),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 39),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 40),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 41),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 42),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 43),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 44),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 45),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 46),  44 ?=? 36+8
+08/12/09 10:07:14  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 47),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 48),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 49),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 50),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 51),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 52),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 53),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 54),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 55),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 56),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 57),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 58),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 59),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 60),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 61),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 62),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 63),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 64),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 65),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 66),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 67),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 68),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 69),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 70),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 71),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 72),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 73),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 74),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 75),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 76),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 77),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 78),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 79),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 80),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 81),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 82),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 83),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 84),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 85),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 86),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 87),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 88),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 89),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 90),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 91),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 92),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 93),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 94),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 95),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 96),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 97),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 98),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 99),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 100),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 101),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 102),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 103),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 104),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 105),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 106),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 107),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 108),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 109),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 110),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 111),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 112),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 113),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 114),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 115),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 116),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 117),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 118),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 119),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 120),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 121),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 122),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 123),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 124),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 125),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 126),  44 ?=? 36+8
+08/12/09 10:07:15  EVT(  44) : UNIFAILURE: GETRESFAIL(0x9) dev=(INTCH, 2, 127),  44 ?=? 36+8
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
+08/12/09 10:19:42  XMS_ctsCloseDevice Fail in CloseTrunkDevice()!
