@@ -20,6 +20,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CXMS_SS7MonitorDlg)
 	enum { IDD = IDD_XMS_SS7MONITOR_DIALOG };
+	CComboBox	m_ComboComType;
 	CComboBox	m_ComboTUPMsgType;
 	CComboBox	m_ComboISUPMsgType;
 	CListCtrl	m_ListTrunk;
@@ -45,6 +46,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnButtonSend();
 	afx_msg void OnButtonSendsigmsg();
+	afx_msg void OnButtonSendrawdata();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

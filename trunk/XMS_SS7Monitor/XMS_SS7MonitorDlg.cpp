@@ -74,6 +74,7 @@ void CXMS_SS7MonitorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CXMS_SS7MonitorDlg)
+	DDX_Control(pDX, IDC_COMBO_COMTYPE, m_ComboComType);
 	DDX_Control(pDX, IDC_COMBO_TUPMSGTYPE, m_ComboTUPMsgType);
 	DDX_Control(pDX, IDC_COMBO_ISUPMSGTYPE, m_ComboISUPMsgType);
 	DDX_Control(pDX, IDC_LIST_TRUNK, m_ListTrunk);
@@ -89,6 +90,7 @@ BEGIN_MESSAGE_MAP(CXMS_SS7MonitorDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON_SEND, OnButtonSend)
 	ON_BN_CLICKED(IDC_BUTTON_SENDSIGMSG, OnButtonSendsigmsg)
+	ON_BN_CLICKED(IDC_BUTTON_SENDRAWDATA, OnButtonSendrawdata)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -191,3 +193,9 @@ void CXMS_SS7MonitorDlg::OnButtonSendsigmsg()
 	SendSigMsgToTrunk();
 }
 
+
+void CXMS_SS7MonitorDlg::OnButtonSendrawdata() 
+{
+
+	SendRawDataToSS7Link2();	
+}

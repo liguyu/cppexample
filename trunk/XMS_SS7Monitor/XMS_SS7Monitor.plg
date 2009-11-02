@@ -6,13 +6,26 @@
 --------------------Configuration: XMS_SS7Monitor - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29D.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_SS7Monitor.res" /d "_DEBUG" /d "_AFXDLL" "D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP212.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_SS7Monitor.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp"
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor.cpp"
+"D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor_Event.cpp"
+"D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor_String.cpp"
 "D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor_Sub.cpp"
+"D:\cppexample\XMS_SS7Monitor\XMS_SS7MonitorDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29D.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29E.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP212.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP213.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_SS7Monitor.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\XMS_SS7Monitor\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP213.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP214.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_SS7Monitor.pdb" /debug /machine:I386 /out:"Debug/XMS_SS7Monitor.exe" /pdbtype:sept 
 .\Debug\Analog_Common_Code.obj
@@ -26,13 +39,24 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29E.tmp" with con
 .\Debug\XMS_SS7Monitor.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29E.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP214.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+Analog_Common_Code.cpp
+CAS_Common_Cfg.CPP
+XMS_SS7Monitor.cpp
+XMS_SS7Monitor_Event.cpp
+XMS_SS7Monitor_String.cpp
 XMS_SS7Monitor_Sub.cpp
-D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor_Sub.cpp(1054) : warning C4018: '<=' : signed/unsigned mismatch
+D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor_Sub.cpp(1064) : warning C4018: '<=' : signed/unsigned mismatch
+D:\cppexample\XMS_SS7Monitor\XMS_SS7Monitor_Sub.cpp(1110) : warning C4018: '<=' : signed/unsigned mismatch
+XMS_SS7MonitorDlg.cpp
+Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29F.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP216.tmp" with contents
 [
 /nologo /o"Debug/XMS_SS7Monitor.bsc" 
 .\Debug\StdAfx.sbr
@@ -43,14 +67,14 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29F.tmp" with con
 .\Debug\XMS_SS7Monitor_String.sbr
 .\Debug\XMS_SS7Monitor_Sub.sbr
 .\Debug\XMS_SS7MonitorDlg.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP29F.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP216.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-XMS_SS7Monitor.exe - 0 error(s), 1 warning(s)
+XMS_SS7Monitor.exe - 0 error(s), 2 warning(s)
 </pre>
 </body>
 </html>

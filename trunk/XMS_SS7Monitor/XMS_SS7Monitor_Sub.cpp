@@ -114,16 +114,29 @@ void	InitComboISUPMsgType(void)
 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CGU");// 电路群阻断消除
 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_RSC");// 电路复原
 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_GRS");// 电路群复原
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CPG");// 呼叫进展
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CQM");// 电路群问讯
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_INF");// 信息
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_INR");// 信息请求
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_RES");// 恢复	
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SAM");// 后续地址
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SGM");// 分段
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SUS");// 暂停 
+ 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_USR");// 用户至用户信息
 
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CPG");// 呼叫进展
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_CQM");// 电路群问讯
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_INF");// 信息
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_INR");// 信息请求
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_RES");// 恢复	
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SAM");// 后续地址
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SGM");// 分段
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_SUS");// 暂停 
-// 	pdlg->m_ComboISUPMsgType.AddString("ISUP_SM_USR");// 用户至用户信息
+	pdlg->m_ComboISUPMsgType.SetCurSel(0);
+}
+
+void	InitComType(void)
+{
+	pdlg->m_ComboComType.AddString("ISUP_SM_BLO");// 阻断
+	pdlg->m_ComboComType.AddString("ISUP_SM_UBL");// 阻断消除
+	pdlg->m_ComboComType.AddString("ISUP_SM_CGB");// 电路群阻断
+	pdlg->m_ComboComType.AddString("ISUP_SM_CGU");// 电路群阻断消除
+	pdlg->m_ComboComType.AddString("ISUP_SM_RSC");// 电路复原
+	pdlg->m_ComboComType.AddString("ISUP_SM_GRS");// 电路群复原
+	pdlg->m_ComboComType.AddString("ISUP_SM_RAWDATA");// 电路群复原
+	
 	pdlg->m_ComboISUPMsgType.SetCurSel(0);
 }
 void	InitComboTUPMsgType(void)
@@ -576,6 +589,9 @@ bool	InitSystem()
 	// Init m_ComboISUPMsgType
 	InitComboISUPMsgType();
 
+	// Init m_ComboComType
+	InitComType();
+
 	// Init m_ComboTUPMsgType
 	InitComboTUPMsgType();
 	
@@ -648,12 +664,19 @@ void	OpenTrunkDevice ( TRUNK_STRUCT *pOneTrunk )
 {
 	RetCode_t	r;
 	
-	if ( pOneTrunk->State == TRK_WAITOPEN && pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK) // not Open yet
-	{
-		r = XMS_ctsOpenDevice ( g_acsHandle, &pOneTrunk->deviceID, NULL );
+	if ( pOneTrunk->State == TRK_WAITOPEN ) // not Open yet
+	{	
+		if ( 1==cfg_OnlyOpenSS7Link && pOneTrunk->deviceID.m_s16DeviceSub==XMS_DEVSUB_SS7_LINK)
+		{
+			r = XMS_ctsOpenDevice ( g_acsHandle, &pOneTrunk->deviceID, NULL );		
+		}else if (0==cfg_OnlyOpenSS7Link)
+		{
+			r = XMS_ctsOpenDevice ( g_acsHandle, &pOneTrunk->deviceID, NULL );	
+		}
+		
 		if ( r < 0 )
 		{
-				AddMsg ( "XMS_ctsOpenDevice Fail in OpenTrunkDevice()!" );
+			AddMsg ( "XMS_ctsOpenDevice Fail in OpenTrunkDevice()!" );
 		}
 	}	
 }
@@ -766,6 +789,7 @@ void	OpenDeviceOK ( DeviceID_t *pDevice )
 // 		g_iTotalSS7LinkOpened ++;
 // 		AllDeviceRes[pDevice->m_s8ModuleID].lSS7LinkOpened ++;
 // 	}
+
 }
 
 // --------------------------------------------------------------------------------
@@ -956,17 +980,11 @@ void SendSigMsgToTrunk(void){
 			break;
 		case 14:
 			ret = XMS_ctsSendSignalMsg(g_acsHandle, &pOneTrunk.deviceID, ISUP_SM_USR);// 用户至用户信息
-			break;
-		
+			break;		
 		}
-		
-		
-
 	}else{
 		AddMsg("The Trunk device type is wrong.");
 	}
-	
-	
 	//AddMsg(tmpStr);
 }
 void	SendRawDataToSS7Link(void){
@@ -1013,39 +1031,31 @@ void	SendRawDataToSS7Link(void){
 
 	if (pOneTrunk.deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK)
 	{
-		if (((CButton *)pdlg->GetDlgItem(IDC_RADIO_TUP))->GetCheck() == 1)
+		raw_data.m_u8UserType = XMS_SS7_USER_TYPE_ISUP;  
+		switch (pdlg->m_ComboComType.GetCurSel())
 		{
-			raw_data.m_u8UserType = XMS_SS7_USER_TYPE_TUP;
-			AfxMessageBox("Not support TUP yet");
-			return;
-
-		}else if(((CButton *)pdlg->GetDlgItem(IDC_RADIO_ISUP))->GetCheck() == 1)
-		{
-
-			raw_data.m_u8UserType = XMS_SS7_USER_TYPE_ISUP;  
-
-			switch (pdlg->m_ComboISUPMsgType.GetCurSel())
-			{
-			case 0:	// ISUP_SM_BLO 阻断
-				convertStrMsgISUP_SM_BLO(rawVal, DPCStr, OPCStr, CICStr);
-				break;
-			case 1:	// ISUP_SM_UBL 阻断消除
-				convertStrMsgISUP_SM_UBL(rawVal, DPCStr, OPCStr, CICStr);
-				break;
-			case 2:	// ISUP_SM_CGB 群闭塞
-				convertStrMsgISUP_SM_CGB(rawVal, DPCStr, OPCStr, CICStr);				
-				break;
-			case 3:	// ISUP_SM_CGU 电路群阻断消除
-				convertStrMsgISUP_SM_CGU(rawVal, DPCStr, OPCStr, CICStr);		
-				break;
-			case 4:// ISUP_SM_RSC 电路复原
-				convertStrMsgISUP_SM_RSC(rawVal, DPCStr, OPCStr, CICStr);
-				break;
-			case 5:// ISUP_SM_GRS 电路群复原
-				convertStrMsgISUP_SM_GRS(rawVal, DPCStr, OPCStr, CICStr);
-				break;						
-			}	
-		}		
+		case 0:	// ISUP_SM_BLO 阻断
+			convertStrMsgISUP_SM_BLO(rawVal, DPCStr, OPCStr, CICStr);
+			break;
+		case 1:	// ISUP_SM_UBL 阻断消除
+			convertStrMsgISUP_SM_UBL(rawVal, DPCStr, OPCStr, CICStr);
+			break;
+		case 2:	// ISUP_SM_CGB 群闭塞
+			convertStrMsgISUP_SM_CGB(rawVal, DPCStr, OPCStr, CICStr);				
+			break;
+		case 3:	// ISUP_SM_CGU 电路群阻断消除
+			convertStrMsgISUP_SM_CGU(rawVal, DPCStr, OPCStr, CICStr);		
+			break;
+		case 4:// ISUP_SM_RSC 电路复原
+			convertStrMsgISUP_SM_RSC(rawVal, DPCStr, OPCStr, CICStr);
+			break;
+		case 5:// ISUP_SM_GRS 电路群复原
+			convertStrMsgISUP_SM_GRS(rawVal, DPCStr, OPCStr, CICStr);
+			break;	
+		case 6:// 原始消息
+			convertStrMsgISUP_SM_RAWDATA(rawVal, DPCStr, OPCStr, CICStr);
+			break;				
+		}			
 	}else{
 		AfxMessageBox("Trunk device type must be SS7_LINK");
 		return;
@@ -1058,9 +1068,7 @@ void	SendRawDataToSS7Link(void){
         sscanf(temp, "%x", &Byte_val[j]);             
 	} 
     Byte_cnt = strlen(rawVal)/2; 
-
-
-	raw_data.m_u8InfoLen  = Byte_cnt;
+ 	raw_data.m_u8InfoLen  = Byte_cnt;
 	memcpy(raw_data.m_u8Info, Byte_val, Byte_cnt);              
 
 	ret = XMS_ctsSendRawFrame(g_acsHandle, &pOneTrunk.deviceID, raw_data.m_u8InfoLen + 8,&raw_data);
@@ -1069,6 +1077,57 @@ void	SendRawDataToSS7Link(void){
 		pOneTrunk.deviceID.m_s8ModuleID, pOneTrunk.deviceID.m_s16ChannelID, ret);  
 	AddMsg(tmpStr);	
 	AddMsg(rawVal);      
+}
+
+//直接发送原始数据
+void	SendRawDataToSS7Link2(void){
+	char			tmpStr[256];
+	int				i,j,selTrunk;
+	TRUNK_STRUCT	pOneTrunk;
+	CString			sourceStr;
+	char			rawVal[512] = {0};
+	int				Byte_cnt = 0;
+	unsigned char   Byte_val[512] = {0};
+	Acs_SS7RawFrame_Data   raw_data = {0};
+	
+	selTrunk = pdlg->m_ListTrunk.GetSelectionMark();
+	if(selTrunk == -1){
+		AfxMessageBox("Please select SS7 Link first!!!");
+		return;
+	}
+	
+	pOneTrunk = AllDeviceRes[1+selTrunk/128].pTrunk[selTrunk%128];
+	
+	if (pOneTrunk.deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK)
+	{
+		raw_data.m_u8InfoType  = XMS_SS7_MSG_DATA; // Must set to data 
+		raw_data.m_u8UserType = XMS_SS7_USER_TYPE_ISUP;  
+		raw_data.m_u8LinkType = XMS_SS7_LINK_TYPE_ITU;	//bChina = 0;
+
+		pdlg->GetDlgItemText(IDC_EDIT_RAWDATA,sourceStr);
+		strcpy(rawVal,sourceStr);
+	
+		for (i = 0,j = 0; i <= strlen(rawVal); i+=2, j++)
+		{       
+			char temp[3] = {0};
+			memcpy(temp, rawVal+i, 2);
+			sscanf(temp, "%x", &Byte_val[j]);             
+		} 
+		Byte_cnt = strlen(rawVal)/2; 
+		raw_data.m_u8InfoLen  = Byte_cnt;
+		memcpy(raw_data.m_u8Info, Byte_val, Byte_cnt);              
+		
+		int ret = XMS_ctsSendRawFrame(g_acsHandle, &pOneTrunk.deviceID, raw_data.m_u8InfoLen + 8,&raw_data);
+		
+		sprintf(tmpStr, "dev %d-%d send ss7 raw data, ret=%d\n",
+			pOneTrunk.deviceID.m_s8ModuleID, pOneTrunk.deviceID.m_s16ChannelID, ret);  
+		AddMsg(tmpStr);	
+		AddMsg(rawVal); 
+
+	}else{
+		AfxMessageBox("The Trunk Sub Device Type is wrong!!!");
+	}
+	
 }
 
 int convertStrMsgISUP_SM_BLO(char *tmpStr, char *DPC,char *OPC,char *CIC){
@@ -1646,8 +1705,110 @@ int convertStrMsgISUP_SM_GRS(char *tmpStr, char *DPC,char *OPC,char *CIC){
 	
 	return pos;
 }
+//原始数据
+int convertStrMsgISUP_SM_RAWDATA(char *tmpStr, char *DPC,char *OPC,char *CIC){
+	int pos = 0;
+	int i = 0;
+	char tmpChar;
+	unsigned int i1 = 0;
+	unsigned int i2 = 0;
+	char temp[3] = {0};
+	int len = 100;
+	
+	if (6 == (int)strlen(DPC) && 6 == (int)strlen(OPC) && 4 == (int)strlen(CIC))
+	{
+		tmpStr[pos++] = '8';
+		tmpStr[pos++] = '5';
+		
+		tmpStr[pos++] = DPC[4];
+		tmpStr[pos++] = DPC[5];
+		tmpStr[pos++] = DPC[2];
+		tmpStr[pos++] = DPC[3];
+		tmpStr[pos++] = DPC[0];
+		tmpStr[pos++] = DPC[1];
+		
+		tmpStr[pos++] = OPC[4];
+		tmpStr[pos++] = OPC[5];
+		tmpStr[pos++] = OPC[2];
+		tmpStr[pos++] = OPC[3];
+		tmpStr[pos++] = OPC[0];
+		tmpStr[pos++] = OPC[1];
+		
+		//SLS
+		tmpStr[pos++] = '0';
+		tmpStr[pos++] = CIC[1];
+		
+	}else if (4 == (int)strlen(DPC) && 4 == (int)strlen(OPC) && 4 == (int)strlen(CIC))
+	{
+		tmpStr[pos++] = 'C';
+		tmpStr[pos++] = '5';
+		
+		tmpStr[pos++] = DPC[2];
+		tmpStr[pos++] = DPC[3];
+		
+        memcpy(temp, DPC, 2);
+        sscanf(temp, "%x", &i1);
+		i1 = i1 & 63;
+		//printf("i1: %x\n",i1);
+		
+		memcpy(temp, OPC+2, 2);
+        sscanf(temp, "%x", &i2);
+		//printf("i2: %x\n",i2);
+		i2 = i2<<6;	
+		//printf("i2: %x\n",i2);
+		
+		i1 = i1|i2;
+		//printf("i1: %x\n",i1);
+		i2 = i1&0x00f0;
+		sprintf( &tmpChar,"%x", i2);
+		tmpStr[pos++] = tmpChar;
+		
+		i2 = i1&0x000f;
+		sprintf( &tmpChar,"%x", i2);
+		tmpStr[pos++] = tmpChar;		
+		
+		memcpy(temp, OPC, 4);
+        sscanf(temp, "%x", &i1);
+		i1 = i1>>2;
+		i2 = i1&0x00f0;
+		sprintf( &tmpChar,"%x", i2);
+		tmpStr[pos++] = tmpChar;		
+		
+		i2 = i1&0x000f;
+		sprintf( &tmpChar,"%x", i2);
+		tmpStr[pos++] = tmpChar;
+		
+		tmpStr[pos++] = CIC[1];
+		
+		i2 = i1&0x0f00;
+		sprintf( &tmpChar,"%x", i2);
+		//printf("tmpChar: %c\n",tmpChar);
+		tmpStr[pos++] = tmpChar;	
+		
+	}else{
+		//printf("input format error");
+		return 0;
+	}	
+	
+	//CIC
+	for (i = 0; i < (int)strlen(CIC); i ++ )
+	{
+		tmpStr[pos++] = CIC[i];
+	}
+	//char temp[]	= {'0x85','0x01','0x01','0x01','0x02','0x02','0x02','0x01','0x01','0x00','0x01','0x00','0x60','0x00','0x0A','0x00','0x02','0x09','0x07','0x81','0x90','0x53','0x64','0x01','0x00','0x0F','0x08','0x01','0x00','0x0A','0x07','0x04','0x13','0x10','0x83','0x82','0x00','0x01','0x3D','0x01','0x1E','0x03','0x0F','0x6D','0x08','0xA8','0x68','0x81','0x29','0x22','0x06','0x78','0xF6','0x71','0x03','0xA0','0x32','0x62','0x1D','0x03','0x80','0x90','0xA3','0x00'};
+  //char temp11[]="010060000A000209078190536401000F0801000A07041310838200013D011E030F6D08A8688129220678F67103A032621D038090A300";
+	char temp11[]="010060000A000209078190536401000F0801000A07041310838200013D011E030F6D08A8688129220678F67103A032621D038090A300";
+	//
+	//010000010A0002070583100351000A0603133836968800
+//	char temp11[]="010000010A0002070583100351000A0603133836968800";
+//	char temp11[]="010060000A0002070583100351000A0603133836968800";
 
-
+	strcat(tmpStr,temp11);
+	//tmpStr[pos++] = '\0';
+	pos = pos+strlen(temp11);
+	return pos;
+}
+ 
 void	CheckRemoveReady ( DJ_S8 s8DspModID )
 {
 	int			i;
@@ -1709,56 +1870,16 @@ void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk )
 
 void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 {
-	Acs_CallControl_Data *	pCallControl = NULL;
+//	Acs_CallControl_Data *	pCallControl = NULL;
 //	DeviceID_t				FreeVocDeviceID;
 //	char					FileName[256];
 //	char					TmpDtmf, TmpGtd;
-	TUP_spCallingLineAddress *pCallerID;
-	memset(&pCallerID,0,sizeof(TUP_spCallingLineAddress));
+//	TUP_spCallingLineAddress *pCallerID;
+//	memset(&pCallerID,0,sizeof(TUP_spCallingLineAddress));
 
 }
 
-/*void	SendRawDataToSS7Link(void){
-	char			tmpStr[256];
-	char			dataStr[256];
-	int				selTrunk;
-	TRUNK_STRUCT	pOneTrunk;
-	DJ_U16			u16FrameSize;
-	Acs_SS7RawFrame_Data			*pData=NULL;
-	
-	selTrunk = pdlg->m_ListTrunk.GetSelectionMark();
-	if(selTrunk == -1){
-		AddMsg("Please select SS7 Link first!!!");
-		return;
-	}
-	
-	pOneTrunk = AllDeviceRes[cfg_iPartWorkModuleID].pTrunk[selTrunk];
-	
-	if (pOneTrunk.deviceID.m_s16DeviceSub == XMS_DEVSUB_SS7_LINK)
-	{
-		pdlg->GetDlgItem ( IDC_EDIT_CMD )->GetWindowText (dataStr, 256);
-		sprintf ( tmpStr, "Success...Send RawData to SS7 Link %d: %s", selTrunk ,dataStr);
-		
-		// 		pData->m_u8UserType = XMS_SS7_USER_ISUP;
-		// 		pData->m_u8LinkType = XMS_SS7_LINK_CHINA;
-		// 		pData->m_u8InfoType = XMS_SS7_MSG_DATA;
-		// 		pData->m_u8InfoLen = 255;
-		// 		pData->m_u8Info[0] = 0;
-		// 		pData->m_u8Info[1] = 6;
-		// 		pData->m_u8Info[2] = 5;
-		// 		pData->m_u8Info[3] = 4;
-		// 		strcat(pData, dataStr);
-		
-		int ret = XMS_ctsSendRawFrame(g_acsHandle, &pOneTrunk.deviceID,256,(void *)dataStr); 
-		if (ret >0)
-		{
-			AddMsg(tmpStr);
-		}
-	}else{
-		AddMsg("The Trunk Sub Device Type is wrong!!!");
-	}
-	
-}*/
+
 DWORD WINAPI ThreadFunc(VOID) 
 { 
 	int             i;
