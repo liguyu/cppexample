@@ -50,12 +50,14 @@ void	OpenDeviceOK ( DeviceID_t *pDevice );
 void	CloseDeviceOK ( DeviceID_t *pDevice );
 void	Remove_OneDsp(void);
 void	SendRawDataToSS7Link(void);
+void	SendRawDataToSS7Link2(void);
 int     convertStrMsgISUP_SM_BLO(char *tmpStr, char *DPC,char *OPC,char *CIC);
 int		convertStrMsgISUP_SM_CGB(char *tmpStr, char *DPC,char *OPC,char *CIC);
 int		convertStrMsgISUP_SM_CGU(char *tmpStr, char *DPC,char *OPC,char *CIC);
 int     convertStrMsgISUP_SM_GRS(char *tmpStr, char *DPC,char *OPC,char *CIC);
 int		convertStrMsgISUP_SM_RSC(char *tmpStr, char *DPC,char *OPC,char *CIC);
 int		convertStrMsgISUP_SM_UBL(char *tmpStr, char *DPC,char *OPC,char *CIC);
+int     convertStrMsgISUP_SM_RAWDATA(char *tmpStr, char *DPC,char *OPC,char *CIC);
 
 void	SendSigMsgToTrunk(void);
 void	TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
