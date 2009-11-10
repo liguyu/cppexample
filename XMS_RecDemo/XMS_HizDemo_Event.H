@@ -1,16 +1,12 @@
 #ifndef _XMS_HIZDEMO_EVENT_H_
 #define _XMS_HIZDEMO_EVENT_H_
 
-
 #include "DJAcsDataDef.h"
 #include "DJAcsAPIDef.h"
 
-//
 #define		MAX_DSP_MODULE_NUMBER_OF_XMS		256
-
 #define		MAX_PCM_NUM_IN_THIS_DEMO			64
 #define		MAX_TRUNK_NUM_IN_THIS_DEMO			(32*MAX_PCM_NUM_IN_THIS_DEMO)
-
 #define		M_OneVoice(DevID)		AllDeviceRes[(DevID).m_s8ModuleID].pVoice[(DevID).m_s16ChannelID]
 #define		M_OnePcm(DevID)			AllDeviceRes[(DevID).m_s8ModuleID].pPcm[(DevID).m_s16ChannelID]
 #define		M_OneTrunk(DevID)		AllDeviceRes[(DevID).m_s8ModuleID].pTrunk[(DevID).m_s16ChannelID]
@@ -50,17 +46,14 @@ typedef	struct
 } TYPE_XMS_DSP_DEVICE_RES_DEMO;
 
 // define the structer: use this, you can search the ModuleID & ChannelID
-//           Warning: don't change this structer
+// Warning: don't change this structer
 typedef struct
 {
     ModuleID_t      m_s8ModuleID;    /*device module type*/
     ChannelID_t     m_s16ChannelID;  /*device chan id*/
 } TYPE_CHANNEL_MAP_TABLE;
-// 
-
-DJ_Void EvtHandler(DJ_U32 esrParam);
 
 void	InitAllDeviceRes (void);
 void	FreeAllDeviceRes (void);
-
+DJ_Void EvtHandler(DJ_U32 esrParam);
 #endif
