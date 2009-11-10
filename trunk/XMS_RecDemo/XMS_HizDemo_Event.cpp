@@ -453,23 +453,24 @@ BOOL IsSysMod(DJ_S8 s8ModuleID)
 	
 	return ret;
 }
-
+/************************************************************************/
+/* function: 事件处理主函数                                             */
+/* input: 事件结构体指针                                                */
+/* output: void                                                         */
+/************************************************************************/
 DJ_Void EvtHandler(DJ_U32 esrParam)
 {
 	Acs_Evt_t *			    pAcsEvt = NULL;
 	Acs_Dev_List_Head_t * pAcsDevList = NULL;
 
-
 	pAcsEvt = (Acs_Evt_t *) esrParam;
 	DispEventInfo ( pAcsEvt );
-
 	switch ( pAcsEvt->m_s32EventType )
 	{
 		case XMS_EVT_QUERY_DEVICE:
 			if (  IsSysMod(pAcsEvt->m_DeviceID.m_s8ModuleID) )
 			{
 				pAcsDevList = ( Acs_Dev_List_Head_t *) FetchEventData(pAcsEvt);
-
 				// receive the event of Device Resources changed, Add/Delete this Device Resources
 				AddDeviceRes ( pAcsDevList );
 			}
@@ -482,12 +483,10 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 				{
 					AllDeviceRes[pAcsEvt->m_DeviceID.m_s8ModuleID].lFlag = 1;		// this DSP can use
 					OpenAllDevice_Dsp ( pAcsEvt->m_DeviceID.m_s8ModuleID );
-				}
-				else
+				}else
 				{
 					AllDeviceRes[pAcsEvt->m_DeviceID.m_s8ModuleID].lFlag = 0;		// Remove DSP Over
 				}
-
 				RefreshMapTable ( );
 				ReDrawAll ();
 			}
@@ -495,23 +494,17 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 
 		case XMS_EVT_QUERY_DEVICE_END:	// Query Device List End
 			break;
-
 		case XMS_EVT_OPEN_DEVICE:
 			OpenDeviceOK ( &pAcsEvt->m_DeviceID );
 			break;
-
 		case XMS_EVT_CLOSE_DEVICE:		// before Delete DSP, DSP send event CloseDevice to the APP; call XMS_ctsCloseDevicey() can generate this Event
 			CloseDeviceOK ( &pAcsEvt->m_DeviceID );
 			break;
-
 		case XMS_EVT_DEVICESTATE:
 			HandleDevState ( pAcsEvt );
 			break;
-
 		case XMS_EVT_UNIFAILURE:
-			// must handle this event in your real System
 			break;
-
 		default:
 			if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH  )
 			{
@@ -521,37 +514,29 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 				  || XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
 					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
-
 					if ( NULL != pOneTrunk )
 					{
 						TrunkWork_ISDN_SS7( pOneTrunk, pAcsEvt );
 					}				
 				}else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
-					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
-					
+					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);					
 					if ( NULL != pOneTrunk )
 					{
 						TrunkWork_Analog( pOneTrunk, pAcsEvt );
 					}
-
 				}else if ( XMS_DEVSUB_DIGITAL_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 				{
 					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
-					
 					if ( NULL != pOneTrunk )
 					{
 						TrunkWork_Digital( pOneTrunk, pAcsEvt );
 					}
 				}
-
-			}
-			else if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_VOICE )
+			}else if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_VOICE )
 			{
 				DeviceID_t	*pDevID;
-
 				pDevID = &M_OneVoice(pAcsEvt->m_DeviceID).UsedDevID;
-
 				if ( pDevID->m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 				{
 					//TrunkWork_SS7 ( &M_OneTrunk(*pDevID), pAcsEvt );

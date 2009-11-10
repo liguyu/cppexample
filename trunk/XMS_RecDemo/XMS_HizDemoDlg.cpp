@@ -134,7 +134,7 @@ BOOL CXMS_DemoDlg::OnInitDialog()
 	
 	//write programme name
 	char szProName[100]={0};
-	strcpy(szProName,"DJKeygoe Record System Demo");
+	strcpy(szProName,"DJKeygoe Record System Demo");   //Set XMS_RecDemo Title
 	this->SetWindowText(szProName);
 
 	InitSystem();
