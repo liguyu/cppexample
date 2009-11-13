@@ -2043,8 +2043,7 @@ int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID
 				DrawCount_Voc ( s8ModID );
 				return i;
 			}
-		}
-		
+		}		
 		return -1;
 	}
 	
@@ -2064,15 +2063,13 @@ int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID
 				lNowMostFreeNum = AllDeviceRes[MapTable_Module[i]].lVocFreeNum;
 			}
 		}
-	}
-    
+	}    
 	for ( i = iLoopStart; i < AllDeviceRes[s8SearchModID].lVocNum; i ++ )
 	{
 		pOneVoice = &AllDeviceRes[s8SearchModID].pVoice[i];
 		if ( pOneVoice->State == VOC_FREE )
 		{
-			*pFreeVocDeviceID = pOneVoice->deviceID;
-			
+			*pFreeVocDeviceID = pOneVoice->deviceID;			
 			// user this voice device 
 			Change_Voc_State ( pOneVoice, VOC_USED);
 			AllDeviceRes[s8SearchModID].lVocFreeNum--;
@@ -2085,27 +2082,23 @@ int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID
 			}			
 			return i;
 		}
-	}
-	
+	}	
 	iLoopStart = 0;
 	for ( i = iLoopStart; i < AllDeviceRes[s8SearchModID].lVocNum; i ++ )
 	{
 		pOneVoice = &AllDeviceRes[s8SearchModID].pVoice[i];
 		if ( pOneVoice->State == VOC_FREE )
 		{
-			*pFreeVocDeviceID = pOneVoice->deviceID;
-			
+			*pFreeVocDeviceID = pOneVoice->deviceID;			
 			// user this voice device 
 			Change_Voc_State ( pOneVoice, VOC_USED);
 			AllDeviceRes[s8SearchModID].lVocFreeNum--;
 			g_iTotalVoiceFree --;
-			DrawCount_Voc ( s8SearchModID );
-			
+			DrawCount_Voc ( s8SearchModID );			
 			if ( cfg_iVoiceRule == 3 )
 			{
 				iLoopStart = i;
-			}
-			
+			}			
 			return i;
 		}
 	}
@@ -2115,8 +2108,7 @@ int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID
 
 int		FreeOneFreeVoice (  DeviceID_t *pFreeVocDeviceID )
 {
-	DJ_S8	s8ModID;
-	
+	DJ_S8	s8ModID;	
 	s8ModID = pFreeVocDeviceID->m_s8ModuleID;
 	if ( AllDeviceRes[s8ModID].lFlag == 1 )
 	{
@@ -2126,39 +2118,32 @@ int		FreeOneFreeVoice (  DeviceID_t *pFreeVocDeviceID )
 		g_iTotalVoiceFree ++;
 		DrawCount_Voc ( s8ModID );
 		return	0;		// OK
-	}
-	
+	}	
 	return -1;			// invalid VocDeviceID
 }
 
 void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState )
 {
-	pOneVoice->State = NewState;
-	
+	pOneVoice->State = NewState;	
 	// Check if ready to remove DSP hardware
 	if ( (AllDeviceRes[pOneVoice->deviceID.m_s8ModuleID].RemoveState == DSP_REMOVE_STATE_START)
 		&& (NewState == VOC_FREE) )
 	{
-		pOneVoice->State = VOC_WAIT_REMOVE;
-		
+		pOneVoice->State = VOC_WAIT_REMOVE;		
 		CheckRemoveReady ( pOneVoice->deviceID.m_s8ModuleID );
 	}
 }
 
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState )
 {
-	pOneTrunk->State = NewState;
-	
-	DrawMain_State ( pOneTrunk );
-	
+	pOneTrunk->State = NewState;	
+	DrawMain_State ( pOneTrunk );	
 	// Check if ready to remove DSP hardware
 	if ( (AllDeviceRes[pOneTrunk->deviceID.m_s8ModuleID].RemoveState == DSP_REMOVE_STATE_START)
 		&& (NewState == TRK_FREE) )
 	{
-		pOneTrunk->State = TRK_WAIT_REMOVE;
-		
-		DrawMain_State ( pOneTrunk );
-		
+		pOneTrunk->State = TRK_WAIT_REMOVE;		
+		DrawMain_State ( pOneTrunk );		
 		CheckRemoveReady ( pOneTrunk->deviceID.m_s8ModuleID );
 	}
 }
@@ -2166,19 +2151,14 @@ void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState )
 // Search Free Voice for get CallerID(FSK)
 void	PrepareForCallerID ( TRUNK_STRUCT *pOneTrunk )
 {
-	DeviceID_t FreeVocDeviceID;
-	
+	DeviceID_t FreeVocDeviceID;	
 	if ( pOneTrunk->deviceID.m_s16DeviceSub != XMS_DEVSUB_ANALOG_REC )
-		return;
-	
+		return;	
 	if ( SearchOneFreeVoice ( pOneTrunk,  &FreeVocDeviceID ) >= 0 )
 	{
-		pOneTrunk->VocDevID = FreeVocDeviceID;
-		
-		M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 
-		
-		DrawMain_VocInfo ( pOneTrunk );
-		
+		pOneTrunk->VocDevID = FreeVocDeviceID;		
+		M_OneVoice(FreeVocDeviceID).UsedDevID = pOneTrunk->deviceID; 		
+		DrawMain_VocInfo ( pOneTrunk );		
 		My_DualLink ( &FreeVocDeviceID, &pOneTrunk->deviceID );
 		SetGtD_AnalogTrunk(&FreeVocDeviceID);
 	}
@@ -2200,28 +2180,27 @@ void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk )
 	memset ( &pOneTrunk->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc Voc Device
 	DrawMain_VocInfo ( pOneTrunk );
 }
-
+/************************************************************************/
+/* function:重置中继设备                                                */
+/* input: 中继设备指针，事件指针                                        */
+/* output:void                                                          */
+/************************************************************************/
 void ResetTrunk ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 {
 	// free the used Voice Resource
 	if ( pOneTrunk->VocDevID.m_s16DeviceMain != 0 )
 	{
-		My_DualUnlink ( &pOneTrunk->VocDevID, &pOneTrunk->deviceID );
-		
+		My_DualUnlink ( &pOneTrunk->VocDevID, &pOneTrunk->deviceID );		
 		if (TRUE == pOneTrunk->u8IsRecordFlag )
 		{
 			StopRecordFile(&pOneTrunk->VocDevID);
-		}
-		
-		FreeOneFreeVoice (  &pOneTrunk->VocDevID );
-		
+		}		
+		FreeOneFreeVoice (  &pOneTrunk->VocDevID );		
 		memset ( &M_OneVoice(pOneTrunk->VocDevID).UsedDevID,	0, sizeof(DeviceID_t) );		// 0: didn't alloc Device
 		memset ( &pOneTrunk->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc Device
 		DrawMain_VocInfo ( pOneTrunk );
-	}
-	
-	InitTrunkChannel ( pOneTrunk );
-	
+	}	
+	InitTrunkChannel ( pOneTrunk );	
 	// Search Free Voice for get CallerID(FSK)
 	// if you needn't CallerID, ignore next line
 	PrepareForCallerID ( pOneTrunk );
