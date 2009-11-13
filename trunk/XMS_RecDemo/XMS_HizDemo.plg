@@ -6,26 +6,18 @@
 --------------------Configuration: XMS_Demo - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_HizDemo.res" /d "_DEBUG" "E:\cppexample\XMS_RecDemo\XMS_HizDemo.rc"" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4F.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE.tmp" with contents
 [
 /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_HizDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"E:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp"
-"E:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
-"E:\cppexample\XMS_RecDemo\XMS_HizDemo.cpp"
-"E:\cppexample\XMS_RecDemo\XMS_HizDemo_Event.cpp"
-"E:\cppexample\XMS_RecDemo\XMS_HizDemo_String.cpp"
-"E:\cppexample\XMS_RecDemo\XMS_HizDemo_Sub.cpp"
-"E:\cppexample\XMS_RecDemo\XMS_HizDemoDlg.cpp"
+"D:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp"
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMS_RecDemo\XMS_HizDemo_Event.cpp"
+"D:\cppexample\XMS_RecDemo\XMS_HizDemo_String.cpp"
+"D:\cppexample\XMS_RecDemo\XMS_HizDemo_Sub.cpp"
+"D:\cppexample\XMS_RecDemo\XMS_HizDemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4F.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP50.tmp" with contents
-[
-/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_HizDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"E:\cppexample\XMS_RecDemo\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP50.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP51.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_HizDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_HizDemo.exe" /pdbtype:sept 
 .\Debug\Analog_Common_Code.obj
@@ -39,28 +31,20 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP51.tmp" with cont
 .\Debug\XMS_HizDemo.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP51.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPF.tmp"
 <h3>Output Window</h3>
-Compiling resources...
 Compiling...
-StdAfx.cpp
+XMS_HizDemo_Event.cpp
+XMS_HizDemo_Sub.cpp
+XMS_HizDemoDlg.cpp
+Generating Code...
 Compiling...
 Analog_Common_Code.cpp
-E:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp(3) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
 CAS_Common_Cfg.CPP
-E:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP(3) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
-XMS_HizDemo.cpp
-XMS_HizDemo_Event.cpp
-E:\cppexample\XMS_RecDemo\XMS_HizDemo_Event.cpp(6) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
 XMS_HizDemo_String.cpp
-E:\cppexample\XMS_RecDemo\XMS_HizDemo_String.cpp(6) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
-XMS_HizDemo_Sub.cpp
-E:\cppexample\XMS_RecDemo\XMS_HizDemo_Sub.cpp(11) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
-XMS_HizDemoDlg.cpp
-e:\cppexample\xms_recdemo\xms_hizdemo_sub.h(4) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
 Generating Code...
-Error executing cl.exe.
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP52.tmp" with contents
+Linking...
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP10.tmp" with contents
 [
 /nologo /o"Debug/XMS_HizDemo.bsc" 
 .\Debug\StdAfx.sbr
@@ -71,16 +55,23 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP52.tmp" with cont
 .\Debug\XMS_HizDemo_String.sbr
 .\Debug\XMS_HizDemo_Sub.sbr
 .\Debug\XMS_HizDemoDlg.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP52.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP10.tmp"
 Creating browse info file...
-BSCMAKE: error BK1506 : cannot open file '.\Debug\Analog_Common_Code.sbr': No such file or directory
-Error executing bscmake.exe.
 <h3>Output Window</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11.bat" with contents
+[
+@echo off
+copy debug\*.exe
+]
+Creating command line "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11.bat"
+
+debug\XMS_HizDemo.exe
+已复制         1 个文件。
 
 
 
 <h3>Results</h3>
-XMS_HizDemo.exe - 7 error(s), 0 warning(s)
+XMS_HizDemo.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>
