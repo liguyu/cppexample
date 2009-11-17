@@ -1912,7 +1912,7 @@ uvoid UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 							FreeOneFreeVoice(&pOneUser->VocDevID); //释放语音资源
 						}
 						
-						My_DualLink( &FreeTrkDeviceID, &pOneUser->deviceID );//坐席与找到的空闲中继建立连接
+						My_DualLink( &FreeTrkDeviceID, &pOneUser->deviceID );//坐席与找到的空闲中继建立连接,SendIOData通过坐席电话发送
 						if( XMS_ctsMakeCallOut ( g_acsHandle, &FreeTrkDeviceID, cfg_CallingNum, pOneUser->DtmfBuf, NULL ) > 0 ){ //call out OK
 							pLinkTrunk = &M_OneTrunk(FreeTrkDeviceID);							
 							pOneUser->LinkDevID = FreeTrkDeviceID;
