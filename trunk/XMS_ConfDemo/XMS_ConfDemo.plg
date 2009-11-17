@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_ConfDemo.res" /d "_DEBUG" /d "_AFXDLL" "D:\cppexample\XMS_ConfDemo\XMS_ConfDemo.rc"" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE5.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP15.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_ConfDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
@@ -17,14 +17,14 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE5.tmp" with cont
 "D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Sub.cpp"
 "D:\cppexample\XMS_ConfDemo\XMS_ConfDemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE5.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE6.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP15.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_ConfDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\cppexample\XMS_ConfDemo\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE6.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE7.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP16.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_ConfDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_ConfDemo.exe" /pdbtype:sept 
 .\Debug\CAS_Common_Cfg.obj
@@ -37,7 +37,7 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE7.tmp" with cont
 .\Debug\XMS_ConfDemo.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPE7.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -47,11 +47,15 @@ CAS_Common_Cfg.CPP
 XMS_ConfDemo.cpp
 XMS_ConfDemo_Event.cpp
 XMS_ConfDemo_String.cpp
+D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_String.cpp(60) : error C2065: 'XMS_EVT_CHGMONITORFILTER' : undeclared identifier
+D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_String.cpp(60) : error C2051: case expression not constant
+D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_String.cpp(121) : error C2065: 'XMS_DEVSUB_3G_324' : undeclared identifier
+D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_String.cpp(121) : error C2051: case expression not constant
 XMS_ConfDemo_Sub.cpp
 D:\cppexample\XMS_ConfDemo\XMS_ConfDemo_Sub.cpp(3156) : warning C4101: 'TmpGtd' : unreferenced local variable
 XMS_ConfDemoDlg.cpp
 Generating Code...
-Linking...
+Error executing cl.exe.
 Creating command line "bscmake.exe /nologo /o"Debug/XMS_ConfDemo.bsc"  .\Debug\StdAfx.sbr .\Debug\CAS_Common_Cfg.sbr .\Debug\XMS_ConfDemo.sbr .\Debug\XMS_ConfDemo_Event.sbr .\Debug\XMS_ConfDemo_String.sbr .\Debug\XMS_ConfDemo_Sub.sbr .\Debug\XMS_ConfDemoDlg.sbr"
 Creating browse info file...
 <h3>Output Window</h3>
@@ -59,7 +63,7 @@ Creating browse info file...
 
 
 <h3>Results</h3>
-XMS_ConfDemo.exe - 0 error(s), 1 warning(s)
+XMS_ConfDemo.exe - 4 error(s), 1 warning(s)
 </pre>
 </body>
 </html>
