@@ -12,6 +12,7 @@ static char THIS_FILE[] = __FILE__;
 #include "DJAcsAPIDef.h"
 #include "DJAcsDevState.h"
 #include "DJAcsISUPDef.h"
+#include "DJAcsTUPDef.h"
 #include "XMS_Dial_Sub.H"
 #include "XMS_Dial_String.H"
 #include "XMS_Dial_Event.H"
@@ -39,19 +40,21 @@ char			cfg_IniShortName[] = "\\XMS_Dial.INI";
 
 ServerID_t		cfg_ServerID;
 int				cfg_iCalledLen = 5;
-char			cfg_CallingNum[32] = "83636988";
-
-char			cfg_VocPath[128] = "";	// no use in XMS_Dial
 int				cfg_iDispChnl = 32;		// always disp 32 channel
 int				cfg_iVoiceRule = 0;		// search voice in Fix Relationship
-
 int				cfg_iPartWork;
 int				cfg_iPartWorkModuleID;
-
-int				cfg_iCallOutRule = 0;
-char			cfg_SimCalledNum[32] = "12345";
-
 int				cfg_s32DebugOn;
+int				cfg_iCallOutRule = 0;
+int				cfg_CallingAddrIndicator = 1;
+int				cfg_CalledAddrIndicator = 1;
+char			cfg_SimCalledNum[32] = "12345";
+char			cfg_OriCalledNum[32] =	"111";
+char			cfg_SubseqNum[32]	 = "22,33";
+char			cfg_RedirectingNum[32] ="444";
+char			cfg_VocPath[128] = "";
+char			cfg_CallingNum[32] = "83636988";
+
 
 // var about work
 ACSHandle_t		g_acsHandle = -1;
@@ -106,13 +109,18 @@ void	ReadFromConfig(void)
 	cfg_iCalledLen = GetPrivateProfileInt ( "ConfigInfo", "CalledLen", 5, cfg_IniName);
 	if ( cfg_iCalledLen > 20 )
 		cfg_iCalledLen = 20;
+	cfg_CallingAddrIndicator = GetPrivateProfileInt ( "ConfigInfo", "CallingAddrIndicator", 1, cfg_IniName);
+	cfg_CalledAddrIndicator = GetPrivateProfileInt ( "ConfigInfo", "CalledAddrIndicator", 1, cfg_IniName);
 
 	GetPrivateProfileString ( "ConfigInfo", "CallingNum", "83636988", cfg_CallingNum, sizeof(cfg_CallingNum), cfg_IniName);
 
 	cfg_iCallOutRule = GetPrivateProfileInt ( "ConfigInfo", "CallOutRule", 0, cfg_IniName);
 
 	GetPrivateProfileString ( "ConfigInfo", "SimCalledRNum", "12345", cfg_SimCalledNum, sizeof(cfg_SimCalledNum), cfg_IniName);
-	
+	GetPrivateProfileString ( "ConfigInfo", "OriCalledNum", "111", cfg_OriCalledNum, sizeof(cfg_OriCalledNum), cfg_IniName);
+	GetPrivateProfileString ( "ConfigInfo", "SubseqNum", "22,33", cfg_SubseqNum, sizeof(cfg_SubseqNum), cfg_IniName);
+	GetPrivateProfileString ( "ConfigInfo", "RedirectingNum", "444", cfg_RedirectingNum, sizeof(cfg_RedirectingNum), cfg_IniName);
+
 	cfg_iPartWork = GetPrivateProfileInt ( "ConfigInfo", "PartWork", 0, cfg_IniName);
 
 	cfg_iPartWorkModuleID = GetPrivateProfileInt ( "ConfigInfo", "PartWorkModuleID", 0, cfg_IniName);
@@ -132,12 +140,21 @@ void	WriteToConfig(void)
 	sprintf ( TmpStr, "%d", cfg_iCalledLen);
 	WritePrivateProfileString ( "ConfigInfo", "CalledLen", TmpStr, cfg_IniName);
 
+	sprintf ( TmpStr, "%d", cfg_CallingAddrIndicator);
+	WritePrivateProfileString ( "ConfigInfo", "CallingAddrIndicator", TmpStr, cfg_IniName);
+
+	sprintf ( TmpStr, "%d", cfg_CalledAddrIndicator);
+	WritePrivateProfileString ( "ConfigInfo", "CalledAddrIndicator", TmpStr, cfg_IniName);
+
 	WritePrivateProfileString ( "ConfigInfo", "CallingNum", cfg_CallingNum, cfg_IniName);
 
 	sprintf ( TmpStr, "%d", cfg_iCallOutRule);
 	WritePrivateProfileString ( "ConfigInfo", "CallOutRule", TmpStr, cfg_IniName);
 
 	WritePrivateProfileString ( "ConfigInfo", "SimCalledRNum", cfg_SimCalledNum, cfg_IniName);
+	WritePrivateProfileString ( "ConfigInfo", "OriCalledNum", cfg_OriCalledNum, cfg_IniName);
+	WritePrivateProfileString ( "ConfigInfo", "SubseqNum", cfg_SubseqNum, cfg_IniName);
+	WritePrivateProfileString ( "ConfigInfo", "RedirectingNum", cfg_RedirectingNum, cfg_IniName);
 
 	sprintf ( TmpStr, "%d", cfg_iPartWork);
 	WritePrivateProfileString ( "ConfigInfo", "PartWork", TmpStr, cfg_IniName);
@@ -161,6 +178,12 @@ void	InitTextBox(void)
 	sprintf ( TmpStr, "%d", cfg_iCalledLen );
 	pdlg->GetDlgItem ( IDC_EDIT_CalledLen )->SetWindowText ( TmpStr );
 
+	sprintf ( TmpStr, "%d", cfg_CallingAddrIndicator );
+	pdlg->GetDlgItem ( IDC_EDIT_CallingAddrIndicator )->SetWindowText ( TmpStr );
+
+	sprintf ( TmpStr, "%d", cfg_CalledAddrIndicator );
+	pdlg->GetDlgItem ( IDC_EDIT_CalledAddrIndicator )->SetWindowText ( TmpStr );
+
 	pdlg->GetDlgItem ( IDC_EDIT_CallingNum )->SetWindowText ( cfg_CallingNum );
 
 	if ( cfg_iCallOutRule == 0 )
@@ -171,6 +194,9 @@ void	InitTextBox(void)
 		((CButton *)pdlg->GetDlgItem (IDC_RADIO_ByDtmf))->SetCheck ( 1 ) ;
 
 	pdlg->GetDlgItem ( IDC_EDIT_SimCalledNum )->SetWindowText ( cfg_SimCalledNum );
+	pdlg->GetDlgItem ( IDC_EDIT_ORICALNUM )->SetWindowText ( cfg_OriCalledNum );
+	pdlg->GetDlgItem ( IDC_EDIT_REDNUM )->SetWindowText ( cfg_RedirectingNum );
+	pdlg->GetDlgItem ( IDC_EDIT_SUBNUM )->SetWindowText ( cfg_SubseqNum );
 
 	if ( cfg_iPartWork == 0 )
 		((CButton *)pdlg->GetDlgItem (IDC_CHECK_PartWork))->SetCheck ( 0 ) ;
@@ -198,6 +224,12 @@ void	FetchFromText(void)
 	pdlg->GetDlgItem ( IDC_EDIT_CalledLen )->GetWindowText ( TmpStr, 30 );
 	sscanf ( TmpStr, "%d", &cfg_iCalledLen );
 
+	pdlg->GetDlgItem ( IDC_EDIT_CallingAddrIndicator )->GetWindowText ( TmpStr, 30 );
+	sscanf ( TmpStr, "%d", &cfg_CallingAddrIndicator );
+	
+	pdlg->GetDlgItem ( IDC_EDIT_CalledAddrIndicator )->GetWindowText ( TmpStr, 30 );
+	sscanf ( TmpStr, "%d", &cfg_CalledAddrIndicator );
+
 	pdlg->GetDlgItem ( IDC_EDIT_CallingNum )->GetWindowText ( cfg_CallingNum, 30 );
 
 	if ( ((CButton *)pdlg->GetDlgItem (IDC_RADIO_Sequence))->GetCheck ( ) )
@@ -208,6 +240,9 @@ void	FetchFromText(void)
 		 cfg_iCallOutRule = 2;
 		
 	pdlg->GetDlgItem ( IDC_EDIT_SimCalledNum )->GetWindowText ( cfg_SimCalledNum, 30 );
+	pdlg->GetDlgItem ( IDC_EDIT_ORICALNUM )->GetWindowText ( cfg_OriCalledNum, 30 );
+	pdlg->GetDlgItem ( IDC_EDIT_SUBNUM )->GetWindowText ( cfg_SubseqNum, 30 );
+	pdlg->GetDlgItem ( IDC_EDIT_REDNUM )->GetWindowText ( cfg_RedirectingNum, 30 );
 
 	if ( ((CButton *)pdlg->GetDlgItem (IDC_CHECK_PartWork))->GetCheck ( ) )
 		cfg_iPartWork = 1;
@@ -2861,8 +2896,10 @@ void ChannelWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 	else
 		TrunkWork ( pOneTrunk, pAcsEvt );
 }
-
-void	SimulateCallOut(void)
+/************************************************************************/
+/* Function:外呼函数                                                    */
+/************************************************************************/
+void SimulateCallOut(void)
 {
 	int				i;
 	DeviceID_t		FreeTrkDeviceID;
@@ -2870,11 +2907,16 @@ void	SimulateCallOut(void)
 	TRUNK_STRUCT	*pLinkTrunk = NULL;
 	RetCode_t		r;
 	char			MsgStr[256];
-
+	char			TmpStr[10];
 	i = SearchOneFreeTrunk ( cfg_SimCalledNum,  &FreeTrkDeviceID );
 	if ( i > 0 )
 	{
-		CString sCalled,sCalling;
+		CString sCalled;			//被叫号码
+		CString sCalling;			//主叫号码
+		CString redirectingNum;		//改发的号码
+		CString subsequentNum;		//后续地址
+		CString oriCalledNumber;	//原始被叫号码
+		
 		pdlg->GetDlgItemText(IDC_EDIT_SimCalledNum,sCalled);
 		memset(cfg_SimCalledNum,0,sizeof(cfg_SimCalledNum));
 		strcpy(cfg_SimCalledNum,(char*)(LPCSTR)sCalled);
@@ -2883,11 +2925,22 @@ void	SimulateCallOut(void)
 		memset(cfg_CallingNum,0,sizeof(cfg_CallingNum));
 		strcpy(cfg_CallingNum,(char*)(LPCSTR)sCalling);
 		
+		pdlg->GetDlgItemText(IDC_EDIT_REDNUM,redirectingNum);
+
+		pdlg->GetDlgItemText(IDC_EDIT_SUBNUM,subsequentNum);
+		
+		pdlg->GetDlgItemText(IDC_EDIT_ORICALNUM,oriCalledNumber);
+		
+		pdlg->GetDlgItem ( IDC_EDIT_CallingAddrIndicator )->GetWindowText ( TmpStr, 30 );
+		sscanf ( TmpStr, "%d", &cfg_CallingAddrIndicator );
+		
+		pdlg->GetDlgItem ( IDC_EDIT_CalledAddrIndicator )->GetWindowText ( TmpStr, 30 );
+		sscanf ( TmpStr, "%d", &cfg_CalledAddrIndicator );
+		
 		pLinkTrunk = &M_OneTrunk(FreeTrkDeviceID);
 
-		// ====================Added for Analog Trunk
 		if ( FreeTrkDeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
-			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK )
+			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK )		//Analog Trunk
 		{
 			if ( SearchOneFreeVoice ( pLinkTrunk,  &FreeVocDeviceID ) >= 0 )
 			{
@@ -2896,42 +2949,121 @@ void	SimulateCallOut(void)
 
 				My_DualLink(&FreeTrkDeviceID,&FreeVocDeviceID);
 				SetGtd_AnalogTrunk(&FreeVocDeviceID);
-			}
-			else
+			}else
 			{
 				MessageBox(NULL,"No VoiceDevice is Free!","SearchOneFreeVoice Failed!",MB_OK);
 				return ;
 			}
-		}
-		/************************************************************************/
-		/* 原始被叫号码                                                         */
-		/***********************************************************************
-		ISUP_spOriginalCalledNumber SP_ocn={0};
-		SP_ocn.m_u8NatureOfAddressIndicator=3; //国内有效号码，根据实际情况填
-		SP_ocn.m_u8OddEvenIndicator=0; //不使用，可填任意值
-		SP_ocn.m_u8AddressPresentationRestrictedIndicator=0; //显示允许
-		SP_ocn.m_u8NumberingPlanIndicator=1; //ISDN 电话号码计划（E.164）
-		strcpy(SP_ocn.m_s8AddressSignal, "000000"); //原来的被叫，小于16 位
-		if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISUP_SP_OriginalCalledNumber, sizeof(SP_ocn),&SP_ocn)<0)
+		}else if ( FreeTrkDeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
+			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_ISUP )
 		{
-			return;
+			/************************************************************************/
+			/* 原始被叫号码  OriginalCalledNumber                                   */
+			/************************************************************************/
+			ISUP_spOriginalCalledNumber SP_ocn={0};
+			SP_ocn.m_u8NatureOfAddressIndicator=3; //国内有效号码，根据实际情况填
+			SP_ocn.m_u8OddEvenIndicator=0; //不使用，可填任意值
+			SP_ocn.m_u8AddressPresentationRestrictedIndicator=0; //显示允许
+			SP_ocn.m_u8NumberingPlanIndicator=1; //ISDN 电话号码计划（E.164）
+			strcpy(SP_ocn.m_s8AddressSignal, oriCalledNumber); //原来的被叫，小于16 位
+			if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISUP_SP_OriginalCalledNumber, sizeof(SP_ocn),&SP_ocn)<0)
+			{
+				return;
+			}
+
+			/************************************************************************/
+			/*发送改发的号码RedirectingNumber                                       */
+			/************************************************************************/
+			ISUP_spRedirectingNumber redNum={0};
+			redNum.m_u8NatureOfAddressIndicator=3; //国内有效号码，根据实际情况填
+			redNum.m_u8OddEvenIndicator=0; //不使用，可填任意值
+			redNum.m_u8NumberingPlanIndicator=1; //ISDN 电话号码计划（E.164）
+			strcpy(redNum.m_s8AddressSignal, redirectingNum); //原来的被叫，小于16 位
+			if (!redirectingNum.IsEmpty())
+			{
+				if (XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISUP_SP_RedirectingNumber, sizeof(redNum),&redNum)<0)
+				{
+					return;
+				}
+			}
+			/************************************************************************/
+			/* 主叫用户号码---地址性质指示码
+			0：备用	1：用户号码	2：不知	3：国内（有效）号码	4：国际号码				*/
+			/************************************************************************/
+			ISUP_spCallingPartNumber callingParNum={0};
+			callingParNum.m_u8NatureOfAddressIndicator=cfg_CallingAddrIndicator;//地址性质指示码,用户号码，根据实际情况填
+			callingParNum.m_u8OddEvenIndicator=0;							//不使用，可填任意值
+			callingParNum.m_u8Screening=3;									//网络提供，一般都取该值
+			callingParNum.m_u8AddressPresentationRestrictedIndicator=0;		//显示允许
+			callingParNum.m_u8NumberingPlanIndicator=1;						//ISDN电话号码计划(E.164)
+			callingParNum.m_u8NumberIncompleteIndicator=0;					//主叫不全指示：完全
+			strcpy(callingParNum.m_s8AddressSignal, cfg_CallingNum);		//完整主叫，小于32位
+			if (XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, ISUP_SP_CallingPartNumber, sizeof(callingParNum), &callingParNum)<0)
+			{
+				return;
+			}
+			/************************************************************************/
+			/* 被叫用户号码---地址性质指示码
+			0：备用	1：用户号码	2：不知	3：国内（有效）号码	4：国际号码				*/
+			/************************************************************************/
+			ISUP_spCalledPartNumber calledParNum={0};
+			calledParNum.m_u8NatureOfAddressIndicator=cfg_CalledAddrIndicator;//地址性质指示码,用户号码，根据实际情况填
+			calledParNum.m_u8OddEvenIndicator=0;							//不使用，可填任意值
+			calledParNum.m_u8NumberingPlanIndicator=1;						//ISDN电话号码计划(E.164)
+			strcpy(calledParNum.m_s8AddressSignal, cfg_SimCalledNum);		//被叫号码
+			if (XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, ISUP_SP_CalledPartNumber, sizeof(calledParNum), &calledParNum)<0)
+			{
+				return;
+			}
+		}else if (FreeTrkDeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
+			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_TUP)
+		{
+			/************************************************************************/
+			/* TUP原始被叫号码  OriginalCalledNumber                                */
+			/************************************************************************/
+			TUP_spIaiFirstIndicator  TUP_FirInd={0};
+			TUP_FirInd.m_u8CallingLineIdentityIndicator = 1;
+			TUP_FirInd.m_u8OriginalCalledAddressIndicator = 1;
+			if(XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID,TUP_SP_IaiFirstIndicator, sizeof(TUP_FirInd), &TUP_FirInd)<0)
+			{
+				return;
+			}
+			TUP_spOriginalCalledAddress TUP_oriCalledNum={0};
+			TUP_oriCalledNum.m_u8NatureOfAddressIndicator=3;				//国内有效号码，根据实际情况填
+			strcpy(TUP_oriCalledNum.m_s8AddressSignal, oriCalledNumber);	//原来的被叫，小于16 位
+			if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,TUP_SP_OriginalCalledAddress, sizeof(TUP_oriCalledNum),&TUP_oriCalledNum)<0)
+			{
+				return;
+			}
+			/************************************************************************/
+			/* TUP主叫用户号码---地址性质指示码
+			0：市内用户号码	1：备用	2：国内有效号码	3：国际号码						*/
+			/************************************************************************/
+			TUP_spCallingLineAddress TUP_CallingLineAddr={0};
+			TUP_CallingLineAddr.m_u8NatureOfAddressIndicator=cfg_CallingAddrIndicator;	//地址性质表示语
+			TUP_CallingLineAddr.m_u8NumberOfAddressSignal=0;							//主叫地址信号的数量
+			TUP_CallingLineAddr.m_u8PresentationIndicator=0;							//提供主叫用户线标识表示语
+			TUP_CallingLineAddr.m_u8IncompleteIndicator=0;								//主叫用户线标识不全表示语
+			strcpy(TUP_CallingLineAddr.m_s8AddressSignal, cfg_CallingNum);				//完整主叫，小于32位
+			if (XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, TUP_SP_CallingLineAddress, sizeof(TUP_CallingLineAddr), &TUP_CallingLineAddr)<0)
+			{
+				return;
+			}
+			/************************************************************************/
+			/* TUP被叫用户号码---地址性质指示码
+			0：市内用户号码	1：备用	2：国内有效号码	3：国际号码						*/
+			/************************************************************************/
+			TUP_spCalledPartAddress TUP_CalledPartAddr={0};
+			TUP_CalledPartAddr.m_u8NatureOfAddressIndicator=cfg_CalledAddrIndicator;	//地址性质指示码,用户号码，根据实际情况填
+			TUP_CalledPartAddr.m_u8NumberOfAddressSignal=1;								//被叫号码的数量
+			strcpy(TUP_CalledPartAddr.m_s8AddressSignal, cfg_SimCalledNum);				//被叫号码
+			if (XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, TUP_SP_CalledPartAddress, sizeof(TUP_CalledPartAddr), &TUP_CalledPartAddr)<0)
+			{
+				return;
+			}
 		}
-		************************************************************************/
-
-		/************************************************************************/
-		/*发送改发的号码RedirectingNumber                                       */
-		/************************************************************************
-		ISUP_spRedirectingNumber SP_ocn={0};
-        SP_ocn.m_u8NatureOfAddressIndicator=3; //国内有效号码，根据实际情况填
-        SP_ocn.m_u8OddEvenIndicator=0; //不使用，可填任意值
-        SP_ocn.m_u8NumberingPlanIndicator=1; //ISDN 电话号码计划（E.164）
-        strcpy(SP_ocn.m_s8AddressSignal, "8989"); //原来的被叫，小于16 位
-        if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISUP_SP_RedirectingNumber, sizeof(SP_ocn),&SP_ocn)<0)
-        {
-            return;
-        }
-		************************************************************************/
-
+		
+		//开始进行外呼
 		r = XMS_ctsMakeCallOut ( g_acsHandle, &FreeTrkDeviceID, cfg_CallingNum, cfg_SimCalledNum, NULL );
 		if ( r > 0 )
 		{
@@ -2946,28 +3078,65 @@ void	SimulateCallOut(void)
 			AddMsg ( MsgStr );
 		}
 
-		/************************************************************************/
-		/*发送后续地址                                                          */
-		/***********************************************************************
-		ISUP_spSubsequentNumber SP_ssn={0};
-        SP_ssn.m_u8OddEvenIndicator=0; //不使用，可填任意值
-        strcpy(SP_ssn.m_s8AddressSignal, "78");//后续地址，不超过16位        
-        //设置后续地址信号的值
-        r = XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, ISUP_SP_SubsequentNumber,sizeof(SP_ssn), &SP_ssn);
-        if (r < 0)
-        {
-            AddMsg("XMS_ctsSetParam:ISUP subsequent number fail.");
-            return ;
-        }          
-        r = XMS_ctsSendSignalMsg(g_acsHandle, &FreeTrkDeviceID, ISUP_SM_SAM);        
-        if( r < 0)
-        {
-            AddMsg("XMS_ctsSendSignalMsg:ISUP subsequent number fail");
-            return ;
-        }else{
-            AddMsg("XMS_ctsSendSignalMsg:ISUP subsequent number first ok.....");
-        }   
-		************************************************************************/
+		if ( FreeTrkDeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
+			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_ISUP )
+		{
+			/************************************************************************/
+			/*ISUP发送后续地址                                                      */
+			/************************************************************************/
+			ISUP_spSubsequentNumber SP_ssn={0};
+			SP_ssn.m_u8OddEvenIndicator=0;							//不使用，可填任意值
+			CString getItem;
+			while(!subsequentNum.IsEmpty())							//遍历字符串，先按逗号分开，存放到容器中
+			{
+				int pos = subsequentNum.Find(',');					//从第一个逗号开始查找，并返回逗号的位置
+				if ( -1 == pos )									//没有找到逗号
+				{
+					strcpy(SP_ssn.m_s8AddressSignal, subsequentNum);//后续地址，不超过16位    
+					XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, ISUP_SP_SubsequentNumber,sizeof(SP_ssn), &SP_ssn);
+					XMS_ctsSendSignalMsg(g_acsHandle, &FreeTrkDeviceID, ISUP_SM_SAM); 
+					subsequentNum = "";
+				}else
+				{
+					getItem = subsequentNum.Left(pos);				//获得逗号左边的字符串
+					if(!getItem.IsEmpty())							//如果逗号间没有字符串，则不做任何处理
+					{
+						strcpy(SP_ssn.m_s8AddressSignal, getItem);	//后续地址，不超过16位 						
+						XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, ISUP_SP_SubsequentNumber,sizeof(SP_ssn), &SP_ssn);
+						XMS_ctsSendSignalMsg(g_acsHandle, &FreeTrkDeviceID, ISUP_SM_SAM);         
+					}
+					subsequentNum = subsequentNum.Right(subsequentNum.GetLength()-pos-1); //截取该逗号以后的字符串，进入下一轮查找
+				}
+			} //end while                                    
+		}else if (FreeTrkDeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
+			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_TUP)
+		{
+			/************************************************************************/
+			/*TUP发送后续地址                                                       */
+			/************************************************************************/
+			TUP_spSubsequentAddress TUP_ssn={0};
+			CString getItem;
+			while(!subsequentNum.IsEmpty())							//遍历字符串，先按逗号分开，存放到容器中
+			{
+				int pos = subsequentNum.Find(',');					//从第一个逗号开始查找，并返回逗号的位置
+				if ( -1 == pos )									//没有找到逗号
+				{
+					strcpy(TUP_ssn.m_s8AddressSignal, subsequentNum);//后续地址，不超过16位    
+					XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, TUP_SP_SubsequentAddress,sizeof(TUP_ssn), &TUP_ssn);
+					XMS_ctsSendSignalMsg(g_acsHandle, &FreeTrkDeviceID, TUP_SM_SAM); 
+					subsequentNum = "";
+				}else
+				{
+					getItem = subsequentNum.Left(pos);				//获得逗号左边的字符串
+					if(!getItem.IsEmpty())							//如果逗号间没有字符串，则不做任何处理
+					{
+						strcpy(TUP_ssn.m_s8AddressSignal, getItem);	//后续地址，不超过16位 						
+						XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID, TUP_SP_SubsequentAddress,sizeof(TUP_ssn), &TUP_ssn);
+						XMS_ctsSendSignalMsg(g_acsHandle, &FreeTrkDeviceID, TUP_SM_SAM);         
+					}
+					subsequentNum = subsequentNum.Right(subsequentNum.GetLength()-pos-1); //截取该逗号以后的字符串，进入下一轮查找
+				}
+			} //end while 
+		}
 	}
-
 }

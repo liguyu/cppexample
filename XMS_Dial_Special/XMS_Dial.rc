@@ -84,48 +84,62 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
 END
 
-IDD_XMS_DIAL_DIALOG DIALOGEX 0, 0, 553, 385
+IDD_XMS_DIAL_DIALOG DIALOGEX 0, 0, 553, 401
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Donjin XMS Dial System"
 FONT 8, "Tahoma"
 BEGIN
-    DEFPUSHBUTTON   "Exit",IDOK,496,364,50,14
+    DEFPUSHBUTTON   "Exit",IDOK,493,380,50,14
     CONTROL         "List1",IDC_LIST1,"SysListView32",LVS_REPORT | WS_BORDER | 
-                    WS_TABSTOP,7,77,366,173
+                    WS_TABSTOP,7,77,366,170
     CONTROL         "List2",IDC_LIST2,"SysListView32",LVS_REPORT | WS_BORDER | 
-                    WS_TABSTOP,382,144,164,59
-    LISTBOX         IDC_LIST3,382,7,164,131,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_TABSTOP,382,117,164,53
+    LISTBOX         IDC_LIST3,382,7,164,107,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
-    GROUPBOX        "Config",IDC_STATIC,382,207,164,155
-    LTEXT           "Server IP Addr:",IDC_STATIC,407,237,61,8
-    LTEXT           "Port:",IDC_STATIC,447,253,21,8
-    LTEXT           "Called Len:",IDC_STATIC,423,273,45,8
+    GROUPBOX        "Config",IDC_STATIC,382,170,164,206
+    LTEXT           "IP:",IDC_STATIC,383,180,11,8
+    LTEXT           "Port:",IDC_STATIC,467,182,18,8
+    LTEXT           "Called Len:",IDC_STATIC,421,241,45,8
     CONTROL         "List4",IDC_LIST4,"SysListView32",LVS_REPORT | WS_BORDER | 
-                    WS_TABSTOP,7,252,366,126
-    EDITTEXT        IDC_EDIT_IPADDR,475,234,65,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_IPPORT,475,252,65,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_CalledLen,475,270,65,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_CallingNum,475,286,65,14,ES_AUTOHSCROLL
-    LTEXT           "Calling Num:",IDC_STATIC,421,288,49,8
-    LTEXT           "CallOutRule:",IDC_STATIC,386,302,49,8
+                    WS_TABSTOP,7,251,366,143
+    EDITTEXT        IDC_EDIT_IPADDR,397,179,65,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IPPORT,490,179,48,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_CalledLen,472,238,65,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_EDIT_CallingNum,472,254,65,14,ES_AUTOHSCROLL
+    LTEXT           "Calling Num:",IDC_STATIC,419,256,49,8
+    LTEXT           "CallOutRule:",IDC_STATIC,383,196,43,8
     CONTROL         "Sequence",IDC_RADIO_Sequence,"Button",
-                    BS_AUTORADIOBUTTON,393,314,48,10
-    CONTROL         "Loop",IDC_RADIO_Loop,"Button",BS_AUTORADIOBUTTON,445,
-                    315,32,10
-    CONTROL         "Dtmf Tail 3",IDC_RADIO_ByDtmf,"Button",
-                    BS_AUTORADIOBUTTON,482,315,60,10
-    PUSHBUTTON      "Simulate",IDC_BUTTON_Simulate,385,329,63,14
-    EDITTEXT        IDC_EDIT_SimCalledNum,475,328,65,14,ES_AUTOHSCROLL
+                    BS_AUTORADIOBUTTON,427,198,46,10
+    CONTROL         "Loop",IDC_RADIO_Loop,"Button",BS_AUTORADIOBUTTON,473,
+                    198,29,10
+    CONTROL         "DtmfTail3",IDC_RADIO_ByDtmf,"Button",BS_AUTORADIOBUTTON,
+                    502,199,42,10
+    PUSHBUTTON      "Simulate",IDC_BUTTON_Simulate,395,287,63,14
+    EDITTEXT        IDC_EDIT_SimCalledNum,472,287,65,14,ES_AUTOHSCROLL
     CONTROL         "Part Work, Module ID:",IDC_CHECK_PartWork,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,394,349,100,10
-    EDITTEXT        IDC_EDIT_ModuleID,499,347,42,14,ES_AUTOHSCROLL
+                    BS_AUTOCHECKBOX | WS_TABSTOP,383,221,87,10
+    EDITTEXT        IDC_EDIT_ModuleID,472,220,65,14,ES_AUTOHSCROLL
     CONTROL         "List5",IDC_LIST_COUNT,"SysListView32",LVS_REPORT | 
                     WS_BORDER | WS_TABSTOP,7,7,366,52
     CONTROL         "Debug Mode On",IDC_CHECK_DEBUG,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,406,217,70,10
-    PUSHBUTTON      "ReOpen",IDC_BUTTON_ReOpen,385,364,50,14
+                    WS_TABSTOP,383,207,70,10
+    PUSHBUTTON      "ReOpen",IDC_BUTTON_ReOpen,385,380,50,14
     PUSHBUTTON      "Prepare For Remove",IDC_BUTTON_Remove,262,61,94,11
+    LTEXT           "OriginalCalledNumber:",IDC_STATIC,387,340,71,11
+    EDITTEXT        IDC_EDIT_ORICALNUM,472,339,65,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_EDIT_REDNUM,472,356,65,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "RedirectingNumber:",IDC_STATIC,393,359,65,11
+    LTEXT           "SubsequentNumber:",IDC_STATIC,391,323,67,11
+    EDITTEXT        IDC_EDIT_SUBNUM,472,322,65,14,ES_AUTOHSCROLL
+    LTEXT           "CallingAddrIndicator:",IDC_STATIC,391,271,71,8
+    EDITTEXT        IDC_EDIT_CallingAddrIndicator,472,269,65,14,
+                    ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "CalledAddrIndicator:",IDC_STATIC,391,305,67,11
+    EDITTEXT        IDC_EDIT_CalledAddrIndicator,472,304,65,14,
+                    ES_AUTOHSCROLL | ES_NUMBER
 END
 
 
@@ -196,7 +210,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 546
         TOPMARGIN, 7
-        BOTTOMMARGIN, 378
+        BOTTOMMARGIN, 394
     END
 END
 #endif    // APSTUDIO_INVOKED

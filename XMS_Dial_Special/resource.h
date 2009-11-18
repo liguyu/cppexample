@@ -27,6 +27,11 @@
 #define IDC_CHECK_DEBUG                 1020
 #define IDC_BUTTON_ReOpen               1021
 #define IDC_BUTTON_Remove               1022
+#define IDC_EDIT_ORICALNUM              1023
+#define IDC_EDIT_REDNUM                 1024
+#define IDC_EDIT_SUBNUM                 1025
+#define IDC_EDIT_CallingAddrIndicator   1026
+#define IDC_EDIT_CalledAddrIndicator    1027
 
 // Next default values for new objects
 // 
