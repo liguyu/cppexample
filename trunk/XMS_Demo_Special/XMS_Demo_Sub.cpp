@@ -12,6 +12,7 @@ static char THIS_FILE[] = __FILE__;
 #include "DJAcsAPIDef.h"
 #include "DJAcsDevState.h"
 #include "DJAcsISUPDef.h"
+#include "DJAcsTUPDef.h"
 #include "XMS_Demo_Sub.H"
 #include "XMS_Demo_Event.H"
 #include "XMS_Demo_String.H"
@@ -2018,8 +2019,6 @@ void SetGtD_AnalogTrunk(DeviceID_t* pDevId)
 
 	//========Set GTG End  ========
 }
-
-
 /********************************************************************************
 Function:		业务流程主体函数
 Input:			TRUNK_STRUCT *pOneTrunk				中继通道结构;
@@ -2027,12 +2026,12 @@ Input:			TRUNK_STRUCT *pOneTrunk				中继通道结构;
 ********************************************************************************/
 void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 {
-	Acs_CallControl_Data *	pCallControl = NULL;
-	DeviceID_t				FreeVocDeviceID;
-	char					FileName[256];
 	char					TmpDtmf, TmpGtd;
-
-
+	char					FileName[256];
+	char					tempStr[100];
+	DeviceID_t				FreeVocDeviceID;
+	Acs_CallControl_Data *	pCallControl = NULL;
+	
 	if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL )	/*clear Event*/
 	{
 		if ( (pOneTrunk->State != TRK_FREE) && (pOneTrunk->State != TRK_WAIT_REMOVE) )
@@ -2058,14 +2057,11 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 
 	switch(pOneTrunk->State)
 	{
-	case TRK_FREE:				//等待呼叫并应答
-		// Special code for CAS(SS1)
-		SpecialForCas(pOneTrunk,pAcsEvt);
-
+	case TRK_FREE:							//等待呼叫并应答
+		SpecialForCas(pOneTrunk,pAcsEvt);	// Special code for CAS(SS1)
 		if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK )
 		{
 			unsigned char	 *p;
-
 			p = My_GetFskCode ( pAcsEvt );
 			if ( p != NULL )
 			{
@@ -2073,32 +2069,81 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 			}	
 		}
 
-		if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )	/* Call In Event */
+		if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )	// Call In Event
 		{
-			/************************************************************************/
-			/* 获取原始被叫号码                                                     */
-			/***********************************************************************
-			XMS_ctsGetParam(g_acsHandle, &pOneTrunk->deviceID, ISUP_SP_OriginalCalledNumber,0,NULL);
-			************************************************************************/
+			pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
+
+			if (pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_ISUP )
+			{
+				// 获取原始被叫号码
+				XMS_ctsGetParam(g_acsHandle, &pOneTrunk->deviceID, ISUP_SP_OriginalCalledNumber,0,NULL);
+				// 获取改发的号码   
+				XMS_ctsGetParam(g_acsHandle, &pOneTrunk->deviceID, ISUP_SP_RedirectingNumber,0,NULL);
+				
+				/************************************************************************/
+				/* 显示：主叫地址性质指示码  被叫地址性质指示码
+				   0：备用	1：用户号码	2：不知	3：国内（有效）号码	4：国际号码         */
+				/************************************************************************/
+				switch (pCallControl->m_u8CallingAddressIndicator)
+				{
+				case 0:strcpy(tempStr,"主叫地址性质指示码: 0-备用");break;
+				case 1:strcpy(tempStr,"主叫地址性质指示码: 1-用户号码");break;
+				case 2:strcpy(tempStr,"主叫地址性质指示码: 2-不知");break;
+				case 3:strcpy(tempStr,"主叫地址性质指示码: 3-国内有效号码");break;
+				case 4:strcpy(tempStr,"主叫地址性质指示码: 4-国际号码");break;
+				default:strcpy(tempStr,"主叫地址性质指示码: Unknown");break;
+				}
+				AddMsg(tempStr);
+				switch(pCallControl->m_u8CalledAddressIndicator)
+				{
+				case 0:strcpy(tempStr,"被叫地址性质指示码: 0-备用");break;
+				case 1:strcpy(tempStr,"被叫地址性质指示码: 1-用户号码");break;
+				case 2:strcpy(tempStr,"被叫地址性质指示码: 2-不知");break;
+				case 3:strcpy(tempStr,"被叫地址性质指示码: 3-国内有效号码");break;
+				case 4:strcpy(tempStr,"被叫地址性质指示码: 4-国际号码");break;
+				default:strcpy(tempStr,"被叫地址性质指示码: Unknown");break;
+				}				
+				AddMsg(tempStr);
+			}else if (pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_TUP)
+			{
+				// 获取原始被叫号码
+				XMS_ctsGetParam(g_acsHandle, &pOneTrunk->deviceID, TUP_SP_OriginalCalledAddress,0,NULL);
+				/************************************************************************/
+				/* TUP显示：主叫地址性质指示码  被叫地址性质指示码
+				   0：市内用户号码	1：备用	2：国内有效号码	3：国际号码				    */
+				/************************************************************************/
+				switch (pCallControl->m_u8CallingAddressIndicator)
+				{
+				case 0:strcpy(tempStr,"主叫地址性质指示码: 0-市内用户号码");break;
+				case 1:strcpy(tempStr,"主叫地址性质指示码: 1-备用");break;
+				case 2:strcpy(tempStr,"主叫地址性质指示码: 2-国内有效号码");break;
+				case 3:strcpy(tempStr,"主叫地址性质指示码: 3-国际号码");break;
+				default:strcpy(tempStr,"主叫地址性质指示码: Unknown");break;
+				}
+				AddMsg(tempStr);
+				switch(pCallControl->m_u8CalledAddressIndicator)
+				{
+				case 0:strcpy(tempStr,"被叫地址性质指示码: 0-市内用户号码");break;
+				case 1:strcpy(tempStr,"被叫地址性质指示码: 1-备用");break;
+				case 2:strcpy(tempStr,"被叫地址性质指示码: 2-国内有效号码");break;
+				case 3:strcpy(tempStr,"被叫地址性质指示码: 3-国际号码");break;
+				default:strcpy(tempStr,"被叫地址性质指示码: Unknown");break;
+				}				
+				AddMsg(tempStr);
+			}
 			
-			/************************************************************************/
-			/* 获取改发的号码                                                       */
-			/************************************************************************
-			XMS_ctsGetParam(g_acsHandle, &pOneTrunk->deviceID, ISUP_SP_RedirectingNumber,0,NULL);
-			************************************************************************/
 			if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK )	 
 			{
 				My_DualUnlink ( &pOneTrunk->VocDevID, &pOneTrunk->deviceID );
 				FreeOneFreeVoice (  &pOneTrunk->VocDevID );
-				memset ( &M_OneVoice(pOneTrunk->VocDevID).UsedDevID,	0, sizeof(DeviceID_t) );		// 0: didn't alloc Device
+				memset ( &M_OneVoice(pOneTrunk->VocDevID).UsedDevID,0, sizeof(DeviceID_t) );		// 0: didn't alloc Device
 				memset ( &pOneTrunk->VocDevID, 0, sizeof(DeviceID_t) );		// 0: didn't alloc Device
 				DrawMain_VocInfo ( pOneTrunk );
 			}
-
-			pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
+		
 			XMS_ctsAlertCall ( g_acsHandle, &pOneTrunk->deviceID, NULL );
 			XMS_ctsAnswerCallIn ( g_acsHandle, &pOneTrunk->deviceID, NULL );
-			if ( pOneTrunk->deviceID.m_s16DeviceSub != XMS_DEVSUB_ANALOG_TRUNK )
+			if ( pOneTrunk->deviceID.m_s16DeviceSub != XMS_DEVSUB_ANALOG_TRUNK )//如果是数字中继(TUP、ISUP、ISDN)直接获取主被叫号码
 			{
 				sprintf ( pOneTrunk->CalleeCode, pCallControl->m_s8CalledNum );
 				sprintf ( pOneTrunk->CallerCode, pCallControl->m_s8CallingNum );

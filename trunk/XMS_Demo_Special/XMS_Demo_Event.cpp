@@ -6,6 +6,7 @@
 #include "DJAcsDataDef.h"
 #include "DJAcsAPIDef.h"
 #include "DJAcsISUPDef.h"
+#include "DJAcsTUPDef.h"
 #include "XMS_Demo_Sub.H"
 #include "XMS_Demo_Event.H"
 #include "XMS_Demo_String.H"
@@ -430,9 +431,10 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 	char						tempStr[100] = {0};
 	Acs_Evt_t					*pAcsEvt = NULL;
 	Acs_Dev_List_Head_t			*pAcsDevList = NULL;
-	ISUP_spOriginalCalledNumber *PSP_ocn=NULL;
-	ISUP_spRedirectingNumber    *reDirectingNumber = NULL;
-	Acs_ParamProc_Data			*pParmHead =NULL;
+	ISUP_spOriginalCalledNumber *ISUP_OriCalledNum = NULL;
+	TUP_spOriginalCalledAddress	*TUP_OriCalledAddr = NULL;
+	ISUP_spRedirectingNumber    *ISUP_RedirectingNumber = NULL;
+	Acs_ParamProc_Data			*pParmHead = NULL;
 
 	pAcsEvt = (Acs_Evt_t *) esrParam;
 	DispEventInfo ( pAcsEvt );
@@ -480,26 +482,34 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 		case XMS_EVT_GETPARAM:
 			pParmHead = (Acs_ParamProc_Data*)FetchEventData(pAcsEvt);
 			switch (pParmHead->m_u16ParamCmdType){
-            case ISUP_SP_OriginalCalledNumber: //原始被叫号码
+            case ISUP_SP_OriginalCalledNumber:		//原始被叫号码
                 if (pParmHead->m_u16ParamDataSize){ //参数存在         
-                    PSP_ocn=(ISUP_spOriginalCalledNumber*)FetchParamData(pAcsEvt);
-                    sprintf(tempStr,"原始被叫号码:%s",PSP_ocn->m_s8AddressSignal);
+                    ISUP_OriCalledNum = (ISUP_spOriginalCalledNumber*)FetchParamData(pAcsEvt);
+                    sprintf(tempStr,"原始被叫号码:%s",ISUP_OriCalledNum->m_s8AddressSignal);
 					AddMsg(tempStr);
                 }
                 break;
-			case ISUP_SP_RedirectingNumber://改发的号码
-                reDirectingNumber = (ISUP_spRedirectingNumber* )FetchParamData(pAcsEvt);
-                sprintf(tempStr,"改发的号码:%s",reDirectingNumber->m_s8AddressSignal);
-				AddMsg(tempStr);
+			case ISUP_SP_RedirectingNumber:			//改发的号码
+				if (pParmHead->m_u16ParamDataSize){ //参数存在
+					ISUP_RedirectingNumber = (ISUP_spRedirectingNumber* )FetchParamData(pAcsEvt);
+					sprintf(tempStr,"改发的号码:%s",ISUP_RedirectingNumber->m_s8AddressSignal);
+					AddMsg(tempStr);
+				}
                 break;
+			case TUP_SP_OriginalCalledAddress:
+				if (pParmHead->m_u16ParamDataSize)
+				{
+					TUP_OriCalledAddr = (TUP_spOriginalCalledAddress*)FetchParamData(pAcsEvt);
+                    sprintf(tempStr,"原始被叫号码:%s",TUP_OriCalledAddr->m_s8AddressSignal);
+					AddMsg(tempStr);
+				}
 			}
 			break;
 		default:
 			if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH  )
 			{
 				TrunkWork ( &M_OneTrunk(pAcsEvt->m_DeviceID), pAcsEvt );
-			}
-			else if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_VOICE )
+			}else if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_VOICE )
 			{
 				DeviceID_t	*pDevID;
 				pDevID = &M_OneVoice(pAcsEvt->m_DeviceID).UsedDevID;

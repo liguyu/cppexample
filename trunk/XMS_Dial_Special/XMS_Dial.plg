@@ -6,13 +6,13 @@
 --------------------Configuration: XMS_Dial - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1CD.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB5.tmp" with contents
 [
 /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_Dial.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\cppexample\XMS_Dial_Special\XMS_Dial_Sub.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1CD.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1CE.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB5.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB6.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_Dial.pdb" /debug /machine:I386 /out:"Debug/XMS_Dial.exe" /pdbtype:sept 
 .\Debug\Analog_Common_Code.obj
@@ -26,7 +26,7 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1CE.tmp" with con
 .\Debug\XMS_Dial.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1CE.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPB6.tmp"
 <h3>Output Window</h3>
 Compiling...
 XMS_Dial_Sub.cpp
