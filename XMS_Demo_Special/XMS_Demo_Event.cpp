@@ -429,6 +429,7 @@ void	AddDeviceRes ( Acs_Dev_List_Head_t *pAcsDevList )
 DJ_Void EvtHandler(DJ_U32 esrParam)
 {
 	char						tempStr[100] = {0};
+	char						*ISDN_OriCalledNum;
 	Acs_Evt_t					*pAcsEvt = NULL;
 	Acs_Dev_List_Head_t			*pAcsDevList = NULL;
 	ISUP_spOriginalCalledNumber *ISUP_OriCalledNum = NULL;
@@ -480,30 +481,40 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 		case XMS_EVT_UNIFAILURE:// must handle this event in your real System
 			break;
 		case XMS_EVT_GETPARAM:
-			pParmHead = (Acs_ParamProc_Data*)FetchEventData(pAcsEvt);
-			switch (pParmHead->m_u16ParamCmdType){
-            case ISUP_SP_OriginalCalledNumber:		//原始被叫号码
-                if (pParmHead->m_u16ParamDataSize){ //参数存在         
-                    ISUP_OriCalledNum = (ISUP_spOriginalCalledNumber*)FetchParamData(pAcsEvt);
-                    sprintf(tempStr,"原始被叫号码:%s",ISUP_OriCalledNum->m_s8AddressSignal);
-					AddMsg(tempStr);
-                }
-                break;
-			case ISUP_SP_RedirectingNumber:			//改发的号码
-				if (pParmHead->m_u16ParamDataSize){ //参数存在
-					ISUP_RedirectingNumber = (ISUP_spRedirectingNumber* )FetchParamData(pAcsEvt);
-					sprintf(tempStr,"改发的号码:%s",ISUP_RedirectingNumber->m_s8AddressSignal);
-					AddMsg(tempStr);
+			
+			if (pAcsEvt->m_DeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_ISUP ||
+				pAcsEvt->m_DeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_SS7_TUP )
+			{
+				pParmHead = (Acs_ParamProc_Data*)FetchEventData(pAcsEvt);
+				switch (pParmHead->m_u16ParamCmdType){
+				case ISUP_SP_OriginalCalledNumber:		//原始被叫号码
+					if (pParmHead->m_u16ParamDataSize){ //参数存在         
+						ISUP_OriCalledNum = (ISUP_spOriginalCalledNumber*)FetchParamData(pAcsEvt);
+						sprintf(tempStr,"原始被叫号码:%s",ISUP_OriCalledNum->m_s8AddressSignal);
+						AddMsg(tempStr);
+					}
+					break;
+				case ISUP_SP_RedirectingNumber:			//改发的号码
+					if (pParmHead->m_u16ParamDataSize){ //参数存在
+						ISUP_RedirectingNumber = (ISUP_spRedirectingNumber* )FetchParamData(pAcsEvt);
+						sprintf(tempStr,"改发的号码:%s",ISUP_RedirectingNumber->m_s8AddressSignal);
+						AddMsg(tempStr);
+					}
+					break;
+				case TUP_SP_OriginalCalledAddress:
+					if (pParmHead->m_u16ParamDataSize)
+					{
+						TUP_OriCalledAddr = (TUP_spOriginalCalledAddress*)FetchParamData(pAcsEvt);
+						sprintf(tempStr,"原始被叫号码:%s",TUP_OriCalledAddr->m_s8AddressSignal);
+						AddMsg(tempStr);
+					}
 				}
-                break;
-			case TUP_SP_OriginalCalledAddress:
-				if (pParmHead->m_u16ParamDataSize)
-				{
-					TUP_OriCalledAddr = (TUP_spOriginalCalledAddress*)FetchParamData(pAcsEvt);
-                    sprintf(tempStr,"原始被叫号码:%s",TUP_OriCalledAddr->m_s8AddressSignal);
-					AddMsg(tempStr);
-				}
-			}
+			}else if (pAcsEvt->m_DeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_DSS1)
+			{
+				ISDN_OriCalledNum = (char *)FetchParamData(pAcsEvt);
+				sprintf(tempStr,"原始被叫号码:%s",ISDN_OriCalledNum);
+				AddMsg(tempStr);
+			}			
 			break;
 		default:
 			if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH  )

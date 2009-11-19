@@ -98,12 +98,12 @@ BEGIN
     LISTBOX         IDC_LIST3,382,7,164,107,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
     GROUPBOX        "Config",IDC_STATIC,382,170,164,206
-    LTEXT           "IP:",IDC_STATIC,383,180,11,8
+    LTEXT           "IP:",IDC_STATIC,384,181,11,8
     LTEXT           "Port:",IDC_STATIC,467,182,18,8
     LTEXT           "Called Len:",IDC_STATIC,421,241,45,8
     CONTROL         "List4",IDC_LIST4,"SysListView32",LVS_REPORT | WS_BORDER | 
                     WS_TABSTOP,7,251,366,143
-    EDITTEXT        IDC_EDIT_IPADDR,397,179,65,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IPADDR,398,179,65,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_IPPORT,490,179,48,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_CalledLen,472,238,65,14,ES_AUTOHSCROLL | 
                     ES_NUMBER
@@ -111,7 +111,7 @@ BEGIN
     LTEXT           "Calling Num:",IDC_STATIC,419,256,49,8
     LTEXT           "CallOutRule:",IDC_STATIC,383,196,43,8
     CONTROL         "Sequence",IDC_RADIO_Sequence,"Button",
-                    BS_AUTORADIOBUTTON,427,198,46,10
+                    BS_AUTORADIOBUTTON,427,197,46,10
     CONTROL         "Loop",IDC_RADIO_Loop,"Button",BS_AUTORADIOBUTTON,473,
                     198,29,10
     CONTROL         "DtmfTail3",IDC_RADIO_ByDtmf,"Button",BS_AUTORADIOBUTTON,

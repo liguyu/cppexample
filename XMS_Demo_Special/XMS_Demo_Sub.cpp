@@ -2081,7 +2081,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 				XMS_ctsGetParam(g_acsHandle, &pOneTrunk->deviceID, ISUP_SP_RedirectingNumber,0,NULL);
 				
 				/************************************************************************/
-				/* 显示：主叫地址性质指示码  被叫地址性质指示码
+				/* ISUP地址性质指示码
 				   0：备用	1：用户号码	2：不知	3：国内（有效）号码	4：国际号码         */
 				/************************************************************************/
 				switch (pCallControl->m_u8CallingAddressIndicator)
@@ -2130,6 +2130,20 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 				default:strcpy(tempStr,"被叫地址性质指示码: Unknown");break;
 				}				
 				AddMsg(tempStr);
+			}else if (pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_E1_DSS1)
+			{
+				/************************************************************************/
+				/* ISDN获取原始主叫号码                                                 */
+				/************************************************************************/
+				XMS_ctsGetParam( g_acsHandle, &pOneTrunk->deviceID, ISDN_PARAM_ORINUMBER, 0, NULL);  
+				switch (pCallControl->m_u8CallingAddressIndicator)
+				{
+				case 0:strcpy(tempStr,"主叫地址性质指示码: 0-市内用户号码");break;
+				case 1:strcpy(tempStr,"主叫地址性质指示码: 1-备用");break;
+				case 2:strcpy(tempStr,"主叫地址性质指示码: 2-国内有效号码");break;
+				case 3:strcpy(tempStr,"主叫地址性质指示码: 3-国际号码");break;
+				default:strcpy(tempStr,"主叫地址性质指示码: Unknown");break;
+				}
 			}
 			
 			if ( pOneTrunk->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK )	 
