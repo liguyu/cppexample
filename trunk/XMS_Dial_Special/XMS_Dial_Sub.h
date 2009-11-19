@@ -76,61 +76,41 @@ enum VOICE_STATE {
 
 typedef struct
 {
-	// ----------------
 	DeviceID_t	deviceID;
 	int			iSeqID;
-
 	DeviceID_t	UsedDevID;
-
-	// ----------------
 	VOICE_STATE	State;
-
-
 } VOICE_STRUCT;
 
 typedef struct
 {
-	// ----------------
 	DeviceID_t	deviceID;
 	int			iSeqID;
 	bool		bOpenFlag;		// flag of OpenDevice OK
 
-	//
 	DJ_U8		u8E1Type;
 	DJ_S32		s32AlarmVal;
 } PCM_STRUCT;
 
-// ----- decalure function -----
+//º¯ÊýÉùÃ÷
 bool	InitSystem(void);
 void	ExitSystem(void); 
-
 void	AddMsg ( char *str);
-
 void	OpenAllDevice_Dsp ( DJ_S8 s8DspModID );
 void	CloseAllDevice_Dsp ( DJ_S8 s8DspModID );
 void	ReOpen_AllDevice (void);
-
 void	HandleDevState ( Acs_Evt_t *pAcsEvt );
-
 void	ReDrawAll (void);
 void	OpenDeviceOK ( DeviceID_t *pDevice );
 void	CloseDeviceOK ( DeviceID_t *pDevice );
-
 void	Remove_OneDsp(void);
-
 void	ChannelWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
-
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
-
 void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk );
 void	InitUserChannel ( TRUNK_STRUCT *pOneUser );
-
 void	SimulateCallOut(void);
-
 void	Change_UserState ( TRUNK_STRUCT *pOneTrunk, USER_STATE NewState );
-
 void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState );
-
 bool	IsTrunk ( DJ_S16 s16DevSub );
 bool	IsDigitTrunk ( DJ_S16 s16DevSub );
 int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID );

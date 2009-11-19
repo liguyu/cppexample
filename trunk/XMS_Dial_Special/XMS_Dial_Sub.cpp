@@ -13,6 +13,7 @@ static char THIS_FILE[] = __FILE__;
 #include "DJAcsDevState.h"
 #include "DJAcsISUPDef.h"
 #include "DJAcsTUPDef.h"
+#include "ITPISDN.h"
 #include "XMS_Dial_Sub.H"
 #include "XMS_Dial_String.H"
 #include "XMS_Dial_Event.H"
@@ -1527,8 +1528,9 @@ void	CloseAllDevice_Dsp ( DJ_S8 s8DspModID )
 		ClosePcmDevice ( &AllDeviceRes[s8DspModID].pPcm[i] );
 	}
 }
-
-// -------------------------------------------------------------------------------------------------
+/************************************************************************/
+/* Function: XMS_EVT_DEVICESTATE事件处理函数                            */
+/************************************************************************/
 void	HandleDevState ( Acs_Evt_t *pAcsEvt )
 {
 	TRUNK_STRUCT	*pOneTrunk;
@@ -1539,14 +1541,59 @@ void	HandleDevState ( Acs_Evt_t *pAcsEvt )
 	if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 	{
 		pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);
-
 		pOneTrunk->iLineState = pGeneralData->m_s32DeviceState;
 		DrawMain_LineState( pOneTrunk );
-
 		if ( pAcsEvt->m_DeviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER )
 			DrawUser_LineState( pOneTrunk );
 	}
 
+	/************************************************************************/
+	/* ISDN发送后续地址                                                     */
+	/************************************************************************/
+    if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
+		 pAcsEvt->m_DeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_DSS1 )
+    {
+        pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);		
+        pOneTrunk->iLineState = pGeneralData->m_s32DeviceState;
+		if (0x705 == pGeneralData->m_s32DeviceState)
+        {
+			CString subsequentNum;		//后续地址
+			CString getItem;			//临时字符串
+			char	*tempCh=NULL;
+			char    tempCh1[32]={0};
+			pdlg->GetDlgItemText(IDC_EDIT_SUBNUM,subsequentNum);
+			
+			while(!subsequentNum.IsEmpty())							//遍历字符串，先按逗号分开，存放到容器中
+			{
+				int pos = subsequentNum.Find(',');					//从第一个逗号开始查找，并返回逗号的位置
+				if ( -1 == pos )									//没有找到逗号
+				{
+					tempCh=subsequentNum.GetBuffer(subsequentNum.GetLength());
+					if ( tempCh[subsequentNum.GetLength()-1] == '.')
+					{
+						tempCh[subsequentNum.GetLength()-1]='\0';
+						sprintf(tempCh1,"1%s",tempCh);
+					}else
+					{
+						sprintf(tempCh1,"0%s",tempCh);
+					}
+					
+					XMS_ctsSetParam(g_acsHandle, &pOneTrunk->deviceID, ISDN_PARAM_APPENDCALLEE,sizeof(tempCh1), tempCh1);					
+					subsequentNum = "";
+				}else
+				{
+					getItem = subsequentNum.Left(pos);				//获得逗号左边的字符串
+					if(!getItem.IsEmpty())							//如果逗号间没有字符串，则不做任何处理
+					{
+						tempCh=getItem.GetBuffer(getItem.GetLength());
+						sprintf(tempCh1,"0%s",tempCh);
+						XMS_ctsSetParam(g_acsHandle, &pOneTrunk->deviceID, ISDN_PARAM_APPENDCALLEE,sizeof(tempCh1), tempCh1);					
+					}
+					subsequentNum = subsequentNum.Right(subsequentNum.GetLength()-pos-1); //截取该逗号以后的字符串，进入下一轮查找
+				}
+			} //end while 	
+        }
+	}
 	if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_DIGITAL_PORT )
 	{
 		pOnePcm = &M_OnePcm(pAcsEvt->m_DeviceID);
@@ -2863,25 +2910,19 @@ void UserWork ( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 		}
 
 		// end of handle FSK Caller ID
-
 		if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )	/*User Offhook Event*/
 		{
 			pLinkUser = &M_OneTrunk(pOneUser->LinkDevID);
-			
 			StopPlayTone ( &pLinkUser->VocDevID );
 			if ( pLinkUser->VocDevID.m_s16DeviceMain != 0 )
 			{
 				My_DualUnlink ( &pLinkUser->VocDevID, &pLinkUser->deviceID );
-
 				FreeOneFreeVoice (  &pLinkUser->VocDevID );
-
 				memset ( &pLinkUser->VocDevID, 0, sizeof(DeviceID_t) );		// 0: Didn't alloc Voc Device
-
 				DrawUser_VocInfo ( pLinkUser );
 			}
 
 			My_DualLink ( &pOneUser->deviceID, &pLinkUser->deviceID );
-
 			Change_UserState ( pLinkUser, USER_LINK );
 			Change_UserState ( pOneUser, USER_LINK );
 		}
@@ -2930,7 +2971,10 @@ void SimulateCallOut(void)
 		pdlg->GetDlgItemText(IDC_EDIT_SUBNUM,subsequentNum);
 		
 		pdlg->GetDlgItemText(IDC_EDIT_ORICALNUM,oriCalledNumber);
-		
+
+		pdlg->GetDlgItem ( IDC_EDIT_ORICALNUM )->GetWindowText ( TmpStr, 30 );
+		sscanf ( TmpStr, "%s", &cfg_OriCalledNum );
+
 		pdlg->GetDlgItem ( IDC_EDIT_CallingAddrIndicator )->GetWindowText ( TmpStr, 30 );
 		sscanf ( TmpStr, "%d", &cfg_CallingAddrIndicator );
 		
@@ -2966,11 +3010,13 @@ void SimulateCallOut(void)
 			SP_ocn.m_u8AddressPresentationRestrictedIndicator=0; //显示允许
 			SP_ocn.m_u8NumberingPlanIndicator=1; //ISDN 电话号码计划（E.164）
 			strcpy(SP_ocn.m_s8AddressSignal, oriCalledNumber); //原来的被叫，小于16 位
-			if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISUP_SP_OriginalCalledNumber, sizeof(SP_ocn),&SP_ocn)<0)
+			if (!oriCalledNumber.IsEmpty())
 			{
-				return;
+				if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISUP_SP_OriginalCalledNumber, sizeof(SP_ocn),&SP_ocn)<0)
+				{
+					return;
+				}
 			}
-
 			/************************************************************************/
 			/*发送改发的号码RedirectingNumber                                       */
 			/************************************************************************/
@@ -3031,10 +3077,13 @@ void SimulateCallOut(void)
 			TUP_spOriginalCalledAddress TUP_oriCalledNum={0};
 			TUP_oriCalledNum.m_u8NatureOfAddressIndicator=3;				//国内有效号码，根据实际情况填
 			strcpy(TUP_oriCalledNum.m_s8AddressSignal, oriCalledNumber);	//原来的被叫，小于16 位
-			if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,TUP_SP_OriginalCalledAddress, sizeof(TUP_oriCalledNum),&TUP_oriCalledNum)<0)
+			if (!oriCalledNumber.IsEmpty())
 			{
-				return;
-			}
+				if(XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,TUP_SP_OriginalCalledAddress, sizeof(TUP_oriCalledNum),&TUP_oriCalledNum)<0)
+				{
+					return;
+				}
+			}			
 			/************************************************************************/
 			/* TUP主叫用户号码---地址性质指示码
 			0：市内用户号码	1：备用	2：国内有效号码	3：国际号码						*/
@@ -3061,6 +3110,27 @@ void SimulateCallOut(void)
 			{
 				return;
 			}
+		}else if (FreeTrkDeviceID.m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH &&
+			FreeTrkDeviceID.m_s16DeviceSub == XMS_DEVSUB_E1_DSS1)
+		{
+			/************************************************************************/
+			/* ISDN原始被叫号码设置                                                 */
+			/************************************************************************/
+			XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISDN_PARAM_ORINUMBER,strlen(cfg_OriCalledNum),&cfg_OriCalledNum);
+			/************************************************************************/
+			/* ISDN设置呼叫类型                                                     */
+			/************************************************************************/
+			//XMS_ctsSetParam(g_acsHandle,& FreeTrkDeviceID,ISDN_PARAM_CALLTYPE,1,"1");
+			
+			/************************************************************************/
+			/*ISDN 主叫号码类型 被叫号码类型
+			0：未知	1：国际号码	2：国内号码	3：网络特定号码	4：用户号码	7：扩展保留*/
+			/************************************************************************/
+			ITP_Q931_CALL_PARAM ISDN_CallingNum={0};
+			ISDN_CallingNum.m_u8CallerType = cfg_CallingAddrIndicator;	//主叫号码类型
+			ISDN_CallingNum.m_u8CalleeType = cfg_CalledAddrIndicator;	//被叫号码类型
+			XMS_ctsSetParam(g_acsHandle,&FreeTrkDeviceID,ISDN_PARAM_CALLOUT,sizeof(ITP_Q931_CALL_PARAM),&ISDN_CallingNum);
+ 
 		}
 		
 		//开始进行外呼

@@ -452,8 +452,6 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 {
 	Acs_Evt_t *			    pAcsEvt = NULL;
 	Acs_Dev_List_Head_t * pAcsDevList = NULL;
-
-
 	pAcsEvt = (Acs_Evt_t *) esrParam;
 	DispEventInfo ( pAcsEvt );
 
