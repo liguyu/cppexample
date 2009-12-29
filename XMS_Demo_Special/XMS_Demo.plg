@@ -6,13 +6,26 @@
 --------------------Configuration: XMS_Demo - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DE.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_Demo.res" /d "_DEBUG" "D:\cppexample\XMS_Demo_Special\XMS_Demo.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17E.tmp" with contents
 [
 /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_Demo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp"
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMS_Demo_Special\XMS_Demo.cpp"
+"D:\cppexample\XMS_Demo_Special\XMS_Demo_Event.cpp"
+"D:\cppexample\XMS_Demo_Special\XMS_Demo_String.cpp"
 "D:\cppexample\XMS_Demo_Special\XMS_Demo_Sub.cpp"
+"D:\cppexample\XMS_Demo_Special\XMS_DemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DE.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DF.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17E.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_Demo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\XMS_Demo_Special\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP17F.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP180.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_Demo.pdb" /debug /machine:I386 /out:"Debug/XMS_Demo.exe" /pdbtype:sept 
 .\Debug\Analog_Common_Code.obj
@@ -26,20 +39,30 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DF.tmp" with con
 .\Debug\XMS_Demo.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1DF.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP180.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+Analog_Common_Code.cpp
+CAS_Common_Cfg.CPP
+XMS_Demo.cpp
+XMS_Demo_Event.cpp
+XMS_Demo_String.cpp
 XMS_Demo_Sub.cpp
+XMS_DemoDlg.cpp
+Generating Code...
 Linking...
 Creating command line "bscmake.exe /nologo /o"Debug/XMS_Demo.bsc"  .\Debug\StdAfx.sbr .\Debug\Analog_Common_Code.sbr .\Debug\CAS_Common_Cfg.sbr .\Debug\XMS_Demo.sbr .\Debug\XMS_Demo_Event.sbr .\Debug\XMS_Demo_String.sbr .\Debug\XMS_Demo_Sub.sbr .\Debug\XMS_DemoDlg.sbr"
 Creating browse info file...
 <h3>Output Window</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E0.bat" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP182.bat" with contents
 [
 @echo off
 copy .\debug\*.exe .
 ]
-Creating command line "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E0.bat"
+Creating command line "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP182.bat"
 
 .\debug\XMS_Demo.exe
 已复制         1 个文件。
