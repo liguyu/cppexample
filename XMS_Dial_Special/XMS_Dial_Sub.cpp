@@ -3033,6 +3033,39 @@ void SimulateCallOut(void)
 				}
 			}
 			/************************************************************************/
+			/* 前向呼叫指示码                                                       */
+			/************************************************************************/
+			ISUP_spForwardCallIndicator forCalInd={0};
+			forCalInd.m_u8NationalInternatoinalIndicator = 0;//0：呼叫作为一个国内呼叫  1：呼叫作为一个国际呼叫
+			forCalInd.m_u8EndToEndMethodIndicator = 0;//0：端到端方法不可获得 1：传递方法可获得 2：SCCP方法可获得 3：传递及SCCP方法都可获得
+			forCalInd.m_u8InterworkingIndicator = 0;//0：不会碰到互通 1：会碰到互通
+			forCalInd.m_u8EndToEndInformationIndicator = 0;//0：端到端信息不可获得 1：端到端信息可获得
+			forCalInd.m_u8ISDNUserPartIndicator = 0; //0：非全程应用ISDN用户部分 1：全程应用ISDN用户部分
+			forCalInd.m_u8ISDNUserPartPreferenceIndicator = 1;//0：ISDN用户部分全程优先1：非全程需要ISDN用户部分2：全程需要ISDN用户部分3：备用
+			forCalInd.m_u8ISDNAccessIndicator = 1;//0：始发接入非ISDN  1：始发接入ISDN
+			forCalInd.m_u8SCCPMethodIndicator = 0;//0：无指示 1：无接续方法可获得	2：面向接续方法可获得 3：无接续及面向接续方法都可获得
+			XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID,ISUP_SP_ForwardCallIndicator, sizeof(ISUP_SP_ForwardCallIndicator), &forCalInd);
+
+			/************************************************************************/
+			/* 主叫用户类别
+			0：来源未知							1：话务员，法语
+			2：话务员，英语						3：话务员，德语
+			4：话务员，俄语						5：话务员，西班牙语
+			6：双方协商采用的语言（汉语）		7：双方协商采用的语言
+			8：双方协商采用的语言（日语）		9：国内话务员（具有插入性能）
+			10：普通用户，长－长（市）间使用	11：优先用户
+			12：数据呼叫						13：测试呼叫
+			16：普通、免费						17：普通、定期
+			18：普通，用户表、立即				19：普通，打印机、立即
+			20：优先、免费						21：优先、定期
+			24：普通用户，在市－市间使用
+			其它：备用																*/
+			/************************************************************************/
+			ISUP_spCallingPartCategory _spCallingPartCategory;
+			_spCallingPartCategory.m_u8CallingPartyCategory = 10;
+			XMS_ctsSetParam(g_acsHandle, &FreeTrkDeviceID,ISUP_SP_CallingPartCategory, sizeof(ISUP_spCallingPartCategory), &_spCallingPartCategory);
+
+			/************************************************************************/
 			/* 主叫用户号码---地址性质指示码
 			0：备用	1：用户号码	2：不知	3：国内（有效）号码	4：国际号码				*/
 			/************************************************************************/
