@@ -121,7 +121,7 @@ void WriteToConfig(void);
 
 int  FreeOneFreeVoice (  DeviceID_t *pFreeVocDeviceID );
 int	 GetOutUserID (  char *pDtmf, DeviceID_t *pUserDeviceID );
-int	 SearchOneFreeTrunk (  char *pDtmf, DeviceID_t *pFreeTrkDeviceID );
+int	 SearchOneFreeTrunk ( DeviceID_t *pFreeTrkDeviceID );
 int  SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID );
 DJ_S32   StopPlayFile ( DeviceID_t	*pVocDevID );
 DJ_S32	PlayTone ( DeviceID_t	*pVocDevID, int iPlayType );
