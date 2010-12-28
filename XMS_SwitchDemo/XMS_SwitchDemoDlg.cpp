@@ -98,6 +98,7 @@ BEGIN_MESSAGE_MAP(CXMS_SwitchDemoDlg, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -186,4 +187,12 @@ void CXMS_SwitchDemoDlg::OnPaint()
 HCURSOR CXMS_SwitchDemoDlg::OnQueryDragIcon()
 {
 	return (HCURSOR) m_hIcon;
+}
+
+void CXMS_SwitchDemoDlg::OnDestroy() 
+{
+	CDialog::OnDestroy();
+	
+	ExitSystem();
+	
 }
