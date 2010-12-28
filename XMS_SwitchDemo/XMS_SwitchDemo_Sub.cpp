@@ -1555,7 +1555,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 				if ( pOneTrunk->DtmfCount >= 4 )//输入四位分机号
 				{
 					int i = GetOutUserID( pOneTrunk->DtmfBuf,  &OutUserDeviceID );//随便找了一个空闲坐席,连接通话
-					if( i > 0 ){
+					if( i > -1 ){
 						r = XMS_ctsMakeCallOut ( g_acsHandle, &OutUserDeviceID, pOneTrunk->DtmfBuf,"1001",NULL );
 						if (r>0)
 						{							
@@ -1837,7 +1837,7 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 
 	if ( pAcsEvt->m_s32EventType == XMS_EVT_CLEARCALL ) /*当前状态USER_RING,坐席挂机事件User Offhook Event*/
 	{
-		if(pOneUser->UserState != USER_FREE)// && pOneUser->UserState != USER_CONNECT)
+		if(pOneUser->UserState != USER_FREE && pOneUser->UserState != USER_CONNECT)
 		{
 			ResetUser( pOneUser, pAcsEvt );
 			return;
@@ -1855,8 +1855,45 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 				M_OneVoice(FreeVocDeviceID).UsedDevID = pOneUser->deviceID; 
 				DrawUser_VocInfo( pOneUser );
 				My_DualLink( &FreeVocDeviceID, &pOneUser->deviceID );
-				PlayTone( &pOneUser->VocDevID, 0 );// dial tone				
-				Change_UserState ( pOneUser, USER_OFFHOOK );
+				if ( cfg_iCallOutRule == 2 )// 坐席呼坐席
+				{
+					PlayTone( &pOneUser->VocDevID, 0 );// dial tone	
+					Change_UserState ( pOneUser, USER_OFFHOOK );
+				}else if ( cfg_iCallOutRule == 3 )//坐席呼外线
+				{
+					if (SearchOneFreeTrunk( &FreeTrkDeviceID ) > 0 )//找到空闲模拟中继通道
+					{ 
+						if (pOneUser->VocDevID.m_s16DeviceMain != 0)
+						{
+							My_DualUnlink(&pOneUser->deviceID ,&pOneUser->VocDevID);//断开坐席与语音设备连接
+							FreeOneFreeVoice(&pOneUser->VocDevID); //释放语音资源
+						}
+						
+						My_DualLink( &FreeTrkDeviceID, &pOneUser->deviceID );//坐席与找到的空闲中继建立连接,SendIOData通过坐席电话发送
+						if( XMS_ctsMakeCallOut ( g_acsHandle, &FreeTrkDeviceID, cfg_CallingNum, pOneUser->DtmfBuf, NULL ) > 0 ){ //call out OK
+							pLinkTrunk = &M_OneTrunk(FreeTrkDeviceID);							
+							pOneUser->LinkDevID = FreeTrkDeviceID;
+							pLinkTrunk->LinkDevID = pOneUser->deviceID; 
+							DrawUser_LinkDev( pOneUser );
+							
+							strcpy ( pLinkTrunk->CallerCode, cfg_CallingNum );
+							DrawMain_CallInfo( pLinkTrunk );
+							
+							Change_UserState( pOneUser, USER_CALLOUT );
+							Change_State( pLinkTrunk, TRK_CALLOUT);							
+						}else//call out fail
+						{ 
+							AddMsg ("坐席拨打外线失败 XMS_ctsMakeCallOut() FAIL!");
+							Change_UserState( pOneUser, USER_CONNECT_FAILURE );
+						}
+					}else
+					{//无法找到可用中继
+						AddMsg ("USER_OFFHOOK & SearchOneFreeTrunk() FAIL! 无法找到可用中继");
+						PlayTone( &pOneUser->VocDevID, 2 );// busy tone
+						Change_UserState( pOneUser, USER_CONNECT_FAILURE );
+					}// end of For Link User & Trunk
+				}
+				
 			}else
 			{
 				AddMsg("USER_FREE & SearchOneFreeVoice() Fail...");
@@ -1879,7 +1916,7 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 			if ( pOneUser->DtmfCount >= cfg_iCalledLen ){   //拨打号码不能多于四位
 				if ( cfg_iCallOutRule == 2 ){		// 坐席呼坐席
 					AddMsg("坐席呼坐席.........");
-					if( GetOutUserID( pOneUser->DtmfBuf,  &OutUserDeviceID ) > 0 ){//随便找了一个空闲坐席,连接通话
+					if( GetOutUserID( pOneUser->DtmfBuf,  &OutUserDeviceID ) > -1 ){//随便找了一个空闲坐席,连接通话
 						if ( XMS_ctsMakeCallOut ( g_acsHandle, &OutUserDeviceID, cfg_CallingNum, pOneUser->DtmfBuf, NULL ) > 0 ){     // call out OK
 							PlayTone( &pOneUser->VocDevID, 1 );	// RingBack tone							
 							pLinkUser = &M_OneTrunk(OutUserDeviceID);
@@ -1904,7 +1941,7 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 				}else if(cfg_iCallOutRule == 3)	//坐席呼外线
 				{
 					AddMsg("坐席拨打外线.........");
-					if (SearchOneFreeTrunk( pOneUser->DtmfBuf,  &FreeTrkDeviceID ) > 0 )//找到空闲模拟中继通道
+					if (SearchOneFreeTrunk( &FreeTrkDeviceID ) > 0 )//找到空闲模拟中继通道
 					{ 
 						if (pOneUser->VocDevID.m_s16DeviceMain != 0)
 						{
@@ -1954,7 +1991,7 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 			if (pLinkDev->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER)
 			{
 				My_DualUnlink( &pOneUser->deviceID, &pLinkDev->deviceID );//断开坐席间双向连接
-				if ( pLinkDev->VocDevID.m_s16DeviceMain != 0 )//连接坐席  连接了语音资源
+				if ( pLinkDev->VocDevID.m_s16DeviceMain != 0 )//坐席是否连接了Voc
 				{
 					AddMsg("USER_CONNECT & XMS_EVT_CLEARCALL Event  & 有语音资源连接");
 				}else{
@@ -1978,6 +2015,32 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 				}
 				InitUserChannel(pOneUser);
 				
+			}else if (pLinkDev->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_TRUNK)
+			{
+				My_DualUnlink( &pOneUser->deviceID, &pLinkDev->deviceID );//断开坐席和中继间双向连接
+				if ( pLinkDev->VocDevID.m_s16DeviceMain != 0 )//中继是否连接Voc
+				{
+					AddMsg("USER_CONNECT & XMS_EVT_CLEARCALL Event  & 有语音资源连接");
+				}else{
+					
+					if ( SearchOneFreeVoice ( pLinkDev	,  &FreeVocDeviceID ) >= 0 )
+					{
+						pLinkDev->VocDevID = FreeVocDeviceID;
+						M_OneVoice(FreeVocDeviceID).UsedDevID = pLinkDev->deviceID; 
+						My_DualLink( &pLinkDev->VocDevID, &pLinkDev->deviceID );	
+					}	
+				}
+				PlayTone( &pLinkDev->VocDevID, 2 ); // busy tone
+				Change_UserState(pOneUser, USER_CONNECT_FAILURE);
+				Change_State(pLinkDev, TRK_CONNECT_FAILURE);
+				DrawUser_FailReason(pOneUser,"Local User关机了");				
+				
+				if ( pOneUser->VocDevID.m_s16DeviceMain != 0 ){//当前坐席有语音资源与其连接
+					My_DualUnlink( &pOneUser->VocDevID, &pOneUser->deviceID );
+					FreeOneFreeVoice(  &pOneUser->VocDevID );
+					DrawUser_VocInfo(pOneUser);
+				}
+				InitUserChannel(pOneUser);
 			}
 			
 		}
@@ -2114,7 +2177,7 @@ int	 GetOutUserID (  char *pDtmf, DeviceID_t *pUserDeviceID )
 	
 	return -1;
 }
-int	 SearchOneFreeTrunk( char *pDtmf, DeviceID_t *pFreeTrkDeviceID )
+int	 SearchOneFreeTrunk( DeviceID_t *pFreeTrkDeviceID )
 {
 	DJ_S8	s8ModID;
 	DJ_S16	s16ChID;
