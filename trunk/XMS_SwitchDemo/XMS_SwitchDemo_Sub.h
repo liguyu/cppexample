@@ -115,6 +115,9 @@ void My_DualUnlink ( DeviceID_t *pDev1, DeviceID_t *pDev2 );
 void My_BuildIndex ( DeviceID_t	*pVocDevID );
 void My_InitDtmfBuf ( TRUNK_STRUCT *pOneTrunk );
 void My_DualLink ( DeviceID_t *pDev1, DeviceID_t *pDev2 );
+void ExitSystem(void);	//ÍË³öÏµÍ³
+void FetchFromText(void);
+void WriteToConfig(void);
 
 int  FreeOneFreeVoice (  DeviceID_t *pFreeVocDeviceID );
 int	 GetOutUserID (  char *pDtmf, DeviceID_t *pUserDeviceID );

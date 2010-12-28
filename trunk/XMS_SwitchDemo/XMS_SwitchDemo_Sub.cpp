@@ -1825,7 +1825,7 @@ void InitUserChannel( TRUNK_STRUCT *pOneUser )
 	DrawUser_FailReason(pOneUser," ");
 }
 
-uvoid UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
+void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 {
 	char					TmpDtmf;
 	DeviceID_t				FreeVocDeviceID, FreeTrkDeviceID, OutUserDeviceID;
@@ -2145,4 +2145,88 @@ bool IsTrunk ( DJ_S16 s16DevSub )
 		return true;
 	}
 	return false;
+}
+void	FetchFromText(void)
+{
+	char	TmpStr[256];
+	
+	pdlg->GetDlgItem ( IDC_EDIT_IPADDR )->GetWindowText ( cfg_ServerID.m_s8ServerIp, 30 );
+	
+	pdlg->GetDlgItem ( IDC_EDIT_IPPORT )->GetWindowText ( TmpStr, 30 );
+	sscanf ( TmpStr, "%d", &cfg_ServerID.m_u32ServerPort);
+	
+	pdlg->GetDlgItem ( IDC_EDIT_CALLEDLEN )->GetWindowText ( TmpStr, 30 );
+	sscanf ( TmpStr, "%d", &cfg_iCalledLen );
+	
+	pdlg->GetDlgItem ( IDC_EDIT_CALLINGNUM )->GetWindowText ( cfg_CallingNum, 30 );
+	
+	if ( ((CButton *)pdlg->GetDlgItem (IDC_RADIO_UT))->GetCheck ( ) )
+		cfg_iCallOutRule = 3;
+	if ( ((CButton *)pdlg->GetDlgItem (IDC_RADIO_UU))->GetCheck ( ) )
+		cfg_iCallOutRule = 2;
+	
+	pdlg->GetDlgItem ( IDC_EDIT_CALLINGNUM )->GetWindowText ( cfg_CallingNum, 30 );
+	
+	if ( ((CButton *)pdlg->GetDlgItem (IDC_CHECK_PARTWORK))->GetCheck ( ) )
+		cfg_iPartWork = 1;
+	else
+		cfg_iPartWork = 0;
+	
+	pdlg->GetDlgItem ( IDC_EDIT_MODULEID )->GetWindowText ( TmpStr, 30 );
+	sscanf ( TmpStr, "%d", &cfg_iPartWorkModuleID);
+	
+	if ( ((CButton *)pdlg->GetDlgItem (IDC_CHECK_DEBUG))->GetCheck ( ) )
+		cfg_s32DebugOn = 1;
+	else
+		cfg_s32DebugOn = 0;
+}
+void	WriteToConfig(void)
+{
+	char	TmpStr[256];
+	
+	WritePrivateProfileString ( "ConfigInfo", "IpAddr", cfg_ServerID.m_s8ServerIp, cfg_IniName);
+	
+	sprintf ( TmpStr, "%d", cfg_ServerID.m_u32ServerPort);
+	WritePrivateProfileString ( "ConfigInfo", "Port", TmpStr, cfg_IniName);
+	
+	sprintf ( TmpStr, "%d", cfg_iCalledLen);
+	WritePrivateProfileString ( "ConfigInfo", "CalledLen", TmpStr, cfg_IniName);
+	
+	WritePrivateProfileString ( "ConfigInfo", "CallingNum", cfg_CallingNum, cfg_IniName);
+	
+	sprintf ( TmpStr, "%d", cfg_iCallOutRule);
+	WritePrivateProfileString ( "ConfigInfo", "CallOutRule", TmpStr, cfg_IniName);
+	
+	WritePrivateProfileString ( "ConfigInfo", "SimCalledRNum", cfg_CallingNum, cfg_IniName);
+	
+	sprintf ( TmpStr, "%d", cfg_iPartWork);
+	WritePrivateProfileString ( "ConfigInfo", "PartWork", TmpStr, cfg_IniName);
+	
+	sprintf ( TmpStr, "%d", cfg_iPartWorkModuleID);
+	WritePrivateProfileString ( "ConfigInfo", "PartWorkModuleID", TmpStr, cfg_IniName);
+	
+	sprintf ( TmpStr, "%d", cfg_s32DebugOn);
+	WritePrivateProfileString ( "ConfigInfo", "DebugOn", TmpStr, cfg_IniName);
+}
+
+void	ExitSystem(void) 
+{
+	RetCode_t	r;
+	
+	/*
+	// close all device	
+	for ( i = 0; i < g_iTotalModule; i ++ )
+	{
+	CloseAllDevice_Dsp ( MapTable_Module[i] );
+	}
+	*/
+	
+	r = XMS_acsCloseStream ( g_acsHandle, NULL );
+	
+//	FreeAllDeviceRes ();
+	
+	// save to "XMS_Dial.INI"
+	FetchFromText();
+	WriteToConfig();
+	
 }
