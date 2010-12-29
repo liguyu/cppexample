@@ -68,15 +68,6 @@ typedef struct{  //语音通道设备
 	VOICE_STATE	State;
 }VOICE_STRUCT;
 
-typedef struct{ //E1端口设备
-	DeviceID_t	deviceID;
-	int			iSeqID;
-	bool		bOpenFlag;		// flag of OpenDevice OK
-	DJ_U8		u8E1Type;
-	DJ_S32		s32AlarmVal;
-}PCM_STRUCT;
-
-
 // ----- declare function -----
 bool InitSystem(void);
 bool CheckPlayEnd ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
@@ -91,7 +82,6 @@ void CloseDeviceOK ( DeviceID_t *pDevice );
 void ReadFromConfig(void);
 void InitListDSPRes(void);//初始化以DSP 模块为单位的资源总体的显示列表框
 void InitListChnRes(void);//接口通道资源的显示
-void InitListPCM(void);
 void InitListAnalogUser(void);
 void InitListMsg(void);
 void InitTextBox(void);

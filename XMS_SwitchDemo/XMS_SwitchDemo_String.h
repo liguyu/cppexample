@@ -9,7 +9,6 @@
 char * GetString_EventType ( EventType_t EvtType );
 char * GetString_DeviceMain ( DJ_S32	s32DeviceMain );
 char * GetString_ErrorCode ( DJ_S32	s32ErrorCode );
-char * GetString_PcmType ( int iPcmType );
 char * GetString_DeviceSub ( DJ_S32	s32DeviceSub );
 void   GetString_LineState ( char *StateStr, int iLineState );
 

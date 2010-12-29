@@ -22,7 +22,6 @@ public:
 	enum { IDD = IDD_XMS_SWITCHDEMO_DIALOG };
 	CListCtrl	m_List_AnalogUser;
 	CListBox	m_List_Msg;
-	CListCtrl	m_List_PCM;
 	CListCtrl	m_List_ChnRes;
 	CListCtrl	m_List_DSPRes;
 	//}}AFX_DATA

@@ -10,10 +10,8 @@
 #include "DJAcsAPIDef.h"
 
 #define		MAX_DSP_MODULE_NUMBER_OF_XMS        256
-#define		MAX_PCM_NUM_IN_THIS_DEMO			64
-#define		MAX_TRUNK_NUM_IN_THIS_DEMO			(32*MAX_PCM_NUM_IN_THIS_DEMO)
+#define		MAX_TRUNK_NUM_IN_THIS_DEMO			(32*64)
 #define		M_OneVoice(DevID)					AllDeviceRes[(DevID).m_s8ModuleID].pVoice[(DevID).m_s16ChannelID]
-#define		M_OnePcm(DevID)						AllDeviceRes[(DevID).m_s8ModuleID].pPcm[(DevID).m_s16ChannelID]
 #define		M_OneTrunk(DevID)					AllDeviceRes[(DevID).m_s8ModuleID].pTrunk[(DevID).m_s16ChannelID]
 
 enum REMOVE_STATE
@@ -38,12 +36,7 @@ typedef	struct
 	long	lVocOpened;			// the VOICE number opened by OpenDevice()
 	long	lVocFreeNum;		// the free voice number in this DSP
 	VOICE_STRUCT	*pVoice;	// the structer of voice, alloc as need
-	
-	//E1端口设备
-	long	lPcmNum;			// the XMS_DEVMAIN_DIGITAL_PORT number in this DPS
-	long	lPcmOpened;			// the PCM number opened by OpenDevice()
-	PCM_STRUCT		*pPcm;		// the structer of PCM, alloc as need
-	
+		
 	//接口通道设备
 	long	lTrunkNum;			// the XMS_DEVMAIN_INTERFACE_CH number in this DSP
 	long	lTrunkOpened;		// the Trunk number opened by OpenDevice()
