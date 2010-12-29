@@ -17,7 +17,6 @@ static char THIS_FILE[] = __FILE__;
 
 CListCtrl *gm_List_DSPRes;
 CListCtrl *gm_List_ChnRes;
-CListCtrl *gm_List_PCM;
 CListCtrl *gm_List_AnalogUser;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,7 +73,6 @@ CXMS_SwitchDemoDlg::CXMS_SwitchDemoDlg(CWnd* pParent /*=NULL*/)
 	//{{AFX_DATA_INIT(CXMS_SwitchDemoDlg)
 	gm_List_DSPRes = &m_List_DSPRes;
 	gm_List_ChnRes = &m_List_ChnRes;
-	gm_List_PCM = &m_List_PCM;
 	gm_List_AnalogUser = &m_List_AnalogUser;
 	//}}AFX_DATA_INIT
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
@@ -87,7 +85,6 @@ void CXMS_SwitchDemoDlg::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CXMS_SwitchDemoDlg)
 	DDX_Control(pDX, IDC_LIST_ANALOGUSER, m_List_AnalogUser);
 	DDX_Control(pDX, IDC_LIST_SYSRES, m_List_Msg);
-	DDX_Control(pDX, IDC_LIST_PCM, m_List_PCM);
 	DDX_Control(pDX, IDC_LIST_CHNRES, m_List_ChnRes);
 	DDX_Control(pDX, IDC_LIST_DSPRES, m_List_DSPRes);
 	//}}AFX_DATA_MAP

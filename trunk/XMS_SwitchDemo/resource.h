@@ -9,16 +9,12 @@
 #define IDR_MAINFRAME                   128
 #define IDC_LIST_DSPRES                 1000
 #define IDC_LIST_CHNRES                 1001
-#define IDC_LIST_PCM                    1002
 #define IDC_LIST_SYSRES                 1003
 #define IDC_CHECK_DEBUG                 1004
 #define IDC_EDIT_IPADDR                 1005
 #define IDC_EDIT_IPPORT                 1006
 #define IDC_EDIT_VOCPATH                1007
-#define IDC_RADIO30                     1010
 #define IDC_RADIO_FIX                   1011
-#define IDC_RADIO31                     1012
-#define IDC_RADIO32                     1013
 #define IDC_RADIO_SAMEMOD               1014
 #define IDC_RADIO_MOSTFIRST             1015
 #define IDC_CHECK_PARTWORK              1016

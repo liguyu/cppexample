@@ -132,34 +132,7 @@ void	GetString_LineState ( char *StateStr, int iLineState )
 		break;
 	}
 }
-char	*GetString_PcmType ( int iPcmType )
-{
-	switch ( iPcmType )
-	{
-	case 0:		return "Disable";
-		
-	case XMS_E1_TYPE_Analog30:			return "T_Analog30";
-	case XMS_E1_TYPE_PCM31:				return "T_PCM31";
-	case XMS_E1_TYPE_PCM30:				return "T_PCM30";
-	case XMS_E1_TYPE_CAS:				return "T_CAS";
-	case XMS_E1_TYPE_PRI:				return "T_PRI";
-	case XMS_E1_TYPE_SS7_TUP_0_Link:	return "T_TUP_0_LK";
-	case XMS_E1_TYPE_SS7_TUP_1_Link:	return "T_TUP_1_LK";
-	case XMS_E1_TYPE_SS7_TUP_2_Link:	return "T_TUP_2_L";
-	case XMS_T1_TYPE_D4:				return "T_D4";
-	case XMS_T1_TYPE_ESF:				return "T_ESF";
-	case XMS_J1_TYPE_D4:				return "T_D4";
-	case XMS_J1_TYPE_ESF:				return "T_ESF";
-	case XMS_SLC_TYPE_96:				return "SLC_TYPE_96";
-	case XMS_E1_TYPE_SS7_ISUP_0_Link:	return "T_ISUP_0_LK";
-	case XMS_E1_TYPE_SS7_ISUP_1_Link:	return "T_ISUP_1_LK";
-	case XMS_E1_TYPESS7_ISUP_2_Link:	return "T_ISUP_2_LK";
-	case XMS_E1_TYPE_6D25B:				return "T_6D25B";
-		
-	}
-	
-	return "UNKNOWN";
-}
+
 char *GetString_DeviceSub ( DJ_S32	s32DeviceSub )
 {
 	switch ( s32DeviceSub )

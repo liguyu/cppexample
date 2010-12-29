@@ -25,11 +25,9 @@ extern int				cfg_iPartWorkModuleID;
 TYPE_XMS_DSP_DEVICE_RES_DEMO	AllDeviceRes[MAX_DSP_MODULE_NUMBER_OF_XMS];
 
 int						g_iTotalModule = 0;
-int						g_iTotalPcm = 0;
 int						g_iTotalVoice = 0;
 int						g_iTotalTrunk = 0;
 
-int						g_iTotalPcmOpened = 0;
 int						g_iTotalVoiceOpened = 0;
 int						g_iTotalTrunkOpened = 0;
 
@@ -39,7 +37,6 @@ int						g_iTotalUserOpened = 0;
 DJ_S8					MapTable_Module[MAX_DSP_MODULE_NUMBER_OF_XMS];
 TYPE_CHANNEL_MAP_TABLE	MapTable_User[MAX_TRUNK_NUM_IN_THIS_DEMO];
 TYPE_CHANNEL_MAP_TABLE	MapTable_Trunk[MAX_TRUNK_NUM_IN_THIS_DEMO];
-TYPE_CHANNEL_MAP_TABLE	MapTable_Pcm[MAX_PCM_NUM_IN_THIS_DEMO];
 TYPE_CHANNEL_MAP_TABLE	MapTable_Voice[MAX_TRUNK_NUM_IN_THIS_DEMO];
 
 
@@ -48,8 +45,6 @@ void InitAllDeviceRes (void){
 	//clear the AllDeviceRes, include: lFlag, all the Total, the pointer clear to NULL
 	memset ( AllDeviceRes, 0, sizeof(AllDeviceRes) );	
 	g_iTotalModule = 0;
-	g_iTotalPcm = 0;
-	g_iTotalPcmOpened = 0;
 	g_iTotalTrunk = 0;
 	g_iTotalTrunkOpened = 0;
 	g_iTotalVoice = 0;
@@ -169,58 +164,7 @@ void AddDeviceRes_Voice( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
 	}
 	
 }
-//添加E1设备-----------------------------------------------
-void AddDeviceRes_Pcm( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
-{
-	DJ_S32	s32Num;
-	int		i;
-	char	TmpStr[256];
-	
-	s32Num = pAcsDevList->m_s32DeviceNum;
-	
-	if ( (AllDeviceRes[s8DspModID].lPcmNum == 0) && (s32Num > 0) )		// the resources new added
-	{
-		AllDeviceRes[s8DspModID].pPcm = new PCM_STRUCT[s32Num];
-		if( !AllDeviceRes[s8DspModID].pPcm )
-		{
-			AllDeviceRes[s8DspModID].lPcmNum = 0;
-			AllDeviceRes[s8DspModID].lPcmOpened = 0;
-			
-			// alloc fail, maybe disp this error in your log
-			sprintf ( TmpStr, "new PCM_STRUCT[%d] fail in AddDeviceRes_Pcm()" );
-			AddMsg ( TmpStr );
-		}else{
-			memset ( AllDeviceRes[s8DspModID].pPcm, 0, sizeof(PCM_STRUCT)*s32Num );
-			AllDeviceRes[s8DspModID].lPcmNum = s32Num;
-			AllDeviceRes[s8DspModID].lPcmOpened = 0;
-			
-			DeviceID_t	 *pDev;
-			pDev = (DeviceID_t *)((BYTE *)pAcsDevList + sizeof(Acs_Dev_List_Head_t));
-			for ( i = 0; i < s32Num; i ++ )
-			{
-				AllDeviceRes[s8DspModID].pPcm[i].deviceID = pDev[i];
-				AllDeviceRes[s8DspModID].pPcm[i].bOpenFlag = false;
-			}
-		}
-	}
-	else if ( (AllDeviceRes[s8DspModID].lPcmNum > 0) && (s32Num == 0) )		// delete this resource
-	{
-		// if some devices did not close, close them
-		for ( i = 0; i < AllDeviceRes[s8DspModID].lPcmNum; i ++ )
-		{
-			if ( AllDeviceRes[s8DspModID].pPcm[i].bOpenFlag != false ){
-				CloseDeviceOK ( &AllDeviceRes[s8DspModID].pPcm[i].deviceID );
-			}
-		}
-		
-		AllDeviceRes[s8DspModID].lPcmNum = 0;
-		AllDeviceRes[s8DspModID].lPcmOpened = 0;
-		
-		delete [] AllDeviceRes[s8DspModID].pPcm;
-		AllDeviceRes[s8DspModID].pPcm = NULL;
-	}
-	
-}
+
 //添加板卡设备-------------------------------------------
 void AddDeviceRes_Board( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
 {
@@ -250,11 +194,11 @@ void AddDeviceRes_Board( DJ_S8 s8DspModID, Acs_Dev_List_Head_t *pAcsDevList )
 void RefreshMapTable( void )
 {
 	int i, j;
-	int	TrkCount, VocCount, PcmCount, ModuleCount,UserCount;
+	int	TrkCount, VocCount, ModuleCount,UserCount;
 	int	iModSeqID;
 	
-	// Remember the AllDeviceRes's Interface,Voice,PCM channel
-	ModuleCount = TrkCount = VocCount = PcmCount = UserCount = 0;
+	// Remember the AllDeviceRes's Interface,Voice channel
+	ModuleCount = TrkCount = VocCount = UserCount = 0;
 	for ( i = 0; i < MAX_DSP_MODULE_NUMBER_OF_XMS; i ++ )
 	{
 		if ( AllDeviceRes[i].lFlag == 1 )
@@ -273,14 +217,7 @@ void RefreshMapTable( void )
 				VocCount ++;
 			}
 			
-			// PCM Channel
-			for ( j = 0; j < AllDeviceRes[i].lPcmNum; j ++ )
-			{
-				AllDeviceRes[i].pPcm[j].iSeqID = PcmCount;
-				MapTable_Pcm[PcmCount].m_s8ModuleID = AllDeviceRes[i].pPcm[j].deviceID.m_s8ModuleID;
-				MapTable_Pcm[PcmCount].m_s16ChannelID = AllDeviceRes[i].pPcm[j].deviceID.m_s16ChannelID;
-				PcmCount ++;
-			}
+		
 			
 			// Interface Channel
 			iModSeqID = 0;
@@ -310,7 +247,6 @@ void RefreshMapTable( void )
 	g_iTotalModule = ModuleCount;
 	g_iTotalTrunk = TrkCount;
 	g_iTotalVoice = VocCount;
-	g_iTotalPcm = PcmCount;
 	g_iTotalUser = UserCount;
 	
 }
@@ -350,7 +286,6 @@ DJ_Void EvtHandler(DJ_U32 esrParam){
 				case XMS_DEVMAIN_FAX:				
 					break;
 				case XMS_DEVMAIN_DIGITAL_PORT:
-					AddDeviceRes_Pcm( s8DspModID, pAcsDevList );
 					break;
 				case XMS_DEVMAIN_INTERFACE_CH:
 					AddDeviceRes_Trunk( s8DspModID, pAcsDevList );

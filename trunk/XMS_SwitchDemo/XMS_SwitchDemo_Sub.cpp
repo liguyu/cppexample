@@ -54,15 +54,10 @@ int				cfg_s32DebugOn;
 
 extern CListCtrl *gm_List_DSPRes;
 extern CListCtrl *gm_List_ChnRes;
-extern CListCtrl *gm_List_PCM;
 extern CListCtrl *gm_List_AnalogUser;
 
 // var in XMS_SwitchDemo_Event.CPP
 extern TYPE_XMS_DSP_DEVICE_RES_DEMO	AllDeviceRes[MAX_DSP_MODULE_NUMBER_OF_XMS];
-
-extern int						g_iTotalPcm;
-extern int						g_iTotalPcmOpened;
-extern TYPE_CHANNEL_MAP_TABLE	MapTable_Pcm[MAX_PCM_NUM_IN_THIS_DEMO];
 
 extern int						g_iTotalTrunk;
 extern int						g_iTotalTrunkOpened;
@@ -202,23 +197,7 @@ void DrawMain_VocInfo( TRUNK_STRUCT *pOneTrunk )
 	pdlg->m_List_ChnRes.SetItemText ( iDispRow, 8, StateStr ); 
 
 }
-//更改 DSP模块 列表框的 Pcm/Open-----------------------------------------
-void DrawCount_Pcm( DJ_S8	s8ModID )
-{
-	char	TmpStr[256];
-	int		iDispRow;
 
-	iDispRow = AllDeviceRes[s8ModID].iSeqID + 1;
-
-	sprintf ( TmpStr, "%3d /%3d", AllDeviceRes[s8ModID].lPcmNum, AllDeviceRes[s8ModID].lPcmOpened );
-	pdlg->m_List_DSPRes.SetItemText ( iDispRow, 2, TmpStr );
-
-	//更改统计行的 Pcm/Open
-	iDispRow = 0;
-	sprintf ( TmpStr, "%3d /%3d", g_iTotalPcm, g_iTotalPcmOpened );
-	pdlg->m_List_DSPRes.SetItemText ( iDispRow, 2, TmpStr );
-
-}
 //更改 DSP模块列表框的 Trk/Open --------------------------------------------------
 void DrawCount_Trunk( DJ_S8	s8ModID )
 {
@@ -313,41 +292,7 @@ void DrawMain_LineState( TRUNK_STRUCT *pOneTrunk )
 	GetString_LineState( StateStr, pOneTrunk->iLineState );
 	pdlg->m_List_ChnRes.SetItemText( iDispRow, 3, StateStr ); 
 }
-//更改E1端口设备列表框的标志位-----------------------
-void DrawPcm_TypeAndAlarm ( PCM_STRUCT *pOnePcm )
-{
-	char StateStr[100];
-	int	 iDispRow;
-	int	 AlarmVal;
 
-	iDispRow = pOnePcm->iSeqID; 
-
-	AlarmVal = pOnePcm->s32AlarmVal;
-
-	//E1 Type
-	sprintf( StateStr, "%s", GetString_PcmType (pOnePcm->u8E1Type) );
-	pdlg->m_List_PCM.SetItemText ( iDispRow, 1, StateStr ); 
-
-	//Alarm Value
-	sprintf( StateStr, "0x%X", AlarmVal );
-	pdlg->m_List_PCM.SetItemText ( iDispRow, 2, StateStr ); 
-	
-	if ( AlarmVal & XMS_E1PORT_MASK_LOST_SIGNAL )
-		pdlg->m_List_PCM.SetItemText ( iDispRow, 3, " X" ); 
-	else
-		pdlg->m_List_PCM.SetItemText ( iDispRow, 3, "O" ); 
-
-	if ( AlarmVal & XMS_E1PORT_MASK_FAS_ALARM )
-		pdlg->m_List_PCM.SetItemText ( iDispRow, 4, " X" ); 
-	else
-		pdlg->m_List_PCM.SetItemText ( iDispRow, 4, "O" ); 
-
-	if ( AlarmVal & XMS_E1PORT_MASK_REMOTE_ALARM )
-		pdlg->m_List_PCM.SetItemText ( iDispRow, 5, " X" ); 
-	else
-		pdlg->m_List_PCM.SetItemText ( iDispRow, 5, "O" ); 
-	
-}
 //更改 坐席资源列表框 的 DTMF-----------------------------------------------
 void DrawUser_DTMF( TRUNK_STRUCT *pOneUser )
 {
@@ -453,7 +398,7 @@ void DrawUser_FailReason( TRUNK_STRUCT *pOneUser,char * failReasonStr )
 	iDispRow = pOneUser->iUserSeqID; 	
 	pdlg->m_List_AnalogUser.SetItemText ( iDispRow, 8, failReasonStr ); 
 }
-// 重画 DSP列表框 CHN列表框 PCM列表框-------------------------------------------------------------------------------------------------
+// 重画 DSP列表框 CHN列表框 
 void ReDrawAll (void)
 {
 	char	TmpStr[256];
@@ -484,16 +429,7 @@ void ReDrawAll (void)
 		DrawMain_DTMF( pOneTrunk );
 	}
 
-	//重画PCM列表框
-	pdlg->m_List_PCM.DeleteAllItems();
-	for ( i = 0; i < g_iTotalPcm; i ++ )
-	{
-		sprintf ( TmpStr, "%3d", i );
-		pdlg->m_List_PCM.InsertItem ( i, TmpStr );
 
-		//Changed content
-		DrawPcm_TypeAndAlarm( &M_OnePcm(MapTable_Pcm[i]) );
-	}
 
 	//重画DSP列表框
 	pdlg->m_List_DSPRes.DeleteAllItems ();
@@ -510,7 +446,6 @@ void ReDrawAll (void)
 	// Display DSP module Content
 	for ( i = 0; i < g_iTotalModule; i ++ )
 	{
-		DrawCount_Pcm( MapTable_Module[i] );
 		DrawCount_Trunk( MapTable_Module[i] );
 		DrawCount_Voc( MapTable_Module[i] );
 		DrawCount_ErrFlag( MapTable_Module[i] );
@@ -568,7 +503,6 @@ bool InitSystem(void){
 
 	InitListDSPRes();//初始化以DSP 模块为单位的资源总体的显示列表框
 	InitListChnRes();//接口通道资源的显示
-	InitListPCM();
 	InitListAnalogUser();
 	InitListMsg();
 	InitTextBox();
@@ -657,16 +591,7 @@ void InitListChnRes(void){
 	gm_List_ChnRes->InsertColumn(8,"VocInfo",LVCFMT_CENTER,60,-1);
 	
 }
-//PCM的显示-------------------------------------------------------------------------
-void InitListPCM(void){
-	gm_List_PCM->InsertColumn(0,"PcmID",LVCFMT_CENTER,60,-1);
-	gm_List_PCM->InsertColumn(1,"Type",LVCFMT_CENTER,80,-1);
-	gm_List_PCM->InsertColumn(2,"Alarm Value",LVCFMT_CENTER,80,-1);
-	gm_List_PCM->InsertColumn(3,"Sig Detect",LVCFMT_CENTER,80,-1);
-	gm_List_PCM->InsertColumn(4,"Frame Sync",LVCFMT_CENTER,80,-1);
-	gm_List_PCM->InsertColumn(5,"Remote Alarm",LVCFMT_CENTER,85,-1);
-	
-}
+
 //坐席资源框-----------------------------------------------------------------------
 void InitListAnalogUser(void){
 	gm_List_AnalogUser->InsertColumn(0,"ID",LVCFMT_CENTER,30,-1);
@@ -686,13 +611,27 @@ void InitListMsg(void){
 	pdlg->m_List_Msg.SetHorizontalExtent ( i+1000 );
 }
 //向消息框添加信息函数--------------------------------------------------------------
-void AddMsg (char *str){
-	static int iTotal_ListMsg = 0;
-	char TmpStr[256];	
+void AddMsg (char *str)
+{
+	char		TmpStr[256]={0};
+	static	int		iTotal_ListMsg = 0;
+	
+	if(pdlg->m_List_Msg.GetCount() >= 1000)
+	{
+		pdlg->m_List_Msg.ResetContent();
+		iTotal_ListMsg = 0;
+	}else
+	{
+		iTotal_ListMsg = pdlg->m_List_Msg.GetCount();
+	}
+	
 	sprintf( TmpStr, "%3d: ", iTotal_ListMsg+1 );
-	strcat ( TmpStr, str );
-	pdlg->m_List_Msg.AddString( TmpStr );
-	iTotal_ListMsg ++;
+	strcat( TmpStr, str );
+	pdlg->m_List_Msg.AddString ( TmpStr );
+	
+	iTotal_ListMsg++;	
+	pdlg->m_List_Msg.SetCurSel (iTotal_ListMsg-1);
+
 }
 //初始化文件XMS_SwitchDemo.INI配置框的初始化---------------------------------------
 void InitTextBox(void){
@@ -707,13 +646,6 @@ void InitTextBox(void){
 	pdlg->GetDlgItem(IDC_EDIT_CALLEDLEN)->SetWindowText(TmpStr);
 	pdlg->GetDlgItem(IDC_EDIT_CALLINGNUM)->SetWindowText(cfg_CallingNum);
 
-	if ( cfg_iDispChnl == 30 )
-		((CButton *)pdlg->GetDlgItem (IDC_RADIO30))->SetCheck ( 1 ) ;
-	else if ( cfg_iDispChnl == 31 )
-		((CButton *)pdlg->GetDlgItem (IDC_RADIO31))->SetCheck ( 1 ) ;
-	else if ( cfg_iDispChnl == 32 )
-		((CButton *)pdlg->GetDlgItem (IDC_RADIO32))->SetCheck ( 1 ) ;
-	
 	if ( cfg_iVoiceRule == 0 )
 		((CButton *)pdlg->GetDlgItem (IDC_RADIO_FIX))->SetCheck ( 1 ) ;
 	else if (cfg_iVoiceRule == 1 )
@@ -760,17 +692,7 @@ void OpenVoiceDevice( VOICE_STRUCT *pOneVoice ){
 		}
 	}
 }
-//打开 E1端口设备  -----------------------------------------------------------------------------
-void OpenPcmDevice ( PCM_STRUCT *pOnePcm )
-{
-	RetCode_t r;
-	if ( pOnePcm->bOpenFlag == false ){		// not Open yet
-		r = XMS_ctsOpenDevice( g_acsHandle, &pOnePcm->deviceID, NULL );
-		if ( r < 0 ){
-			AddMsg ( "OpenPcmDevice() Fail!" );
-		}
-	}
-}
+
 //打开板卡设备------------------------------------------------------------
 void OpenBoardDevice( DJ_S8 s8DspModID )
 {
@@ -801,13 +723,7 @@ void OpenAllDevice_Dsp( DJ_S8 s8DspModID ){
 	{
 		OpenVoiceDevice( &AllDeviceRes[s8DspModID].pVoice[i] );
 	}
-	
-	//打开E1端口设备
-	for ( i = 0; i < AllDeviceRes[s8DspModID].lPcmNum; i++ )
-	{
-		OpenPcmDevice( &AllDeviceRes[s8DspModID].pPcm[i] );
-	}
-	
+		
 	//打开接口通道设备
 	for ( i = 0; i < AllDeviceRes[s8DspModID].lTrunkNum; i++ )
 	{
@@ -927,22 +843,6 @@ void OpenDeviceOK( DeviceID_t *pDevice ){
 		DrawCount_Voc ( pDevice->m_s8ModuleID );
 	}
 
-	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_DIGITAL_PORT )
-	{
-		M_OnePcm(*pDevice).deviceID.m_CallID = pDevice->m_CallID;		// this is very important
-		M_OnePcm(*pDevice).bOpenFlag = true;
-
-		// init the Device: Pcm
-		XMS_ctsResetDevice ( g_acsHandle, pDevice, NULL );
-		XMS_ctsGetDevState ( g_acsHandle, pDevice, NULL );
-		DrawPcm_TypeAndAlarm ( &M_OnePcm(*pDevice) );
-
-		// moidfy the count
-		g_iTotalPcmOpened ++;
-		AllDeviceRes[pDevice->m_s8ModuleID].lPcmOpened ++;
-
-		DrawCount_Pcm  ( pDevice->m_s8ModuleID );
-	}
 }
 // Special code for Analog
 void	SetGTD_ToneParam ( DeviceID_t *pDevice )
@@ -1325,23 +1225,12 @@ void	CloseDeviceOK ( DeviceID_t *pDevice )
 		DrawCount_Voc ( pDevice->m_s8ModuleID );
 	}
 
-	if ( pDevice->m_s16DeviceMain == XMS_DEVMAIN_DIGITAL_PORT )
-	{
-		M_OnePcm(*pDevice).bOpenFlag = false;
-
-		// moidfy the count
-		g_iTotalPcmOpened --;
-		AllDeviceRes[pDevice->m_s8ModuleID].lPcmOpened --;
-
-		DrawCount_Pcm  ( pDevice->m_s8ModuleID );
-	}
 }
 
 // -------------------------------------------------------------------------------------------------
 void	HandleDevState ( Acs_Evt_t *pAcsEvt )
 {
 	TRUNK_STRUCT	*pOneTrunk;
-	PCM_STRUCT		*pOnePcm;
 	Acs_GeneralProc_Data *pGeneralData = NULL;
 
 	pGeneralData = (Acs_GeneralProc_Data *)FetchEventData(pAcsEvt);
@@ -1355,15 +1244,6 @@ void	HandleDevState ( Acs_Evt_t *pAcsEvt )
 			DrawUser_LineState( pOneTrunk );
 	}
 
-	if ( pAcsEvt->m_DeviceID.m_s16DeviceMain == XMS_DEVMAIN_DIGITAL_PORT )
-	{
-		pOnePcm = &M_OnePcm(pAcsEvt->m_DeviceID);
-
-		pOnePcm->u8E1Type = (pGeneralData->m_s32DeviceState >> 16) & 0xFF;
-		pOnePcm->s32AlarmVal = (pGeneralData->m_s32DeviceState & 0xFFFF);
-
-		DrawPcm_TypeAndAlarm ( pOnePcm );
-	}
 
 }
 //初始化中继通道设备--------------------------------------------------------
@@ -1439,6 +1319,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 	char					TmpDtmf, TmpGtd;
 	RetCode_t		        r;
 	TRUNK_STRUCT *pLinkUser;
+	TRUNK_STRUCT *pLinkDev;
 	/*XMS_EVT_CLEARCALL触发条件: 调用XMS_ctsClearCall()：成功发送挂机信号后返回
 	被动挂机完成后返回的事件;对于Analog Trunk在调用API函数XMS_ctsClearCall()成功后返回;
 	对于Analog User在调用API函数XMS_ctsClearCall()成功后，或在检测到对方挂机时候返回。*/
@@ -1451,7 +1332,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 	}
 	TmpGtd = My_GetGtdCode( pAcsEvt );
 	
-	if( TmpGtd  != -1 ){
+	if( pOneTrunk->State  != TRK_CONNECT ){
 		if( TmpGtd == 'I' || TmpGtd == 'J' || TmpGtd == 'K' )// Busy Tone
 		{
 			XMS_ctsResetDevice(g_acsHandle,&pOneTrunk->deviceID,NULL);//复位设备
@@ -1590,6 +1471,43 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 			break;	
 		case TRK_CONNECT_FAILURE:
 			break;
+		case TRK_CALLOUT:
+			if( TmpGtd  == 'h' || TmpGtd=='P')		//收到 回铃音结束h，或者爆破音P
+			{
+				pLinkDev = &M_OneTrunk(pOneTrunk->LinkDevID);
+				Change_State(pOneTrunk,TRK_CONNECT);
+				if( pLinkDev->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER )
+				{
+					Change_UserState(pLinkDev,USER_CONNECT);
+				}			
+			}
+			break;
+		case TRK_CONNECT:
+			if( TmpGtd == 'I' || TmpGtd == 'J' || TmpGtd == 'K' )// Busy Tone
+			{
+// 				XMS_ctsResetDevice(g_acsHandle,&pOneTrunk->deviceID,NULL);//复位设备
+// 				XMS_ctsClearCall(g_acsHandle,&pOneTrunk->deviceID,0,NULL);//清除呼叫
+// 				ResetTrunk(pOneTrunk,pAcsEvt);
+ 				pLinkDev = &M_OneTrunk(pOneTrunk->LinkDevID);
+				if (pLinkDev->deviceID.m_s16DeviceSub == XMS_DEVSUB_ANALOG_USER)
+				{
+					if ( pLinkDev->VocDevID.m_s16DeviceMain != 0 )//坐席是否连接了Voc
+					{
+						AddMsg("USER_CONNECT & XMS_EVT_CLEARCALL Event  & 有语音资源连接");
+					}else{						
+						if ( SearchOneFreeVoice ( pLinkDev,  &FreeVocDeviceID ) >= 0 )
+						{
+							pLinkDev->VocDevID = FreeVocDeviceID;
+							M_OneVoice(FreeVocDeviceID).UsedDevID = pLinkDev->deviceID; 
+							My_DualLink( &pLinkDev->VocDevID, &pLinkDev->deviceID );	
+						}	
+					}
+					PlayTone( &pLinkDev->VocDevID, 2 ); // busy tone
+					Change_UserState(pLinkDev, USER_CONNECT_FAILURE);
+					DrawUser_FailReason(pLinkDev,"PEER ONHOOK");
+				}
+			}
+			break;
 		default:
 			break;
 	}
@@ -1639,7 +1557,7 @@ char My_GetGtdCode ( Acs_Evt_t *pAcsEvt )
 		if ( ( pIOData->m_u16IoType == XMS_IO_TYPE_GTG ) && ( pIOData->m_u16IoDataLen > 0 ) )
 		{
 			p = (char *)FetchIOData(pAcsEvt);
-			sprintf(sbuffer,"My_GetGtdCode: [%s]",p);
+			sprintf(sbuffer,"My_GetGtdCode: [%s] ",p);
 			AddMsg(sbuffer);
 			return *p;
 		}
@@ -1936,44 +1854,7 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 						AddMsg ("USER_OFFHOOK & GetOutUserID() FAIL 无法找到空闲坐席");
 						PlayTone( &pOneUser->VocDevID, 2 );// busy tone
 						Change_UserState( pOneUser, USER_CONNECT_FAILURE );
-					}// end of For Link User & User
-					
-				}else if(cfg_iCallOutRule == 3)	//坐席呼外线
-				{
-					AddMsg("坐席拨打外线.........");
-					if (SearchOneFreeTrunk( &FreeTrkDeviceID ) > 0 )//找到空闲模拟中继通道
-					{ 
-						if (pOneUser->VocDevID.m_s16DeviceMain != 0)
-						{
-							My_DualUnlink(&pOneUser->deviceID ,&pOneUser->VocDevID);//断开坐席与语音设备连接
-							FreeOneFreeVoice(&pOneUser->VocDevID); //释放语音资源
-						}
-						
-						My_DualLink( &FreeTrkDeviceID, &pOneUser->deviceID );//坐席与找到的空闲中继建立连接,SendIOData通过坐席电话发送
-						if( XMS_ctsMakeCallOut ( g_acsHandle, &FreeTrkDeviceID, cfg_CallingNum, pOneUser->DtmfBuf, NULL ) > 0 ){ //call out OK
-							pLinkTrunk = &M_OneTrunk(FreeTrkDeviceID);							
-							pOneUser->LinkDevID = FreeTrkDeviceID;
-							pLinkTrunk->LinkDevID = pOneUser->deviceID; 
-							DrawUser_LinkDev( pOneUser );
-														
-							strcpy ( pLinkTrunk->CallerCode, cfg_CallingNum );
-							strcpy ( pLinkTrunk->CalledCode, pOneUser->DtmfBuf );
-							DrawMain_CallInfo( pLinkTrunk );
-								
-							Change_UserState( pOneUser, USER_CALLOUT );
-							Change_State( pLinkTrunk, TRK_CALLOUT);							
-						}else//call out fail
-						{ 
-							AddMsg ("坐席拨打外线失败 XMS_ctsMakeCallOut() FAIL!");
-							//PlayTone( &pOneUser->VocDevID, 2 );// busy tone
-							Change_UserState( pOneUser, USER_CONNECT_FAILURE );
-						}
-					}else
-					{//无法找到可用中继
-						AddMsg ("USER_OFFHOOK & SearchOneFreeTrunk() FAIL! 无法找到可用中继");
-						PlayTone( &pOneUser->VocDevID, 2 );// busy tone
-						Change_UserState( pOneUser, USER_CONNECT_FAILURE );
-					}// end of For Link User & Trunk				
+					}// end of For Link User & User					
 				}else{
 					AddMsg("配置文件中没有定义此 呼叫规则");
 				}		
@@ -2030,17 +1911,11 @@ void UserWork( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt )
 						My_DualLink( &pLinkDev->VocDevID, &pLinkDev->deviceID );	
 					}	
 				}
-				PlayTone( &pLinkDev->VocDevID, 2 ); // busy tone
-				Change_UserState(pOneUser, USER_CONNECT_FAILURE);
-				Change_State(pLinkDev, TRK_CONNECT_FAILURE);
-				DrawUser_FailReason(pOneUser,"Local User关机了");				
+				ResetUser( pOneUser, pAcsEvt );
+				XMS_ctsClearCall(g_acsHandle, &pLinkDev->deviceID,0,NULL );
 				
-				if ( pOneUser->VocDevID.m_s16DeviceMain != 0 ){//当前坐席有语音资源与其连接
-					My_DualUnlink( &pOneUser->VocDevID, &pOneUser->deviceID );
-					FreeOneFreeVoice(  &pOneUser->VocDevID );
-					DrawUser_VocInfo(pOneUser);
-				}
-				InitUserChannel(pOneUser);
+				Change_State(pLinkDev, TRK_CONNECT_FAILURE);
+				
 			}
 			
 		}
