@@ -1164,7 +1164,6 @@ void SetGtD_AnalogTrunk(DeviceID_t* pDevId)
 	cmdVoc.m_VocGtdControl.m_u8DTMFEnable = 1;			// Detect DTMF
 	cmdVoc.m_VocGtdControl.m_u8GTDEnable = 1;			// Detect GTD 
 	cmdVoc.m_VocGtdControl.m_u8FSKEnable = 1;			// Detect FSK for receive CallerID
-
 	cmdVoc.m_VocGtdControl.m_u8EXTEnable = 0x2;		// Enable PVD Detect
 
 	strcpy((char*)&cmdVoc.m_VocGtdControl.m_u8GTDID[0],"GHIJK");	// Detect Busy Tone
@@ -1314,12 +1313,13 @@ void ResetUser( TRUNK_STRUCT *pOneUser, Acs_Evt_t *pAcsEvt ){
 void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 	Acs_CallControl_Data *	pCallControl = NULL;
 	DeviceID_t				FreeVocDeviceID;
-	DeviceID_t			OutUserDeviceID;
+	DeviceID_t				OutUserDeviceID;
 	char					FileName[256];
+	char					tmpStr[256];
 	char					TmpDtmf, TmpGtd;
 	RetCode_t		        r;
-	TRUNK_STRUCT *pLinkUser;
-	TRUNK_STRUCT *pLinkDev;
+	TRUNK_STRUCT			*pLinkUser;
+	TRUNK_STRUCT			*pLinkDev;
 	/*XMS_EVT_CLEARCALL触发条件: 调用XMS_ctsClearCall()：成功发送挂机信号后返回
 	被动挂机完成后返回的事件;对于Analog Trunk在调用API函数XMS_ctsClearCall()成功后返回;
 	对于Analog User在调用API函数XMS_ctsClearCall()成功后，或在检测到对方挂机时候返回。*/
@@ -1398,7 +1398,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 			{
 				AddMsg("TRK_WAIT_LINKOK & XMS_EVT_LINKDEVICE 中继通道设备与语音通道设备 时隙连接建立成功");
 				strcpy ( FileName, cfg_VocPath );
-				strcat ( FileName, "\\bank.001");
+				strcat ( FileName, "Bank.001");
 				pOneTrunk->u8PlayTag ++;
 				PlayFile( &pOneTrunk->VocDevID, FileName, pOneTrunk->u8PlayTag,false);
 				Change_State ( pOneTrunk, TRK_WELCOME );			
@@ -1409,7 +1409,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 			if ( CheckPlayEnd ( pOneTrunk, pAcsEvt) )	/*play end Event*/
 			{
 				strcpy ( FileName, cfg_VocPath );
-				strcat ( FileName, "\\bank.002");
+				strcat ( FileName, "Bank.002");
 				pOneTrunk->u8PlayTag ++;
 				PlayFile ( &pOneTrunk->VocDevID, FileName, pOneTrunk->u8PlayTag,false );
 				
@@ -1442,7 +1442,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 						{							
 							//给外线播放背景音乐
 							strcpy ( FileName, cfg_VocPath );
-							strcat ( FileName, "\\ConfMusi.Pcm");
+							strcat ( FileName, "ConfMusi.Pcm");
 							pOneTrunk->u8PlayTag ++;
 							PlayFile ( &pOneTrunk->VocDevID, FileName, pOneTrunk->u8PlayTag,false );
 							
@@ -1472,6 +1472,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 		case TRK_CONNECT_FAILURE:
 			break;
 		case TRK_CALLOUT:
+
 			if( TmpGtd  == 'h' || TmpGtd=='P')		//收到 回铃音结束h，或者爆破音P
 			{
 				pLinkDev = &M_OneTrunk(pOneTrunk->LinkDevID);
@@ -1480,6 +1481,11 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt ){
 				{
 					Change_UserState(pLinkDev,USER_CONNECT);
 				}			
+			}
+			if ( pAcsEvt->m_s32EventType == XMS_EVT_ANALOG_INTERFACE )
+			{
+				sprintf(tmpStr,"A_TRK(%d,%d) 没有接线!",pAcsEvt->m_DeviceID.m_s8ModuleID,pAcsEvt->m_DeviceID.m_s16ChannelID);
+				AddMsg(tmpStr);
 			}
 			break;
 		case TRK_CONNECT:
@@ -2097,7 +2103,8 @@ void	FetchFromText(void)
 	sscanf ( TmpStr, "%d", &cfg_iCalledLen );
 	
 	pdlg->GetDlgItem ( IDC_EDIT_CALLINGNUM )->GetWindowText ( cfg_CallingNum, 30 );
-	
+	pdlg->GetDlgItem ( IDC_EDIT_VOCPATH )->GetWindowText ( cfg_VocPath, 128 );
+
 	if ( ((CButton *)pdlg->GetDlgItem (IDC_RADIO_UT))->GetCheck ( ) )
 		cfg_iCallOutRule = 3;
 	if ( ((CButton *)pdlg->GetDlgItem (IDC_RADIO_UU))->GetCheck ( ) )
@@ -2139,7 +2146,10 @@ void	WriteToConfig(void)
 	
 	sprintf ( TmpStr, "%d", cfg_iPartWork);
 	WritePrivateProfileString ( "ConfigInfo", "PartWork", TmpStr, cfg_IniName);
-	
+
+	sprintf ( TmpStr, "%s", cfg_VocPath);
+	WritePrivateProfileString ( "ConfigInfo", "VocPath", TmpStr, cfg_IniName);
+
 	sprintf ( TmpStr, "%d", cfg_iPartWorkModuleID);
 	WritePrivateProfileString ( "ConfigInfo", "PartWorkModuleID", TmpStr, cfg_IniName);
 	
