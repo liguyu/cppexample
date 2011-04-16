@@ -6,26 +6,26 @@
 --------------------Configuration: XMS_SwitchDemo - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_SwitchDemo.res" /d "_DEBUG" /d "_AFXDLL" "C:\DJKeygoe\Samples\XMS_SwitchDemo\XMS_SwitchDemo.rc"" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP39.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_SwitchDemo.res" /d "_DEBUG" /d "_AFXDLL" "D:\cppexample\XMS_SwitchDemo\XMS_SwitchDemo.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B4.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_SwitchDemo.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\DJKeygoe\Samples\Analog_Common_Code\Analog_Common_Code.cpp"
-"C:\DJKeygoe\Samples\CAS_Common_Code\CAS_Common_Cfg.CPP"
-"C:\DJKeygoe\Samples\XMS_SwitchDemo\XMS_SwitchDemo.cpp"
-"C:\DJKeygoe\Samples\XMS_SwitchDemo\XMS_SwitchDemo_Event.cpp"
-"C:\DJKeygoe\Samples\XMS_SwitchDemo\XMS_SwitchDemo_String.cpp"
-"C:\DJKeygoe\Samples\XMS_SwitchDemo\XMS_SwitchDemo_Sub.cpp"
-"C:\DJKeygoe\Samples\XMS_SwitchDemo\XMS_SwitchDemoDlg.cpp"
+"D:\cppexample\Analog_Common_Code\Analog_Common_Code.cpp"
+"D:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"D:\cppexample\XMS_SwitchDemo\XMS_SwitchDemo.cpp"
+"D:\cppexample\XMS_SwitchDemo\XMS_SwitchDemo_Event.cpp"
+"D:\cppexample\XMS_SwitchDemo\XMS_SwitchDemo_String.cpp"
+"D:\cppexample\XMS_SwitchDemo\XMS_SwitchDemo_Sub.cpp"
+"D:\cppexample\XMS_SwitchDemo\XMS_SwitchDemoDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP39.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3A.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B4.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B5.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMS_SwitchDemo.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"C:\DJKeygoe\Samples\XMS_SwitchDemo\StdAfx.cpp"
+"D:\cppexample\XMS_SwitchDemo\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3A.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3B.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B5.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B6.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_SwitchDemo.pdb" /debug /machine:I386 /out:"Debug/XMS_SwitchDemo.exe" /pdbtype:sept 
 .\Debug\Analog_Common_Code.obj
@@ -37,9 +37,9 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3B.tmp" with cont
 .\Debug\XMS_SwitchDemo_Sub.obj
 .\Debug\XMS_SwitchDemoDlg.obj
 .\Debug\XMS_SwitchDemo.res
-..\..\Lib\DJAcsAPI.lib
+C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3B.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B6.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -54,7 +54,7 @@ XMS_SwitchDemo_Sub.cpp
 XMS_SwitchDemoDlg.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3D.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B8.tmp" with contents
 [
 /nologo /o"Debug/XMS_SwitchDemo.bsc" 
 .\Debug\StdAfx.sbr
@@ -65,7 +65,7 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3D.tmp" with cont
 .\Debug\XMS_SwitchDemo_String.sbr
 .\Debug\XMS_SwitchDemo_Sub.sbr
 .\Debug\XMS_SwitchDemoDlg.sbr]
-Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3D.tmp"
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1B8.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 
