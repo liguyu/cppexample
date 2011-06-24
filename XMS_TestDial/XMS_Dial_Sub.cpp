@@ -1815,7 +1815,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 		{
 			pCallControl = (Acs_CallControl_Data *)FetchEventData(pAcsEvt);
 
-			if ( pCallControl->m_s32AcsEvtState == 1 )	// 呼出成功，对方摘机
+			if ( pCallControl->m_s32AcsEvtState == 1 )	// 呼出成功，对方摘机了
 			{
 				pOneTrunk->iEstablishTime = GetTickCount() - pOneTrunk->iCallOutTime;
 				g_iEstablishSum += pOneTrunk->iEstablishTime;
@@ -1823,7 +1823,7 @@ void TrunkWork ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 				g_iCallSuc++;
 
 				pOneTrunk->iSucCnt++;	
-				XMS_ctsClearCall(g_acsHandle, &pOneTrunk->deviceID, 0, NULL);
+				//XMS_ctsClearCall(g_acsHandle, &pOneTrunk->deviceID, 0, NULL);
 				Change_State (pOneTrunk, TRK_WAITHANGUP);
 
 				//停止定时器函数，设置一个新定时器
