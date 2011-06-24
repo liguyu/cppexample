@@ -6,7 +6,38 @@
 --------------------Configuration: XMSApi_Test - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP42F.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP420.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/XMSApi_Test.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP"
+"E:\cppexample\XMSApi_Test\CSPPlayDlg.cpp"
+"E:\cppexample\XMSApi_Test\Dialog3GFaxTone.cpp"
+"E:\cppexample\XMSApi_Test\DialogAnalogUser.cpp"
+"E:\cppexample\XMSApi_Test\DialogAnaTrunk.cpp"
+"E:\cppexample\XMSApi_Test\DialogAtrunkFlash.cpp"
+"E:\cppexample\XMSApi_Test\DialogFaxHeader.cpp"
+"E:\cppexample\XMSApi_Test\DialogFlashSet.cpp"
+"E:\cppexample\XMSApi_Test\DialogFskSet.cpp"
+"E:\cppexample\XMSApi_Test\DialogGTDSet.cpp"
+"E:\cppexample\XMSApi_Test\RecCSPDlg.cpp"
+"E:\cppexample\XMSApi_Test\XMS_Test_ParamVoIP.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_BuildIndex.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_ConfParam.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_ControlPlay.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_ControlRecord.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_ParamCAS.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_PlaySet.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_RecordSet.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_SendIOData.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_Test_Event.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_Test_Func.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_Test_ParamVoice.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_Test_String.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_Test_Sub.cpp"
+"E:\cppexample\XMSApi_Test\XMSApi_TestDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP420.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP421.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMSApi_Test.pdb" /debug /machine:I386 /out:"Debug/XMSApi_Test.exe" /pdbtype:sept 
 .\Debug\CAS_Common_Cfg.obj
@@ -41,16 +72,107 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP42F.tmp" with con
 .\Debug\XMSApi_Test.res
 ..\..\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP42F.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP421.tmp"
 <h3>Output Window</h3>
-Linking...
-LINK : fatal error LNK1104: cannot open file "..\..\Lib\DJAcsAPI.lib"
-Error executing link.exe.
+Compiling...
+CAS_Common_Cfg.CPP
+E:\cppexample\CAS_Common_Code\CAS_Common_Cfg.CPP(3) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+CSPPlayDlg.cpp
+E:\cppexample\XMSApi_Test\CSPPlayDlg.cpp(7) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+Dialog3GFaxTone.cpp
+E:\cppexample\XMSApi_Test\Dialog3GFaxTone.cpp(7) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogAnalogUser.cpp
+E:\cppexample\XMSApi_Test\DialogAnalogUser.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogAnaTrunk.cpp
+E:\cppexample\XMSApi_Test\DialogAnaTrunk.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogAtrunkFlash.cpp
+E:\cppexample\XMSApi_Test\DialogAtrunkFlash.cpp(7) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogFaxHeader.cpp
+E:\cppexample\XMSApi_Test\DialogFaxHeader.cpp(8) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogFlashSet.cpp
+E:\cppexample\XMSApi_Test\DialogFlashSet.cpp(8) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogFskSet.cpp
+E:\cppexample\XMSApi_Test\DialogFskSet.cpp(8) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+DialogGTDSet.cpp
+E:\cppexample\XMSApi_Test\DialogGTDSet.cpp(7) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+RecCSPDlg.cpp
+E:\cppexample\XMSApi_Test\RecCSPDlg.cpp(7) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMS_Test_ParamVoIP.cpp
+E:\cppexample\XMSApi_Test\XMS_Test_ParamVoIP.cpp(15) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_BuildIndex.cpp
+E:\cppexample\XMSApi_Test\XMSApi_BuildIndex.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_ConfParam.cpp
+E:\cppexample\XMSApi_Test\XMSApi_ConfParam.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_ControlPlay.cpp
+E:\cppexample\XMSApi_Test\XMSApi_ControlPlay.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_ControlRecord.cpp
+E:\cppexample\XMSApi_Test\XMSApi_ControlRecord.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_ParamCAS.cpp
+E:\cppexample\XMSApi_Test\XMSApi_ParamCAS.cpp(17) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_PlaySet.cpp
+E:\cppexample\XMSApi_Test\XMSApi_PlaySet.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_RecordSet.cpp
+E:\cppexample\XMSApi_Test\XMSApi_RecordSet.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_SendIOData.cpp
+E:\cppexample\XMSApi_Test\XMSApi_SendIOData.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+Generating Code...
+Compiling...
+XMSApi_Test_Event.cpp
+E:\cppexample\XMSApi_Test\XMSApi_Test_Event.cpp(11) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_Test_Func.cpp
+E:\cppexample\XMSApi_Test\XMSApi_Test_Func.cpp(33) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_Test_ParamVoice.cpp
+E:\cppexample\XMSApi_Test\XMSApi_Test_ParamVoice.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_Test_String.cpp
+E:\cppexample\XMSApi_Test\XMSApi_Test_String.cpp(11) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_Test_Sub.cpp
+E:\cppexample\XMSApi_Test\XMSApi_Test_Sub.cpp(11) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+XMSApi_TestDlg.cpp
+E:\cppexample\XMSApi_Test\XMSApi_TestDlg.cpp(14) : fatal error C1083: Cannot open include file: 'DJAcsDataDef.h': No such file or directory
+Generating Code...
+Error executing cl.exe.
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP422.tmp" with contents
+[
+/nologo /o"Debug/XMSApi_Test.bsc" 
+.\Debug\StdAfx.sbr
+.\Debug\CAS_Common_Cfg.sbr
+.\Debug\CSPPlayDlg.sbr
+.\Debug\Dialog3GFaxTone.sbr
+.\Debug\DialogAnalogUser.sbr
+.\Debug\DialogAnaTrunk.sbr
+.\Debug\DialogAtrunkFlash.sbr
+.\Debug\DialogFaxHeader.sbr
+.\Debug\DialogFlashSet.sbr
+.\Debug\DialogFskSet.sbr
+.\Debug\DialogGTD.sbr
+.\Debug\DialogGTDSet.sbr
+.\Debug\RecCSPDlg.sbr
+.\Debug\XMS_Test_ParamVoIP.sbr
+.\Debug\XMSApi_BuildIndex.sbr
+.\Debug\XMSApi_ConfParam.sbr
+.\Debug\XMSApi_ControlPlay.sbr
+.\Debug\XMSApi_ControlRecord.sbr
+.\Debug\XMSApi_ParamCAS.sbr
+.\Debug\XMSApi_PlaySet.sbr
+.\Debug\XMSApi_RecordSet.sbr
+.\Debug\XMSApi_SendIOData.sbr
+.\Debug\XMSApi_Test.sbr
+.\Debug\XMSApi_Test_Event.sbr
+.\Debug\XMSApi_Test_Func.sbr
+.\Debug\XMSApi_Test_ParamVoice.sbr
+.\Debug\XMSApi_Test_String.sbr
+.\Debug\XMSApi_Test_Sub.sbr
+.\Debug\XMSApi_TestDlg.sbr]
+Creating command line "bscmake.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP422.tmp"
+Creating browse info file...
+BSCMAKE: error BK1506 : cannot open file '.\Debug\CAS_Common_Cfg.sbr': No such file or directory
+Error executing bscmake.exe.
+<h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-XMSApi_Test.exe - 1 error(s), 0 warning(s)
+XMSApi_Test.exe - 27 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

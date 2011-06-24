@@ -6,11 +6,37 @@
 --------------------Configuration: HelloKeygoe - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP34.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/HelloKeygoe.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\cppexample\HelloKeygoe_MFC\HelloKeygoe_Sub.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP34.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP35.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/HelloKeygoe.pdb" /debug /machine:I386 /out:"Debug/HelloKeygoe.exe" /pdbtype:sept 
+.\Debug\HelloKeygoe.obj
+.\Debug\HelloKeygoe_Sub.obj
+.\Debug\HelloKeygoeDlg.obj
+.\Debug\StdAfx.obj
+.\Debug\HelloKeygoe.res
+C:\DJKeygoe\Lib\DJAcsAPI.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP35.tmp"
+<h3>Output Window</h3>
+Compiling...
+HelloKeygoe_Sub.cpp
+E:\cppexample\HelloKeygoe_MFC\HelloKeygoe_Sub.cpp(144) : warning C4101: 'MsgStr' : unreferenced local variable
+E:\cppexample\HelloKeygoe_MFC\HelloKeygoe_Sub.cpp(143) : warning C4101: 'r' : unreferenced local variable
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/HelloKeygoe.bsc"  .\Debug\StdAfx.sbr .\Debug\HelloKeygoe.sbr .\Debug\HelloKeygoe_Sub.sbr .\Debug\HelloKeygoeDlg.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-HelloKeygoe.exe - 0 error(s), 0 warning(s)
+HelloKeygoe.exe - 0 error(s), 2 warning(s)
 </pre>
 </body>
 </html>

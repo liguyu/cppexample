@@ -6,13 +6,19 @@
 --------------------Configuration: XMS_TestDial - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP198.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/XMS_TestDial.res" /d "_DEBUG" "E:\cppexample\XMS_TestDial\XMS_TestDial.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP5D.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FR"Debug/" /Fp"Debug/XMS_TestDial.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"D:\cppexample\XMS_TestDial\XMS_Dial_Sub.cpp"
+"E:\cppexample\XMS_TestDial\CAS_Common_Cfg.CPP"
+"E:\cppexample\XMS_TestDial\XMS_Dial_Event.cpp"
+"E:\cppexample\XMS_TestDial\XMS_Dial_String.cpp"
+"E:\cppexample\XMS_TestDial\XMS_Dial_Sub.cpp"
+"E:\cppexample\XMS_TestDial\XMS_TestDial.cpp"
+"E:\cppexample\XMS_TestDial\XMS_TestDialDlg.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP198.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP199.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP5D.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP5E.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/XMS_TestDial.pdb" /debug /machine:I386 /out:"Debug/XMS_TestDial.exe" /pdbtype:sept 
 .\Debug\CAS_Common_Cfg.obj
@@ -24,10 +30,16 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP199.tmp" with con
 .\Debug\XMS_TestDial.res
 C:\DJKeygoe\Lib\DJAcsAPI.lib
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP199.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP5E.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+CAS_Common_Cfg.CPP
+XMS_Dial_Event.cpp
+XMS_Dial_String.cpp
 XMS_Dial_Sub.cpp
+XMS_TestDial.cpp
+XMS_TestDialDlg.cpp
 Linking...
 Creating command line "bscmake.exe /nologo /o"Debug/XMS_TestDial.bsc"  .\Debug\CAS_Common_Cfg.sbr .\Debug\XMS_Dial_Event.sbr .\Debug\XMS_Dial_String.sbr .\Debug\XMS_Dial_Sub.sbr .\Debug\XMS_TestDial.sbr .\Debug\XMS_TestDialDlg.sbr"
 Creating browse info file...

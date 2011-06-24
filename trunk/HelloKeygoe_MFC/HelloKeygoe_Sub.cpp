@@ -93,7 +93,8 @@ void	InitListTrunk(void)
 {
 	LV_COLUMN	lvc;
 	DWORD dwExStyle;
-	
+	char TmpStr[100];
+
 	dwExStyle = LVS_EX_FULLROWSELECT | /*LVS_EX_GRIDLINES | LVS_EX_SUBITEMIMAGES |*/
 		LVS_EX_HEADERDRAGDROP;// | LVS_EX_TRACKSELECT;
 	pdlg->m_ListTrunk.SendMessage(LVM_SETEXTENDEDLISTVIEWSTYLE, 0, LPARAM(dwExStyle));	
@@ -125,6 +126,16 @@ void	InitListTrunk(void)
 	lvc.cx = 70;
 	pdlg->m_ListTrunk.InsertColumn ( 4, &lvc ); 
 
+	for (int i = 0; i < 10; i ++ )
+	{
+		// Fix content
+		sprintf ( TmpStr, "%d", i );
+		pdlg->m_ListTrunk.InsertItem ( i, TmpStr );
+		
+		pdlg->m_ListTrunk.SetItemText ( i, 1, "earn" );
+	}
+	pdlg->m_ListTrunk.GetItemText(1, 1, TmpStr,100 );
+
 }
 
 bool	InitSystem()
@@ -138,7 +149,7 @@ bool	InitSystem()
 	cfg_ServerID.m_u32ServerPort = 9000;
 
 	InitListTrunk();
-
+/*
 	r = XMS_acsOpenStream( &g_acsHandle, 
 		&cfg_ServerID,
 		2,				// App Unit ID 
@@ -175,7 +186,7 @@ bool	InitSystem()
 	memset ( AllDeviceRes, 0, sizeof(AllDeviceRes) );
 	
 	XMS_acsGetDeviceList ( g_acsHandle, NULL );
-	
+	*/
 	return true;
 }
 
