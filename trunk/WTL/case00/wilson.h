@@ -1,0 +1,9 @@
+#ifndef _WILSON_H_
+#define _WILSON_H_
+
+BOOL MyRegisterClass(HINSTANCE);
+BOOL InitInstance(HINSTANCE,int);
+LRESULT CALLBACK WndProc(HWND,UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK About(HWND,UINT, WPARAM, LPARAM);
+
+#endif
