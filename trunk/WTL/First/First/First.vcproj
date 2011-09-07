@@ -49,6 +49,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\WTL81_9127\Include;D:\WINDDK\7600.16385.1\inc\atl71;D:\WINDDK\7600.16385.1\inc\ddk"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +65,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;..\..\WTL81_9127\Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -72,6 +73,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="D:\WINDDK\7600.16385.1\lib\ATL\i386"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
