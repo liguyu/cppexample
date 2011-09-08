@@ -22,6 +22,7 @@ public:
 
 CAppModule _Module;
 
+//Èë¿Úº¯Êý
 int APIENTRY WinMain(HINSTANCE hInstance,
 					 HINSTANCE hPrevInstance,
 					 LPSTR lpCmdLine,
