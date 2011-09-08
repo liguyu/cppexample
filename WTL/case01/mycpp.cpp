@@ -36,28 +36,52 @@ INT_PTR CDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	return FALSE;
 }
+
 INT_PTR CDialog::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	switch(LOWORD(wParam))
 	{
-	
+	case IDC_BTN_CLOSE:
+		EndDialog(m_hWnd,IDOK);
+		return TRUE;
+	default:
+		break;	
 	}
+	return FALSE;
 }
 
 INT_PTR CALLBACK DefDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	CDialog* pThis = NULL;
-	CDialog* pThat = NULL
+	CDialog* pThat = NULL;
 	switch(uMsg)
 	{
 	case WM_INITDIALOG:
 		pThis=(CDialog*)lParam;
-		if()
+		if( NULL != pThis)
 		{
+			pThis->Attach(hWnd);//设置HWND和C++ Object之间的关系
+			SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);
 		}
 		break;
 	default:
 		break;
 	}
+	pThat = (CDialog*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+	if(NULL != pThat)
+	{
+		return ( pThat->HandleMessage(uMsg,wParam, lParam) );
+	}
 
+	return (INT_PTR)FALSE;
+}
+
+int APIENTRY WinMain( HINSTANCE hInstance, 
+					 HINSTANCE hPrevInstance, 
+					 LPSTR lpCmdLine, 
+					 int nCmdShow)
+{
+	CDialog dlg;
+	dlg.DoDialogBox(hInstance, CDialog::IDD, GetDesktopWindow());
+	return 0;
 }
