@@ -2,19 +2,19 @@
 #include "resource.h"
 
 INT_PTR CALLBACK DefDialogProc(HWND, UINT, WPARAM, LPARAM);
-///////////////////////////////////////////////////////////////////////
+//对话框类
 class CDialog
 {
 public:
-	CDialog(){ m_hWnd=NULL;	}
-	~CDialog(){}
+	CDialog(){ m_hWnd=NULL;	}						//构造函数
+	~CDialog(){}									//析构函数
 	enum { IDD = IDD_DLG_MAIN };
 public:
-	INT_PTR HandleMessage(UINT, WPARAM, LPARAM);
+	INT_PTR HandleMessage(UINT, WPARAM, LPARAM);	//消息处理函数
 	INT_PTR DoDialogBox(HINSTANCE, UINT, HWND);
 	INT_PTR OnCommand(WPARAM wParam, LPARAM lParam);
 
-	void Attach(HWND hWnd){ m_hWnd = hWnd; }
+	void Attach(HWND hWnd){ m_hWnd = hWnd; }		//将创建窗口时的句柄hWnd，绑定到对象成员m_hWnd
 
 private:
 	HWND m_hWnd;//窗口句柄，对象通过m_hWnd找到窗口
@@ -57,17 +57,17 @@ INT_PTR CALLBACK DefDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	switch(uMsg)
 	{
 	case WM_INITDIALOG:
-		pThis=(CDialog*)lParam;
+		pThis=(CDialog*)lParam;		//获取对象指针
 		if( NULL != pThis)
 		{
-			pThis->Attach(hWnd);//设置HWND和C++ Object之间的关系
-			SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);
+			pThis->Attach(hWnd);	//设置HWND和对象之间的关系
+			SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)pThis);	//将对象指针保存到窗口hWnd用户数据空间
 		}
 		break;
 	default:
 		break;
 	}
-	pThat = (CDialog*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+	pThat = (CDialog*)GetWindowLongPtr(hWnd, GWLP_USERDATA);	//从窗口句柄hWnd得到对象指针，因为之前有SetWindowLongPtr()
 	if(NULL != pThat)
 	{
 		return ( pThat->HandleMessage(uMsg,wParam, lParam) );
