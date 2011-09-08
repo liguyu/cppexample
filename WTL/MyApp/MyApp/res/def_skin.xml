@@ -1,0 +1,25 @@
+﻿<skins>
+  <imghorzex name="dlg_header" src="501" left="4"/>
+  <imgframe name="dlg_body" src="502" top="4" left="4" crbg="FFFFFF" part="top"/>
+  <imgframe name="dlg_footer" src="502" top="4" left="4" crbg="FFFFFF" part="bottom"/>
+  
+  <!--<skins-png>-->
+  <png name="little_logo"  src="201"/>
+  <png name="big_logo"     src="202"/>
+  <!--<png name="status_ok"    src="303"/>
+  <png name="status_warn"  src="304"/>
+  <png name="status_ask"   src="305"/>
+  <png name="animation"    src="306" subwidth="45"/>-->
+  <png name="dlg_btn_close" src="100" subwidth="42"/>
+  <png name="dlg_btn_max" src="101" subwidth="31"/>  
+  <png name="dlg_btn_min" src="102" subwidth="31"/>
+  <png name="dlg_btn_normal" src="103" subwidth="31"/>
+  <png name="dlg_btn_menu" src="110" subwidth="40"/>
+  <!--</skins-png>-->
+
+  <!--</skins-other>-->
+  <gradation name="tipbg" from="FFFFFF" to="E4E5F0" direction="vert"/>
+  <button name="common_btn" border="7D9EBC" bg="FBFCFD" bgup="FEFEFE" bgdown="C6E2FD" bguphover="FEFEFE" bgdownhover="DBEDFE" bguppush="C6E2FD" bgdownpush="FEFEFE"/>
+  <!--</skins-other>-->
+  
+</skins>

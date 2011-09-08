@@ -1,0 +1,14 @@
+<style>
+  <class name="dlg_header" skin="dlg_header" font="0000" crtext="000000"/>
+  <class name="dlg_body" skin="dlg_body" font="0000" crtext="000000" x-margin="4" />
+  <class name="dlg_footer" skin="dlg_footer" font="0000" crtext="000000" x-margin="4" />
+  <class name="head_text_title" font="0004" crtext="FFFFFF" textmode="8030"/>
+  <class name="cmn_imgbtn" cursor="hand"/>
+  
+  <class name="dlg_title" font="0104" crtext="0f6ec0"/>
+  <class name="dlg_mulit_text" textmode="A210" font="0104" crtext="0f6ec0"/>
+  <class name="dlg_mulit_normal_text" textmode="A210" font="0000" crtext="000000"/>
+  <class name="common_btn" skin="common_btn" font="0000" crtext="000000" textmode="25" cursor="hand"/>
+  <class name="linktext" font="0002" hoverfont="0002" crtext="0f6ec0" crhover="0f6ec0" cursor="hand"/>
+  <class name="tipbg" skin="tipbg"/>
+</style>
