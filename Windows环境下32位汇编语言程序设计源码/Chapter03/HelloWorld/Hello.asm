@@ -8,6 +8,10 @@
 ; 使用 nmake 或下列命令进行编译和链接:
 ; ml /c /coff Hello.asm
 ; Link /subsystem:windows Hello.obj
+; .386 使用的指令集
+; flat 内存模式，平坦模式
+; stdcall 函数调用方式
+; casemap:none 大小写敏感
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		.386
 		.model flat,stdcall
@@ -21,18 +25,21 @@ includelib	user32.lib
 include		kernel32.inc
 includelib	kernel32.lib
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-; 数据段
+; 数据段 
+; .data 可读可写的已定义变量
+; .data? 可读可写的未定义变量，不会增大.exe文件的大小
+; .const 可读不可写，一些常量，
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		.data
 
 szCaption	db	'A MessageBox !',0
 szText		db	'Hello, World !',0
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-; 代码段
+; 代码段 所有的指令都必须写在代码段中
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		.code
 start:
-		invoke	MessageBox,NULL,offset szText,offset szCaption,MB_OK
+		invoke	MessageBox,NULL,addr szText,addr szCaption,MB_OK
 		invoke	ExitProcess,NULL
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		end	start
