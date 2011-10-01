@@ -1,4 +1,4 @@
-NAME = Hello
+NAME = xiaobu
 OBJS = $(NAME).obj
 
 LINK_FLAG = /subsystem:windows /DEBUG /DEBUGTYPE:CV
