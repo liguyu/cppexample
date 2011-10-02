@@ -15,7 +15,7 @@ include kernel32.inc
 includelib kernel32.lib
 
 .data
-HelloWord BYTE 'hello, world!', 0
+HelloWord db 'hello, world!', 0
 
 .code
 start:
