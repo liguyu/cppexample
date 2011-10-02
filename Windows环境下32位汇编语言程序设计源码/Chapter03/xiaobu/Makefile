@@ -1,8 +1,8 @@
 NAME = xiaobu
 OBJS = $(NAME).obj
 
-LINK_FLAG = /subsystem:windows /DEBUG /DEBUGTYPE:CV
-ML_FLAG = /c /coff /Cp /Zi
+LINK_FLAG = /SUBSYSTEM:CONSOLE
+ML_FLAG = /c /coff
 
 $(NAME).exe: $(OBJS)
 	Link $(LINK_FLAG) $(OBJS)
