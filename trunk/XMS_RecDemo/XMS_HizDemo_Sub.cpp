@@ -1233,12 +1233,13 @@ bool	InitSystem()
 	{
 		sprintf ( MsgStr, "XMS_acsSetESR() FAIL! ret = %d", r );
 		AddMsg ( MsgStr );
+		WriteLog(LEVEL_ERROR, MsgStr);
 		return false;
-	}
-	else
+	}else
 	{
 		sprintf ( MsgStr, "XMS_acsSetESR() OK!" );
 		AddMsg ( MsgStr );
+		WriteLog(LEVEL_DEBUG,MsgStr);
 	}
 	
 	InitAllDeviceRes ();
@@ -1271,6 +1272,7 @@ void	ExitSystem()
 	// save to "XMS_HizDemo.INI"
 	FetchFromText();
 	WriteToConfig();
+	WriteLog(LEVEL_INFO,"ExitSystem\n");
 	
 }
 /************************************************************************/
@@ -2293,8 +2295,8 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	DeviceID_t				FreeVoc1DeviceID;
 	DeviceID_t				FreeVoc2DeviceID;
 	char					FileName[256] = {0};
-	char                    str[20] = {0};
-	char					MsgStr[100] = {0};
+	char                    str[512] = {0};
+	char					MsgStr[512] = {0};
 	DeviceID_t *            pDev = &pAcsEvt->m_DeviceID;
 	PSMON_EVENT             SMevt= NULL;
     static  DJ_U32          m_u32Counter = 0;
@@ -2303,17 +2305,21 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	int						monitorFirstE1;
 	int						monitorSecondDspModuleID;
 	int						monitorSecondE1;	
-	if ( XMS_EVT_SIGMON != pAcsEvt->m_s32EventType){
+	if ( XMS_EVT_SIGMON != pAcsEvt->m_s32EventType)
+	{
 		AddMsg("Event type != XMS_EVT_SIGMON ");
 		return;
 	}	
 	if (g_NumbersOfMonitorGroup == 0)
 	{
-		AddMsg("g_NumbersOfMonitorGroup == 0");
+		strcpy(MsgStr, "g_NumbersOfMonitorGroup == 0");
+		AddMsg(MsgStr);
+		WriteLog(LEVEL_ERROR,MsgStr);
 		return;
 	}
 	
 	SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);	
+	//根据当前产生监控事件的通道定位监控组信息
 	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
 	{
 		if ((pAcsEvt->m_DeviceID.m_s8ModuleID == g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID 
@@ -2325,20 +2331,30 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 			monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
 			monitorSecondDspModuleID = g_MonitorGroupInfo[i].m_MonitorSecondModuleID;
 			monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
-			i = g_NumbersOfMonitorGroup;				
-		}else if (i == g_NumbersOfMonitorGroup-1)
-		{
-			sprintf(str,"DSP:%d,Chn:%d,E1:%d", pAcsEvt->m_DeviceID.m_s8ModuleID, pAcsEvt->m_DeviceID.m_s16ChannelID,pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1);
-			AddMsg(str);
-			AddMsg("The trunk not exist in the ini file.");
-			return;
+			i = g_NumbersOfMonitorGroup;	
+			sprintf(MsgStr,"Find the monitor group, monitorFirstDspModuleID:%d, \
+				monitorFirstE1:d,monitorSecondDspModuleID:%d,monitorSecondE1:%d",\
+				monitorFirstDspModuleID,monitorFirstE1,monitorSecondDspModuleID,monitorSecondE1);
+			WriteLog(LEVEL_DEBUG, MsgStr);
 		}
-	}	
+	}
+	//没有找到监控组信息
+	if (i == g_NumbersOfMonitorGroup)
+	{
+		sprintf(str,"DSP:%d,Chn:%d,E1:%d", pAcsEvt->m_DeviceID.m_s8ModuleID, pAcsEvt->m_DeviceID.m_s16ChannelID,pAcsEvt->m_DeviceID.m_s16ChannelID/32 + 1);
+		AddMsg(str);
+		WriteLog(LEVEL_DEBUG, str);
+		AddMsg("The trunk not exist in the ini file.");
+		WriteLog(LEVEL_ERROR, "The trunk not exist in the ini file.");
+		return;
+	}
+
 	TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorFirstDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
 	TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorSecondDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
 	if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
 	{
 		AddMsg("Record Trunk is not exist");
+		WriteLog(LEVEL_ERROR, "Record Trunk is not exist")
 		return;
 	}	
 	switch(SMevt->EventType)
