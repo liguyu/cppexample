@@ -2375,14 +2375,20 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);				
 				Change_State(pOneRecordTrunk1,TRK_CONNECT);
 				Change_State(pOneRecordTrunk2,TRK_CONNECT);				
-				TRACE("********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+				sprintf(str,"********** (DSP: %d, CH: %d)Call_Generate ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+				AddMsg(str);
+				WriteLog(LEVEL_DEBUG,str);
 			}else{
-				TRACE("trunk state is wrong!");
+				sprintf(str,"trunk state is wrong! RecTrk1(%d,%d) state=%s,RecTrk2(%d,%d) state=%s", 
+					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
+				AddMsg(str);
+				WriteLog(LEVEL_ERROR,str);
 				return;
 			}	
 		}else
 		{
-			TRACE("please start record");
+			AddMsg("please start record");
 			return;
 		}		
 		break;
