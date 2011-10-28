@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "XMS_HizDemo.h"
 #include "XMS_HizDemoDlg.h"
-
+#include "XMS_HizDemo_Sub.h"
 
 #include "DJAcsDataDef.h"
 #include "DJAcsAPIDef.h"
@@ -163,6 +163,40 @@ void	GetString_LineState ( char *StateStr, int iLineState )
 		sprintf ( StateStr, "0x%X", iLineState );
 		break;
 	}
+}
+char	*	GetString_State ( int iState )
+{
+	char StateStr[100]={0};
+	switch( iState ) 
+	{
+	case TRK_WAITOPEN:
+		strcpy(StateStr,"Wait Open"); 
+		break;
+		
+	case TRK_FREE:		
+		strcpy(StateStr,"Free"); 
+		break ;
+		
+	case TRK_CONNECT:
+		strcpy(StateStr,"Connect");
+		break ;
+	case TRK_RECORDFILE:
+		strcpy(StateStr,"RecordFile");
+		break ;
+	case TRK_DISCONNECT:
+		strcpy(StateStr,"Disonnect");
+		break ;
+		
+		
+	case TRK_WAIT_REMOVE:
+		strcpy(StateStr,"DSP remove");
+		break;
+		
+	default:
+		strcpy(StateStr,"other");
+		break;
+	}
+	return StateStr;
 }
 
 char	*GetString_PcmType ( int iPcmType )
