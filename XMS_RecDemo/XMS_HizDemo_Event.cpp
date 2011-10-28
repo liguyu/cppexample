@@ -518,7 +518,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 					{
 						TrunkWork_ISDN_SS7( pOneTrunk, pAcsEvt );
 					}				
-				}else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub)
+				}else if(XMS_DEVSUB_ANALOG_REC == pAcsEvt->m_DeviceID.m_s16DeviceSub )
 				{
 					TRUNK_STRUCT *pOneTrunk = &M_OneTrunk(pAcsEvt->m_DeviceID);					
 					if ( NULL != pOneTrunk )
@@ -540,6 +540,7 @@ DJ_Void EvtHandler(DJ_U32 esrParam)
 				if ( pDevID->m_s16DeviceMain == XMS_DEVMAIN_INTERFACE_CH )
 				{
 					//TrunkWork_SS7 ( &M_OneTrunk(*pDevID), pAcsEvt );
+					TrunkWork_Analog(&M_OneTrunk(*pDevID),pAcsEvt);
 				}
 			}
 			break;

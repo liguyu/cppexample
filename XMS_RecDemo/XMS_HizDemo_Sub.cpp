@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "XMS_HizDemo.h"
 #include "XMS_HizDemoDlg.h"
-
+#include "LogFile.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -37,7 +37,8 @@ ServerID_t		cfg_ServerID;
 char			cfg_VocPath[128];
 int				cfg_iDispChnl;
 int				cfg_iVoiceRule;
-
+int				cfg_LogOn;
+int				cfg_LogLevel;
 int				cfg_iPartWork;
 int				cfg_iPartWorkModuleID[256] = {0};
 char            cfg_chPartWorkModuleID[256] = {0};
@@ -523,6 +524,9 @@ void	ReadFromConfig(void)
 	cfg_s32DebugOn = GetPrivateProfileInt ( "ConfigInfo", "DebugOn", 0, cfg_IniName);
 	cfg_oneRecFileEachTrunk = GetPrivateProfileInt ( "ConfigInfo", "OneRecFileEachTrunk", 0, cfg_IniName);
 	
+	cfg_LogOn = GetPrivateProfileInt ( "ConfigInfo", "LogOn", 0, cfg_IniName);
+	cfg_LogLevel = GetPrivateProfileInt ( "ConfigInfo", "LogLevel", 0, cfg_IniName);
+
 	GetPrivateProfileString("ConfigInfo", "PartWorkModuleID","",cfg_chPartWorkModuleID, sizeof(cfg_chPartWorkModuleID), cfg_IniName); 
 	strncpy(strTmp, cfg_chPartWorkModuleID, sizeof(strTmp));
 	SplitStr2Int(strTmp, ",", cfg_iPartWorkModuleID);
@@ -1170,7 +1174,8 @@ bool	InitSystem()
 	
 	// Read From "XMS_HizDemo.INI"
 	ReadFromConfig();
-	
+	InitLogCfg();		//初始化日志
+
 	// Special code for CAS(SS1)
 	// Read From "C:\\DJKeygoe\\Samples\\CAS_Common_Code\\XMS_CAS_Cfg.INI"
 	if ( CAS_Common_Cfg_ReadCfg ( &g_Param_CAS ) != 0 )
@@ -1213,12 +1218,14 @@ bool	InitSystem()
 		
 		MessageBox(NULL, MsgStr, "Init System", MB_OK ) ;
 		AddMsg ( MsgStr );
+		WriteLog(LEVEL_ERROR, MsgStr);
 		return false;
 	}
 	else
 	{
 		sprintf ( MsgStr, "XMS_acsOpenStream(%s,%d) OK!", cfg_ServerID.m_s8ServerIp, cfg_ServerID.m_u32ServerPort );
 		AddMsg ( MsgStr );
+		WriteLog(LEVEL_DEBUG,MsgStr);
 	}
 	
 	r = XMS_acsSetESR ( g_acsHandle, (EsrFunc)EvtHandler, 0, 1 );
@@ -2374,6 +2381,8 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
 				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
 				TRUNK_STRUCT *pSearchVocTrunk;
+				//在语音资源较多的DSP查找空闲语音，pOneRecordTrunk1和pOneRecordTrunk2可以位于不同的DSP，
+				//不影响混音录音，因为查找的Voc在同一个DSP上找，Voc和Trk双向时隙连接可以跨DSP
 				if (AllDeviceRes[monitorFirstDspModuleID].lVocFreeNum >= AllDeviceRes[monitorSecondDspModuleID].lVocFreeNum )
 				{
 					pSearchVocTrunk = pOneRecordTrunk1;
@@ -2381,7 +2390,6 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 					pSearchVocTrunk = pOneRecordTrunk2;
 				}
 				
-				//search free voice resource in the same dsp, the dsp is monitorFirstDspModuleID or monitorSecondDspModuleID		
 				int voc1Chn = SearchOneFreeVoice ( pSearchVocTrunk,  &FreeVoc1DeviceID );
 				if ( voc1Chn >= 0 )
 				{
@@ -2406,24 +2414,26 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 					CString str;
 					CTime tm;					
 					tm=CTime::GetCurrentTime();
-					str=tm.Format("%Y%m%d-%H%M%S");
+					str=tm.Format("%Y%m%d%H%M%S");
 					
 					if ( XMS_DEVSUB_HIZ_SS7 == pAcsEvt->m_DeviceID.m_s16DeviceSub 
 						|| XMS_DEVSUB_HIZ_SS7_64K_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 					{
 						if (cfg_oneRecFileEachTrunk)
-						{
+						{//每个通道时钟只录一个文件
 							sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
-						}else{
+						}else
+						{//每个通道每次录一个文件，通过后面精确到秒时间区分
 							sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
 						}
 					}else if ( XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub 
 						|| XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
 					{
 						if (cfg_oneRecFileEachTrunk)
-						{
+						{//每个通道时钟只录一个文件
 							sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
-						}else{
+						}else
+						{//每个通道每次录一个文件，通过后面精确到秒时间区分
 							sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
 						}								
 					}					
@@ -2500,6 +2510,8 @@ void TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt )
 			if ( p != NULL )
 			{
 				ConvertRawFskToCallerID ((unsigned char *) p, pOneTrunk->CallerCode, 20 );
+				DrawMain_CallInfo(pOneTrunk);
+				AddMsg(pOneTrunk->CallerCode);
 			}				
 			if ( pAcsEvt->m_s32EventType == XMS_EVT_CALLIN )
 			{				
