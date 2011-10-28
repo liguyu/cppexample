@@ -107,6 +107,10 @@ SOURCE=..\CAS_Common_Code\CAS_Common_Cfg.CPP
 # End Source File
 # Begin Source File
 
+SOURCE=.\LogFile.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -149,6 +153,10 @@ SOURCE=..\Analog_Common_Code\Analog_Common_Code.h
 # Begin Source File
 
 SOURCE=..\CAS_Common_Code\CAS_Common_Cfg.H
+# End Source File
+# Begin Source File
+
+SOURCE=.\LogFile.h
 # End Source File
 # Begin Source File
 
