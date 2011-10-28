@@ -2354,7 +2354,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	if (pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
 	{
 		AddMsg("Record Trunk is not exist");
-		WriteLog(LEVEL_ERROR, "Record Trunk is not exist")
+		WriteLog(LEVEL_ERROR, "Record Trunk is not exist");
 		return;
 	}	
 	switch(SMevt->EventType)
