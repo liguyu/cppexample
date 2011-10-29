@@ -2331,11 +2331,8 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 			monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
 			monitorSecondDspModuleID = g_MonitorGroupInfo[i].m_MonitorSecondModuleID;
 			monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
-			i = g_NumbersOfMonitorGroup;	
-			sprintf(MsgStr,"Find the monitor group, monitorFirstDspModuleID:%d, monitorFirstE1:d,
-													monitorSecondDspModuleID:%d,monitorSecondE1:%d",
-													monitorFirstDspModuleID,monitorFirstE1,
-													monitorSecondDspModuleID,monitorSecondE1);
+			sprintf(MsgStr,"Find the monitor group, monitorFirstDspModuleID:%d, monitorFirstE1:%d,monitorSecondDspModuleID:%d,monitorSecondE1:%d",\
+							monitorFirstDspModuleID,monitorFirstE1,	monitorSecondDspModuleID,monitorSecondE1);
 			WriteLog(LEVEL_DEBUG, MsgStr);
 			break;
 		}
@@ -2373,16 +2370,16 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				pdlg->m_ListMain.SetItemText(iRecord2Pos, 7, str);
 				pdlg->m_ListMain.SetItemText(iRecord2Pos, 6, SMevt->Caller_ID);
 				pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);				
-				Change_State(pOneRecordTrunk1,TRK_CONNECT);
-				Change_State(pOneRecordTrunk2,TRK_CONNECT);				
-				sprintf(str,"EvtTrk(%d, %d), SMON_EVT_Call_Generate, RecTrk1(%d, %d), RecTrk2(%d, %d)", 
+				Change_State(pOneRecordTrunk1,TRK_CALL_GENERATE);
+				Change_State(pOneRecordTrunk2,TRK_CALL_GENERATE);				
+				sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Generate, RecTrk1(%d, %d), RecTrk2(%d, %d)", 
 					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
 					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID,
 					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID);
 				AddMsg(str);
 				WriteLog(LEVEL_DEBUG,str);
 			}else{
-				sprintf(str,"trunk state is wrong! EvtTrk(%d, %d), SMON_EVT_Call_Generate, RecTrk1(%d,%d) state=%s,RecTrk2(%d,%d) state=%s", 
+				sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Generate, trunk state is wrong! RecTrk1(%d,%d) state=%s,RecTrk2(%d,%d) state=%s", 
 					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
 					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
 					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
@@ -2392,7 +2389,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 			}	
 		}else
 		{
-			sprintf(str,"Please start record! EvtTrk(%d, %d), SMON_EVT_Call_Generate",
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Generate, Please start record! ",
 				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
 			AddMsg(str);
 			WriteLog(LEVEL_ERROR, str);
@@ -2405,7 +2402,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		pdlg->GetDlgItem(IDC_STATIC_CONNUM)->SetWindowText(MsgStr);
 		if ( g_u8IsStartFlag)
 		{			
-			if (pOneRecordTrunk1->State == TRK_CONNECT && pOneRecordTrunk2->State == TRK_CONNECT)
+			if (pOneRecordTrunk1->State == TRK_CALL_GENERATE && pOneRecordTrunk2->State == TRK_CALL_GENERATE)
 			{				
 				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
 				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
@@ -2482,19 +2479,19 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 				++pOneRecordTrunk2->u8RecordCounter;
 				Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
 				Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
-				sprintf(str,"EvtTrk(%d, %d), SMON_EVT_Call_Connect, RecTrk1(%d,%d), RecTrk2(%d,%d)", 
+				sprintf(MsgStr,"pEvtTrk(%d, %d), SMON_EVT_Call_Connect, RecTrk1(%d,%d)_%s, RecTrk2(%d,%d)_%s", \
 					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
 					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
 					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
-				AddMsg(str);
-				WriteLog(LEVEL_DEBUG, str);
-				sprintf(str, "RecordFile:%s,  RecTrk1(%d,%d), RecTrk2(%d,%d)", FileName,
+				AddMsg(MsgStr);
+				WriteLog(LEVEL_DEBUG, MsgStr);
+				sprintf(MsgStr, "RecordFile:%s,  RecTrk1(%d,%d), RecTrk2(%d,%d)", FileName,
 					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID,
-					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID,);		
-				AddMsg(str);
-				WriteLog(LEVEL_DEBUG, str);
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID);		
+				AddMsg(MsgStr);
+				WriteLog(LEVEL_DEBUG, MsgStr);
 			}else{
-				sprintf(str,"trunk state is wrong! EvtTrk(%d, %d), SMON_EVT_Call_Connect, RecTrk1(%d,%d) state=%s, RecTrk2(%d,%d) state=%s", 
+				sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Connect, trunk state is wrong! RecTrk1(%d,%d) state=%s, RecTrk2(%d,%d) state=%s", 
 					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
 					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
 					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
@@ -2504,7 +2501,7 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 			}			
 		}else
 		{
-			sprintf(str,"Please start record! EvtTrk(%d, %d), SMON_EVT_Call_Connect",
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Connect, Please start record!",
 				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
 			AddMsg(str);
 			WriteLog(LEVEL_ERROR, str);
@@ -2518,24 +2515,37 @@ void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		
 		if (!g_u8IsStartFlag)
 		{
-			AddMsg("SMON_EVT_Call_Disconnect===please start record.");
+			sprintf(MsgStr,"pEvtTrk(%d, %d), SMON_EVT_Call_Disconnect, please start record.",
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
+			AddMsg(str);
+			WriteLog(LEVEL_ERROR, str);
 			return;
 		}		
 		if (pOneRecordTrunk1->State == TRK_RECORDFILE && pOneRecordTrunk2->State == TRK_RECORDFILE)
 		{
 			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
 			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 			
-			sprintf(str,"DSP:%d Record1Pos:%d Record2Pos:%d MsgType:%d,ReleaseReason:%d",
-				monitorFirstDspModuleID,iRecord1Pos,iRecord2Pos,SMevt->MsgType,SMevt->ReleaseReason);
-			AddMsg(str);			
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Disconnect, ReleaseReason:%d",
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,SMevt->ReleaseReason);
+			AddMsg(str);
+			WriteLog(LEVEL_DEBUG, str);
 			StopRecordFile(&pOneRecordTrunk1->VocDevID);
 			StopRecordFile(&pOneRecordTrunk2->VocDevID);
 			ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
 			ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
-			TRACE("********** (DSP: %d, CH: %d)Call_DisConnect ***** \n", pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID );
+			sprintf(MsgStr, "StopRecordFile(),  RecTrk1(%d,%d), RecTrk2(%d,%d)",
+				pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID,
+				pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID);		
+			AddMsg(MsgStr);
+				WriteLog(LEVEL_DEBUG, MsgStr);
 		}else
 		{
-			AddMsg("SMON_EVT_Call_Disconnect: trunk state is wrong.");
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Disconnect, trunk state is wrong! RecTrk1(%d,%d) state=%s, RecTrk2(%d,%d) state=%s", 
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+				pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
+				pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
+			AddMsg(str);
+			WriteLog(LEVEL_ERROR,str);
 			return;
 		}	
 		break;

@@ -164,39 +164,21 @@ void	GetString_LineState ( char *StateStr, int iLineState )
 		break;
 	}
 }
-char	*	GetString_State ( int iState )
+char*	GetString_State ( int iState )
 {
 	char StateStr[100]={0};
 	switch( iState ) 
 	{
-	case TRK_WAITOPEN:
-		strcpy(StateStr,"Wait Open"); 
-		break;
-		
-	case TRK_FREE:		
-		strcpy(StateStr,"Free"); 
-		break ;
-		
-	case TRK_CONNECT:
-		strcpy(StateStr,"Connect");
-		break ;
-	case TRK_RECORDFILE:
-		strcpy(StateStr,"RecordFile");
-		break ;
-	case TRK_DISCONNECT:
-		strcpy(StateStr,"Disonnect");
-		break ;
-		
-		
-	case TRK_WAIT_REMOVE:
-		strcpy(StateStr,"DSP remove");
-		break;
-		
-	default:
-		strcpy(StateStr,"other");
-		break;
+	case TRK_WAITOPEN:		return "Wait Open"; 		
+	case TRK_FREE:			return "Free";
+	case TRK_CALL_GENERATE: return "Call Generate";
+	case TRK_CONNECT:		return "Connect";
+	case TRK_RECORDFILE:	return "Connect & RecordFile";
+	case TRK_DISCONNECT:	return "Disonnect";
+	case TRK_WAIT_REMOVE:	return "DSP remove";		
 	}
-	return StateStr;
+	return "UNKNOWN";
+
 }
 
 char	*GetString_PcmType ( int iPcmType )
