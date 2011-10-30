@@ -2331,9 +2331,13 @@ void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	//4.16时隙产生信令事件
 	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
 	{
-		tmpE1No = pEventTrunk->deviceID.m_s16ChannelID/32 + 1;		//产生事件通道对应的E1，E1的取值为[1,4]
-		tmpDSPNo = ( tmpE1No + SMevt->Pcm*2 )/4 + pEventTrunk->deviceID.m_s8ModuleID;	//实际通道位于监控系统的DSP ID号
-		tmpE1No  = ( tmpE1No + SMevt->Pcm*2 )%4;										//实际通道位于监控系统的DSP中的第几个E1
+		//定位通话通道位于整个监控系统的DSP ID号和所在DSP的E1号
+		tmpE1No = pEventTrunk->deviceID.m_s16ChannelID/32 + 1;			//产生事件通道位于所在DSP的第几个E1，E1的取值为[1,4]
+		tmpE1No = tmpE1No + (pEventTrunk->deviceID.m_s8ModuleID-1)*4;	//产生事件通道位于整个监控系统的第几个E1
+		tmpE1No = tmpE1No + SMevt->Pcm*2;								//通话通道位于整个监控系统的第几个E1
+		tmpDSPNo = (tmpE1No-1)/4 +1;									//通话通道位于整个监控系统的DSP ID号
+		tmpE1No = (tmpE1No-1)%4 +1;										//通话通道位于所在DSP的第几个E1
+
 		if ((tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID 
 			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorFirstE1) ||
 			(tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorSecondModuleID 
