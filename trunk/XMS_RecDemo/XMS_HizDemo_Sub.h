@@ -5,6 +5,8 @@
 #include "DJAcsAPIDef.h"
 
 #define	MAX_FILE_NAME_LEN		256
+#define	MAX_APPNAME_LEN			30
+#define	MAX_MONITOR_GROUP_NUM	100
 
 enum TRUNK_STATE {
 	TRK_WAITOPEN,
@@ -91,50 +93,45 @@ typedef struct
 
 typedef  struct 
 {
-	DJ_U8                   m_MonitorFirstDspModuleID;     //the dsp ID of Monitor Group
-	DJ_U8                   m_MonitorFirstE1;     //the first E1 number
-	DJ_U8                   m_MonitorSecondModuleID;     //the dsp ID of Monitor Group
-	DJ_U8                   m_MonitorSecondE1;     //the second E1 number
+	DJ_U8       m_MonitorFirstDspModuleID;		//the dsp ID of Monitor Group
+	DJ_U8       m_MonitorFirstE1;				//the first E1 number
+	DJ_U8       m_MonitorSecondModuleID;		//the dsp ID of Monitor Group
+	DJ_U8       m_MonitorSecondE1;				//the second E1 number
+	DJ_S8		MonitorSS7DPCOrOPC[10];			//高阻七号监听时有效，第n个监听组所监听E1的DPCOrOPC，十六进制；前六个字符有用例如：014E91
+	DJ_S8		MonitorSS7OPCOrDPC[10];         //高阻七号监听时有效，第n个监听组所监听E1的OPCOrDPC，十六进制；与MonitorSS7DPCOrOPC[n]相对应
+	DJ_U8		MonitorSS7_PCM;                 // CIC_Hig7
 }MonitorGroupInfo;
 
 
 // ----- declare function -----
 bool	InitSystem(void);
 void	ExitSystem(void); 
-
 void	AddMsg ( char *str);
-
 void	OpenAllDevice_Dsp ( DJ_S8 s8DspModID );
 void	CloseAllDevice_Dsp ( DJ_S8 s8DspModID );
 void	ReOpen_AllDevice (void);
-
 void	HandleDevState ( Acs_Evt_t *pAcsEvt );
-
 void	InitTrunkChannel ( TRUNK_STRUCT *pOneTrunk );
 void	ReDrawAll (void);
 void	OpenDeviceOK ( DeviceID_t *pDevice );
 void	CloseDeviceOK ( DeviceID_t *pDevice );
-
 void	Remove_OneDsp(void);
-
 void	My_BuildIndex ( DeviceID_t	*pVocDevID );
-
-DJ_S32	 PlayFile ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U8 u8PlayTag, bool bIsQueue = false );
-DJ_S32	 PlayIndex ( DeviceID_t	*pVocDevID, DJ_U16 u16Index, DJ_U8 u8PlayTag, bool bIsQueue );
-
+void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
+void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState );
+void	PrepareForCallerID ( TRUNK_STRUCT *pOneTrunk );
 void	TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//模拟高阻
 void	TrunkWork_Digital ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//数字话机
 void	TrunkWork_ISDN ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//ISDN
 void	TrunkWork_SS7 ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//SS7
 
-void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
-void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState );
+DJ_S32	PlayFile ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U8 u8PlayTag, bool bIsQueue = false );
+DJ_S32	PlayIndex ( DeviceID_t	*pVocDevID, DJ_U16 u16Index, DJ_U8 u8PlayTag, bool bIsQueue );
+DJ_S32	StopRecordFile ( DeviceID_t	*pVocDevID );
 
-char My_GetDtmfCode ( Acs_Evt_t *pAcsEvt );
-char *My_GetFskCode ( Acs_Evt_t *pAcsEvt );
-int  SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID );
-void	PrepareForCallerID ( TRUNK_STRUCT *pOneTrunk );
-int InitMGNode( TRUNK_STRUCT * pOneTrunk );
-DJ_S32 StopRecordFile ( DeviceID_t	*pVocDevID );
+char	My_GetDtmfCode ( Acs_Evt_t *pAcsEvt );
+char*	My_GetFskCode ( Acs_Evt_t *pAcsEvt );
+int		SearchOneFreeVoice (  TRUNK_STRUCT *pOneTrunk, DeviceID_t *pFreeVocDeviceID );
+int		InitMGNode( TRUNK_STRUCT * pOneTrunk );
 
 #endif
