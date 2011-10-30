@@ -111,14 +111,12 @@ typedef struct
 {
 	DJ_U16                  m_u16BGCount;        //the count of the EM channel including EM channel and VOC channel
 	DJ_U16                  m_u16Ref;
-	
-	MGNode              *   m_pstMGNode;
+	MGNode*				    m_pstMGNode;
 }MGNodeINFO;
 
-MGNodeINFO                  g_stMGNodeInfo;
-int							g_NumbersOfMonitorGroup = 0;
-MonitorGroupInfo			g_MonitorGroupInfo[100];
-#define  MAX_APPNAME_LEN    30
+MGNodeINFO                  g_stMGNodeInfo;					//无用的
+int							g_NumbersOfMonitorGroup = 0;	//监听组数目
+MonitorGroupInfo			g_MonitorGroupInfo[MAX_MONITOR_GROUP_NUM];		//ini配置文件中读取监听组信息
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -413,34 +411,54 @@ DJ_S32 ReadRecordProperty(void)
 //get monitor group information from ini
 DJ_S32 ReadMonitorGroupInfo(void)
 {
-	static char strAppName[ ] = "MONITOR_CFG";
-	static char strKey[MAX_APPNAME_LEN];
+	char tmpStr[100]={0};
+	char strAppName[] = "MONITOR_CFG";
+	char strKey[MAX_APPNAME_LEN]={0};
 	
-	TRACE("******** ReadBindInfo\n");
 	memset(&g_MonitorGroupInfo, 0, sizeof(MonitorGroupInfo) );
 	
-	memset(strKey, 0, MAX_APPNAME_LEN);
 	sprintf(strKey, "NumsOfMonitorGroup");
 	g_NumbersOfMonitorGroup = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 	
 	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
 	{
-		memset(strKey, 0, MAX_APPNAME_LEN);
 		sprintf(strKey, "MonitorFirstDspModuleID[%d]", i + 1);
 		g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID  = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 		
-		memset(strKey, 0, MAX_APPNAME_LEN);
 		sprintf(strKey, "MonitorFirstE1[%d]", i + 1);
 		g_MonitorGroupInfo[i].m_MonitorFirstE1 = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 		
-		memset(strKey, 0, MAX_APPNAME_LEN);
 		sprintf(strKey, "MonitorSecondDspModuleID[%d]", i + 1);
 		g_MonitorGroupInfo[i].m_MonitorSecondModuleID  = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 		
-		memset(strKey, 0, MAX_APPNAME_LEN);
 		sprintf(strKey, "MonitorSecondE1[%d]", i + 1);
 		g_MonitorGroupInfo[i].m_MonitorSecondE1  = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 		
+		sprintf(strKey, "MonitorSS7DPCOrOPC[%d]", i + 1);
+		GetPrivateProfileString(strAppName, strKey,"",	g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC , sizeof(g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC ), cfg_IniName); 
+		if ( strlen(g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC) !=6 )
+		{
+			sprintf(tmpStr,"%s=%s, 不是六个字符!",strKey,g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC);
+			WriteLog(LEVEL_ERROR,tmpStr);
+		}else
+		{	
+			strupr(g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC);		
+		}
+
+		sprintf(strKey, "MonitorSS7OPCOrDPC[%d]", i + 1);
+		GetPrivateProfileString(strAppName, strKey,"",	g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC , sizeof(g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC ), cfg_IniName); 
+
+		if ( strlen(g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC) !=6 )
+		{
+			sprintf(tmpStr,"%s=%s, 不是六个字符!",strKey, g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC);
+			WriteLog(LEVEL_ERROR,tmpStr);
+		}else
+		{	
+			strupr(g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC);
+		}
+
+		sprintf(strKey, "MonitorSS7_PCM[%d]", i + 1);
+		g_MonitorGroupInfo[i].MonitorSS7_PCM  = GetPrivateProfileInt(strAppName, strKey, 0, cfg_IniName);
 		
 	}
 	
@@ -2301,11 +2319,14 @@ void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	PSMON_EVENT             SMevt= NULL;
     static  DJ_U32          m_u32Counter = 0;
 	int						iPos = 0;
-	int						tmpE1No,tmpDSPNo;
 	int						monitorFirstDspModuleID;
 	int						monitorFirstE1;
 	int						monitorSecondDspModuleID;
 	int						monitorSecondE1;	
+	int						tmpE1No,tmpDSPNo;
+	char					DPC[10]={0};
+	char					OPC[10]={0};
+
 	if ( XMS_EVT_SIGMON != pAcsEvt->m_s32EventType)
 	{
 		AddMsg("Event type != XMS_EVT_SIGMON ");
@@ -2338,18 +2359,28 @@ void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 		tmpDSPNo = (tmpE1No-1)/4 +1;									//通话通道位于整个监控系统的DSP ID号
 		tmpE1No = (tmpE1No-1)%4 +1;										//通话通道位于所在DSP的第几个E1
 
-		if ((tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID 
-			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorFirstE1) ||
-			(tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorSecondModuleID 
-			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorSecondE1))
-		{		
+		sprintf(DPC,"%02X%02X%02X",SMevt->DPC[0],SMevt->DPC[1],SMevt->DPC[2]);
+		sprintf(OPC,"%02X%02X%02X",SMevt->OPC[0],SMevt->OPC[1],SMevt->OPC[2]);
+		if ((  strcmp(DPC, g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC )==0 
+			&& strcmp(OPC, g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC )==0 
+			&& SMevt->Pcm == g_MonitorGroupInfo[i].MonitorSS7_PCM ) ||
+			(  strcmp(OPC, g_MonitorGroupInfo[i].MonitorSS7DPCOrOPC )==0 
+			&& strcmp(DPC, g_MonitorGroupInfo[i].MonitorSS7OPCOrDPC )==0 
+			&& SMevt->Pcm == g_MonitorGroupInfo[i].MonitorSS7_PCM ))
+		{
+		
+// 		if (( tmpDSPNo== g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID 
+// 			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorFirstE1) ||
+// 			(tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorSecondModuleID 
+// 			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorSecondE1))
+// 		{		
 			monitorFirstDspModuleID = g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID;
 			monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
 			monitorSecondDspModuleID = g_MonitorGroupInfo[i].m_MonitorSecondModuleID;
 			monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
-			sprintf(MsgStr,"pEvtTrk(%d, %d), SMevt->Pcm:%d, SMevt->Chn:%d, tmpDSPNo:%d, tmpE1No:%d, Monitor group, (DSP:%d, E1:%d) and (DSP:%d, E1:%d)",\
+			sprintf(MsgStr,"pEvtTrk(%d, %d), (DPC:%s, OPC:%s, Pcm:%d), Monitor group, (DSP:%d, E1:%d) and (DSP:%d, E1:%d)",\
 					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
-					SMevt->Pcm,SMevt->Chn,tmpDSPNo,tmpE1No,
+					DPC, OPC, SMevt->Pcm, 
 					monitorFirstDspModuleID,monitorFirstE1,	monitorSecondDspModuleID,monitorSecondE1);
 			WriteLog(LEVEL_DEBUG, MsgStr);
 			break;
@@ -2358,9 +2389,9 @@ void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	//没有找到监控组信息
 	if (i == g_NumbersOfMonitorGroup)
 	{
-		sprintf(str,"pEvtTrk(%d, %d), SMevt->Pcm:%d, SMevt->Chn:%d, (tmpDSPNo:%d, tmpE1No:%d) not exist in the ini file! ",\
+		sprintf(str,"pEvtTrk(%d, %d), (DPC:%s, OPC:%s, Pcm:%d) not exist in the ini file! ",\
 			pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
-			SMevt->Pcm,SMevt->Chn,tmpDSPNo,tmpE1No);
+			DPC, OPC, SMevt->Pcm);
 		AddMsg(str);
 		WriteLog(LEVEL_ERROR, str);
 		return;
@@ -2370,8 +2401,10 @@ void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorSecondDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
 	if ( pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
 	{
-		AddMsg("Record Trunk is not exist!");
-		WriteLog(LEVEL_ERROR, "Record Trunk is not exist!");
+		sprintf(MsgStr,"pEvtTrk(%d, %d), pOneRecordTrunk1 or pOneRecordTrunk2 is not exist!", 
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
+		AddMsg(MsgStr);
+		WriteLog(LEVEL_ERROR, MsgStr);
 		return;
 	}	
 	switch(SMevt->EventType)
