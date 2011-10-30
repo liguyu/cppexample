@@ -2324,7 +2324,11 @@ void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 	//根据当前产生监控事件的通道定位监控组信息
 	//SS7一般都是在第16时隙产生事件
 	//当一条七号链路带多个E1时，如何定位通道，如何定位另一个通道。尤其是当链路和话路在不同的DSP
-	//下面的定位算法只适用于此种连接方式：1.一个局的链路和话路按照CIC顺序挂接到监控系统；2.CIC顺序号必须是 0,1,2,3...
+	//下面的定位算法只适用于此种连接方式：
+	//1.一个局的链路和话路按照CIC顺序挂接到监控系统；
+	//2.CIC顺序号必须是 0,1,2,3...
+	//3.每个DSP的1E1、2E1作为一组，3E1、4E1作为一组
+	//4.16时隙产生信令事件
 	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
 	{
 		tmpE1No = pEventTrunk->deviceID.m_s16ChannelID/32 + 1;		//产生事件通道对应的E1，E1的取值为[1,4]
