@@ -122,9 +122,10 @@ void	My_BuildIndex ( DeviceID_t	*pVocDevID );
 DJ_S32	 PlayFile ( DeviceID_t	*pVocDevID, DJ_S8 *s8FileName, DJ_U8 u8PlayTag, bool bIsQueue = false );
 DJ_S32	 PlayIndex ( DeviceID_t	*pVocDevID, DJ_U16 u16Index, DJ_U8 u8PlayTag, bool bIsQueue );
 
-void	TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
-void	TrunkWork_Digital ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
-void	TrunkWork_ISDN_SS7 ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );
+void	TrunkWork_Analog ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//模拟高阻
+void	TrunkWork_Digital ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//数字话机
+void	TrunkWork_ISDN ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//ISDN
+void	TrunkWork_SS7 ( TRUNK_STRUCT *pOneTrunk, Acs_Evt_t *pAcsEvt );//SS7
 
 void	Change_State ( TRUNK_STRUCT *pOneTrunk, TRUNK_STATE NewState );
 void	Change_Voc_State ( VOICE_STRUCT *pOneVoice, VOICE_STATE NewState );
