@@ -2288,9 +2288,288 @@ void SetGtD_AnalogTrunk(DeviceID_t* pDevId)
 /* function: 数字中继高阻录音和信令监控处理函数                         */
 /* input: 中继设备结构体指针，事件指针                                  */
 /* output: void                                                         */
-/* description: 包括ISDN、TUP、ISUP的处理                               */
+/* description: 包括TUP、ISUP的处理			                            */
 /************************************************************************/
-void TrunkWork_ISDN_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
+void TrunkWork_SS7(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
+{
+	DeviceID_t				FreeVoc1DeviceID;
+	DeviceID_t				FreeVoc2DeviceID;
+	char					FileName[256] = {0};
+	char                    str[512] = {0};
+	char					MsgStr[512] = {0};
+	DeviceID_t *            pDev = &pAcsEvt->m_DeviceID;
+	PSMON_EVENT             SMevt= NULL;
+    static  DJ_U32          m_u32Counter = 0;
+	int						iPos = 0;
+	int						tmpE1No,tmpDSPNo;
+	int						monitorFirstDspModuleID;
+	int						monitorFirstE1;
+	int						monitorSecondDspModuleID;
+	int						monitorSecondE1;	
+	if ( XMS_EVT_SIGMON != pAcsEvt->m_s32EventType)
+	{
+		AddMsg("Event type != XMS_EVT_SIGMON ");
+		return;
+	}	
+	if (g_NumbersOfMonitorGroup == 0)
+	{
+		strcpy(MsgStr, "g_NumbersOfMonitorGroup == 0");
+		AddMsg(MsgStr);
+		WriteLog(LEVEL_ERROR,MsgStr);
+		return;
+	}
+	
+	SMevt = (PSMON_EVENT)FetchEventData(pAcsEvt);
+	
+	//根据当前产生监控事件的通道定位监控组信息
+	//SS7一般都是在第16时隙产生事件
+	//当一条七号链路带多个E1时，如何定位通道，如何定位另一个通道。尤其是当链路和话路在不同的DSP
+	//下面的定位算法只适用于此种连接方式：1.一个局的链路和话路按照CIC顺序挂接到监控系统；2.CIC顺序号必须是 0,1,2,3...
+	for (int i=0; i<g_NumbersOfMonitorGroup; i++)
+	{
+		tmpE1No = pEventTrunk->deviceID.m_s16ChannelID/32 + 1;		//产生事件通道对应的E1，E1的取值为[1,4]
+		tmpDSPNo = ( tmpE1No + SMevt->Pcm*2 )/4 + pEventTrunk->deviceID.m_s8ModuleID;	//实际通道位于监控系统的DSP ID号
+		tmpE1No  = ( tmpE1No + SMevt->Pcm*2 )%4;										//实际通道位于监控系统的DSP中的第几个E1
+		if ((tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID 
+			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorFirstE1) ||
+			(tmpDSPNo == g_MonitorGroupInfo[i].m_MonitorSecondModuleID 
+			&& tmpE1No == g_MonitorGroupInfo[i].m_MonitorSecondE1))
+		{		
+			monitorFirstDspModuleID = g_MonitorGroupInfo[i].m_MonitorFirstDspModuleID;
+			monitorFirstE1 = g_MonitorGroupInfo[i].m_MonitorFirstE1;
+			monitorSecondDspModuleID = g_MonitorGroupInfo[i].m_MonitorSecondModuleID;
+			monitorSecondE1 = g_MonitorGroupInfo[i].m_MonitorSecondE1;
+			sprintf(MsgStr,"pEvtTrk(%d, %d), SMevt->Pcm:%d, SMevt->Chn:%d, tmpDSPNo:%d, tmpE1No:%d, Monitor group, (DSP:%d, E1:%d) and (DSP:%d, E1:%d)",\
+					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+					SMevt->Pcm,SMevt->Chn,tmpDSPNo,tmpE1No,
+					monitorFirstDspModuleID,monitorFirstE1,	monitorSecondDspModuleID,monitorSecondE1);
+			WriteLog(LEVEL_DEBUG, MsgStr);
+			break;
+		}
+	}
+	//没有找到监控组信息
+	if (i == g_NumbersOfMonitorGroup)
+	{
+		sprintf(str,"pEvtTrk(%d, %d), SMevt->Pcm:%d, SMevt->Chn:%d, (tmpDSPNo:%d, tmpE1No:%d) not exist in the ini file! ",\
+			pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+			SMevt->Pcm,SMevt->Chn,tmpDSPNo,tmpE1No);
+		AddMsg(str);
+		WriteLog(LEVEL_ERROR, str);
+		return;
+	}
+	//一次通话的两个通道，在监控系统中对应两个监控通道，根据上面定位到的监控组信息和SMevt->Chn来计算得到监控系统中的这两个通道
+	TRUNK_STRUCT *pOneRecordTrunk1 = &AllDeviceRes[monitorFirstDspModuleID].pTrunk[SMevt->Chn + (monitorFirstE1-1)*32];
+	TRUNK_STRUCT *pOneRecordTrunk2 = &AllDeviceRes[monitorSecondDspModuleID].pTrunk[SMevt->Chn + (monitorSecondE1-1)*32];
+	if ( pOneRecordTrunk1 == NULL || pOneRecordTrunk2 == NULL )
+	{
+		AddMsg("Record Trunk is not exist!");
+		WriteLog(LEVEL_ERROR, "Record Trunk is not exist!");
+		return;
+	}	
+	switch(SMevt->EventType)
+	{
+	case SMON_EVT_Call_Generate:
+		if ( g_u8IsStartFlag)
+		{
+			if (pOneRecordTrunk1->State == TRK_FREE && pOneRecordTrunk2->State == TRK_FREE)
+			{			
+				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID);				
+				sprintf(str,"%d", SMevt->MsgType);
+				pdlg->m_ListMain.SetItemText(iRecord1Pos, 7, str);
+				pdlg->m_ListMain.SetItemText(iRecord1Pos, 6, SMevt->Caller_ID);
+				pdlg->m_ListMain.SetItemText(iRecord1Pos, 5, SMevt->Called_ID);
+				pdlg->m_ListMain.SetItemText(iRecord2Pos, 7, str);
+				pdlg->m_ListMain.SetItemText(iRecord2Pos, 6, SMevt->Caller_ID);
+				pdlg->m_ListMain.SetItemText(iRecord2Pos, 5, SMevt->Called_ID);				
+				Change_State(pOneRecordTrunk1,TRK_CALL_GENERATE);
+				Change_State(pOneRecordTrunk2,TRK_CALL_GENERATE);				
+				sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Generate, RecTrk1(%d, %d), RecTrk2(%d, %d)", 
+					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID,
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID);
+				AddMsg(str);
+				WriteLog(LEVEL_DEBUG,str);
+			}else{
+				sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Generate, trunk state is wrong! RecTrk1(%d,%d) state=%s,RecTrk2(%d,%d) state=%s", 
+					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
+				AddMsg(str);
+				WriteLog(LEVEL_ERROR,str);
+				return;
+			}	
+		}else
+		{
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Generate, Please start record! ",
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
+			AddMsg(str);
+			WriteLog(LEVEL_ERROR, str);
+			return;
+		}		
+		break;
+	case SMON_EVT_Call_Connect:
+		g_connectNumber++;			
+		sprintf(MsgStr, "%d", g_connectNumber);
+		pdlg->GetDlgItem(IDC_STATIC_CONNUM)->SetWindowText(MsgStr);
+		if ( g_u8IsStartFlag)
+		{			
+			if (pOneRecordTrunk1->State == TRK_CALL_GENERATE && pOneRecordTrunk2->State == TRK_CALL_GENERATE)
+			{				
+				int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+				int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 
+				TRUNK_STRUCT *pSearchVocTrunk;
+				//在语音资源较多的DSP查找空闲语音，pOneRecordTrunk1和pOneRecordTrunk2可以位于不同的DSP，
+				//不影响混音录音，因为查找的Voc在同一个DSP上找，Voc和Trk双向时隙连接可以跨DSP
+				if (AllDeviceRes[monitorFirstDspModuleID].lVocFreeNum >= AllDeviceRes[monitorSecondDspModuleID].lVocFreeNum )
+				{
+					pSearchVocTrunk = pOneRecordTrunk1;
+				}else{
+					pSearchVocTrunk = pOneRecordTrunk2;
+				}
+				
+				int voc1Chn = SearchOneFreeVoice ( pSearchVocTrunk,  &FreeVoc1DeviceID );
+				if ( voc1Chn >= 0 )
+				{
+					pOneRecordTrunk1->VocDevID = FreeVoc1DeviceID;
+					M_OneVoice(FreeVoc1DeviceID).UsedDevID = pOneRecordTrunk1->deviceID; 
+					DrawMain_VocInfo ( pOneRecordTrunk1 );
+					My_DualLink ( &FreeVoc1DeviceID, &pOneRecordTrunk1->deviceID ); 
+				}else{
+					sprintf(str,"Not Find free voc1Chn, pSearchVocTrunk(%d, %d).", 
+						pSearchVocTrunk->deviceID.m_s8ModuleID,	pSearchVocTrunk->deviceID.m_s16ChannelID);
+					AddMsg(str);
+					WriteLog(LEVEL_ERROR, str);
+					return;
+				}			
+				
+				int voc2Chn = SearchOneFreeVoice ( pSearchVocTrunk,  &FreeVoc2DeviceID );
+				if (  voc2Chn >= 0 )
+				{
+					pOneRecordTrunk2->VocDevID = FreeVoc2DeviceID;
+					M_OneVoice(FreeVoc2DeviceID).UsedDevID = pOneRecordTrunk2->deviceID; 
+					DrawMain_VocInfo ( pOneRecordTrunk2 );
+					My_DualLink ( &FreeVoc2DeviceID, &pOneRecordTrunk2->deviceID ); 					
+				}else
+				{
+					sprintf(str,"Not Find free voc2Chn, pSearchVocTrunk(%d, %d).", 
+						pSearchVocTrunk->deviceID.m_s8ModuleID,	pSearchVocTrunk->deviceID.m_s16ChannelID);
+					AddMsg(str);
+					WriteLog(LEVEL_ERROR, str);
+				}
+
+				//获取系统时间，用来组成录音文件名
+				CString str;
+				CTime tm;					
+				tm=CTime::GetCurrentTime();
+				str=tm.Format("%Y%m%d%H%M%S");
+				
+				if ( XMS_DEVSUB_HIZ_SS7 == pAcsEvt->m_DeviceID.m_s16DeviceSub || XMS_DEVSUB_HIZ_SS7_64K_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
+				{
+					if (cfg_oneRecFileEachTrunk)
+					{//每个通道时钟只录一个文件
+						sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+					}else
+					{//每个通道每次录一个文件，通过后面精确到秒时间区分
+						sprintf ( FileName, "%s\\SS7Rec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+					}
+				}else if ( XMS_DEVSUB_HIZ_PRI == pAcsEvt->m_DeviceID.m_s16DeviceSub || XMS_DEVSUB_HIZ_PRI_LINK == pAcsEvt->m_DeviceID.m_s16DeviceSub)
+				{
+					if (cfg_oneRecFileEachTrunk)
+					{//每个通道时钟只录一个文件
+						sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+					}else
+					{//每个通道每次录一个文件，通过后面精确到秒时间区分
+						sprintf ( FileName, "%s\\ISDNRec-%d-%d-%d-%s.pcm", cfg_VocPath,monitorFirstDspModuleID,pOneRecordTrunk1->deviceID.m_s16ChannelID,pOneRecordTrunk2->deviceID.m_s16ChannelID,str);
+					}								
+				}					
+				//start record in the mix way
+				RecordFile ( &pOneRecordTrunk2->VocDevID, FileName, 8000L*3600L*24, false ,voc1Chn);		// we record for 24 hours
+				pOneRecordTrunk1->u8IsRecordFlag = TRUE;
+				pOneRecordTrunk2->u8IsRecordFlag = TRUE;
+				++pOneRecordTrunk1->u8RecordCounter;
+				++pOneRecordTrunk2->u8RecordCounter;
+				Change_State ( pOneRecordTrunk1, TRK_RECORDFILE );	
+				Change_State ( pOneRecordTrunk2, TRK_RECORDFILE );	
+				sprintf(MsgStr,"pEvtTrk(%d, %d), SMON_EVT_Call_Connect, RecTrk1(%d,%d)_%s, RecTrk2(%d,%d)_%s", \
+					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
+				AddMsg(MsgStr);
+				WriteLog(LEVEL_DEBUG, MsgStr);
+				sprintf(MsgStr, "RecordFile:%s,  RecTrk1(%d,%d), RecTrk2(%d,%d)", FileName,
+					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID,
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID);		
+				AddMsg(MsgStr);
+				WriteLog(LEVEL_DEBUG, MsgStr);
+			}else{
+				sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Connect, trunk state is wrong! RecTrk1(%d,%d) state=%s, RecTrk2(%d,%d) state=%s", 
+					pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+					pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
+					pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
+				AddMsg(str);
+				WriteLog(LEVEL_ERROR,str);
+				return;
+			}			
+		}else
+		{
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Connect, Please start record!",
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
+			AddMsg(str);
+			WriteLog(LEVEL_ERROR, str);
+			return;
+		}			
+		break;		
+	case SMON_EVT_Call_Disconnect:	
+		g_disconnectNumber++;
+		sprintf(MsgStr, "%d", g_connectNumber);
+		pdlg->GetDlgItem(IDC_STATIC_DISCONNUM)->SetWindowText(MsgStr);
+		
+		if (!g_u8IsStartFlag)
+		{
+			sprintf(MsgStr,"pEvtTrk(%d, %d), SMON_EVT_Call_Disconnect, please start record.",
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID);
+			AddMsg(str);
+			WriteLog(LEVEL_ERROR, str);
+			return;
+		}		
+		if (pOneRecordTrunk1->State == TRK_RECORDFILE && pOneRecordTrunk2->State == TRK_RECORDFILE)
+		{
+			int iRecord1Pos = CalDispRow(pOneRecordTrunk1->iSeqID); 
+			int iRecord2Pos = CalDispRow(pOneRecordTrunk2->iSeqID); 			
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Disconnect, ReleaseReason:%d",
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,SMevt->ReleaseReason);
+			AddMsg(str);
+			WriteLog(LEVEL_DEBUG, str);
+			StopRecordFile(&pOneRecordTrunk1->VocDevID);
+			StopRecordFile(&pOneRecordTrunk2->VocDevID);
+			ResetTrunk ( pOneRecordTrunk1, pAcsEvt );
+			ResetTrunk ( pOneRecordTrunk2, pAcsEvt );
+			sprintf(MsgStr, "StopRecordFile(),  RecTrk1(%d,%d), RecTrk2(%d,%d)",
+				pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID,
+				pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID);		
+			AddMsg(MsgStr);
+				WriteLog(LEVEL_DEBUG, MsgStr);
+		}else
+		{
+			sprintf(str,"pEvtTrk(%d, %d), SMON_EVT_Call_Disconnect, trunk state is wrong! RecTrk1(%d,%d) state=%s, RecTrk2(%d,%d) state=%s", 
+				pEventTrunk->deviceID.m_s8ModuleID, pEventTrunk->deviceID.m_s16ChannelID,
+				pOneRecordTrunk1->deviceID.m_s8ModuleID, pOneRecordTrunk1->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk1->State),
+				pOneRecordTrunk2->deviceID.m_s8ModuleID, pOneRecordTrunk2->deviceID.m_s16ChannelID, GetString_State(pOneRecordTrunk2->State));
+			AddMsg(str);
+			WriteLog(LEVEL_ERROR,str);
+			return;
+		}	
+		break;
+	}	
+}
+/************************************************************************/
+/* function: 数字中继高阻录音和信令监控处理函数                         */
+/* input: 中继设备结构体指针，事件指针                                  */
+/* output: void                                                         */
+/* description: 包括ISDN的处理                                          */
+/************************************************************************/
+void TrunkWork_ISDN(TRUNK_STRUCT *pEventTrunk, Acs_Evt_t *pAcsEvt )
 {
 	DeviceID_t				FreeVoc1DeviceID;
 	DeviceID_t				FreeVoc2DeviceID;
