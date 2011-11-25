@@ -6,27 +6,27 @@
 --------------------Configuration: socket_server - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSP61D0.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11A.tmp" with contents
 [
-/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/socket_server.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FR"Debug/" /Fp"Debug/socket_server.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
 "D:\cppexample\socket_server\main.cpp"
 ]
-Creating command line "cl.exe @C:\Users\lmy\AppData\Local\Temp\RSP61D0.tmp" 
-Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSP61D1.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11A.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11B.tmp" with contents
 [
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/socket_server.pdb" /debug /machine:I386 /out:"Debug/socket_server.exe" /pdbtype:sept 
-.\Debug\SimpleSocket.obj
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/socket_server.pdb" /debug /machine:I386 /out:"Debug/socket_server.exe" /pdbtype:sept 
 .\Debug\ActiveSocket.obj
 .\Debug\HTTPActiveSocket.obj
 .\Debug\main.obj
 .\Debug\PassiveSocket.obj
+.\Debug\SimpleSocket.obj
 ]
-Creating command line "link.exe @C:\Users\lmy\AppData\Local\Temp\RSP61D1.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP11B.tmp"
 <h3>Output Window</h3>
 Compiling...
 main.cpp
 Linking...
-Creating command line "bscmake.exe /nologo /o"Debug/socket_server.bsc"  .\Debug\SimpleSocket.sbr .\Debug\ActiveSocket.sbr .\Debug\HTTPActiveSocket.sbr .\Debug\main.sbr .\Debug\PassiveSocket.sbr"
+Creating command line "bscmake.exe /nologo /o"Debug/socket_server.bsc"  .\Debug\ActiveSocket.sbr .\Debug\HTTPActiveSocket.sbr .\Debug\main.sbr .\Debug\PassiveSocket.sbr .\Debug\SimpleSocket.sbr"
 Creating browse info file...
 <h3>Output Window</h3>
 
