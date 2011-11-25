@@ -951,7 +951,7 @@ void CSimpleSocket::TranslateSocketError(void)
     switch (errno)
     {
         case EXIT_SUCCESS:
-	    SetSocketError(CSimpleSocket::SocketSuccess);
+			SetSocketError(CSimpleSocket::SocketSuccess);
             break;
         case ENOTCONN:
             SetSocketError(CSimpleSocket::SocketNotconnected);
@@ -965,7 +965,7 @@ void CSimpleSocket::TranslateSocketError(void)
         case ENOBUFS:
         case ENOMEM:
         case EPROTONOSUPPORT:
-	    SetSocketError(CSimpleSocket::SocketInvalidSocket);
+			SetSocketError(CSimpleSocket::SocketInvalidSocket);
             break;
         case ECONNREFUSED :
             SetSocketError(CSimpleSocket::SocketConnectionRefused);
@@ -978,7 +978,7 @@ void CSimpleSocket::TranslateSocketError(void)
             break;
         case EWOULDBLOCK:
             //		case EAGAIN:
-	    SetSocketError(CSimpleSocket::SocketEwouldblock);
+			SetSocketError(CSimpleSocket::SocketEwouldblock);
 	    break;
         case EINTR:
             SetSocketError(CSimpleSocket::SocketInterrupted);
@@ -991,10 +991,10 @@ void CSimpleSocket::TranslateSocketError(void)
             SetSocketError(CSimpleSocket::SocketProtocolError);
             break;
         case EPERM:
-	    SetSocketError(CSimpleSocket::SocketFirewallError);
+			SetSocketError(CSimpleSocket::SocketFirewallError);
             break;
         case EFAULT:
-	    SetSocketError(CSimpleSocket::SocketInvalidSocketBuffer);
+			SetSocketError(CSimpleSocket::SocketInvalidSocketBuffer);
             break;
         case ECONNRESET:
             SetSocketError(CSimpleSocket::SocketConnectionReset);
