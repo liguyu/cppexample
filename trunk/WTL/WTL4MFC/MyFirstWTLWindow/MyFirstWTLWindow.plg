@@ -1,0 +1,37 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: MyFirstWTLWindow - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3F7.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Release/" /Fp"Release/MyFirstWTLWindow.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\cppexample\WTL\WTL4MFC\MyFirstWTLWindow\MyFirstWTLWindow.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3F7.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3F8.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/MyFirstWTLWindow.pdb" /machine:I386 /out:"Release/MyFirstWTLWindow.exe" 
+.\Release\MyFirstWTLWindow.obj
+.\Release\StdAfx.obj
+.\Release\MyFirstWTLWindow.res
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP3F8.tmp"
+<h3>Output Window</h3>
+Compiling...
+MyFirstWTLWindow.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Release/MyFirstWTLWindow.bsc"  .\Release\StdAfx.sbr .\Release\MyFirstWTLWindow.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+MyFirstWTLWindow.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
