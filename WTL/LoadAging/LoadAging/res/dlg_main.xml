@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layer title="我的WTL程序" width="420" height="720" appwin="1" resize="1">
+<layer title="LoadAging" width="800" height="600" appwin="1" resize="1">
   <header class="dlg_header" width="full" height="30">
     <img pos="8,8" skin="little_logo"/>
-    <text pos="28,10" class="head_text_title">My的KUI程序</text>
+    <text pos="28,10" class="head_text_title">My WTL Program 标题</text>
     <imgbtn id="102" pos="-105,1" tip="最小化" skin="dlg_btn_min"/>
     <imgbtn id="101" pos="-74,1" tip="最大化" skin="dlg_btn_max"/>
     <imgbtn id="100" pos="-43,1" tip="关闭" skin="dlg_btn_close"/>
@@ -17,9 +17,9 @@
   <body class="dlg_body" width="full" height="full">
     <dlg pos="0,0,-0,-0" crbg="FFFFFF">
       <img pos="100,100" skin="big_logo"/>
-	  <hr style="dot" mce_style="dot" size=1 pos="50,90,250,90" crbg=888888 />
-	  <check id="4" check=4 pos="50,60">复选框</check>
-	  <check id="18" check=4 pos="250,260">我的测试复选框</check>
+	  	<hr style="dot" mce_style="dot" size=1 pos="50,90,250,90" crbg=888888 />
+	  	<check id="4" check=4 pos="50,60">复选框</check>
+	  	<check id="18" check=4 pos="250,260">我的测试复选框</check>
     </dlg>
   </body>
 
