@@ -240,6 +240,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest"
 			>
 			<File
+				RelativePath="..\KUI\bkres\bkres.rc"
+				>
+			</File>
+			<File
 				RelativePath=".\bkwinres.h"
 				>
 			</File>
