@@ -25,6 +25,12 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR /*
 	hRes = _Module.Init(NULL, hInstance);		//全局对象_Module被初始化
 	ATLASSERT(SUCCEEDED(hRes));
 
+	BkString::Load(IDR_BK_STRING_DEF);			//加载指定资源ID的string定义xml
+	BkFontPool::SetDefaultFont(BkString::Get(IDS_APP_FONT), -12);
+
+	BkSkin::LoadSkins(IDR_BK_SKIN_DEF);			//加载指定资源ID的skin定义xml
+	BkStyle::LoadStyles(IDR_BK_STYLE_DEF);		//加载指定资源ID的Style定义xml
+
 	int nRet = 0;
 	// BLOCK: Run application, 将CMainDlg变量放在一个区块中是很重要的
 	{
