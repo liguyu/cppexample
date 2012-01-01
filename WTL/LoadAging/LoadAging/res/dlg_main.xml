@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layer title="LoadAging" width="800" height="600" appwin="1" resize="1">
+<layer title="LoadAging" width="800" height="570" appwin="1" resize="1">
   <header class="dlg_header" width="full" height="30">
     <img pos="8,8" skin="little_logo"/>
     <text pos="28,10" class="head_text_title">My WTL Program 标题</text>
@@ -8,18 +8,17 @@
     <imgbtn id="100" pos="-43,1" tip="关闭" skin="dlg_btn_close"/>
   </header>
   
-  <footer class="dlg_footer" width="full" height="50">
-    <dlg pos="0,0,-0,-4" crbg="DCE3EB">
-			<imgbtn id="110" pos="5,5" tip="菜单" skin="dlg_btn_menu"/>
-    </dlg>
+  <footer class="dlg_header" width="full" height="25">
+	 <text pos="10,5" class="dlg_mulit_normal_text">欢迎使用</text>
   </footer>
   
   <body class="dlg_body" width="full" height="full">
-    <dlg pos="0,0,-0,-0" crbg="FFFFFF">
-      <img pos="100,100" skin="big_logo"/>
-	  	<hr style="dot" mce_style="dot" size=1 pos="50,90,250,90" crbg=888888 />
-	  	<check id="4" check=4 pos="50,60">复选框</check>
-	  	<check id="18" check=4 pos="250,260">我的测试复选框</check>
+	<dlg pos="3,3,-3,-3" crbg="EEFCFD">
+		<imgbtn id="110" pos="5,0" tip="主菜单" skin="dlg_btn_menu"/>
+		<imgbtn id="111" pos="70,0" tip="系统设置" skin="dlg_btn_sysconfig"/>
+		<imgbtn id="112" pos="135,0" tip="参数编辑" skin="dlg_btn_paramedit"/>
+		<imgbtn id="113" pos="200,0" tip="参数导入" skin="dlg_btn_paramimport"/>
+		<imgbtn id="114" pos="265,0" tip="开始测试" skin="dlg_btn_start"/>
     </dlg>
   </body>
 

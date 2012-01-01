@@ -1,6 +1,6 @@
 <style>
   <class name="dlg_header" skin="dlg_header" font="0000" crtext="000000"/>
-  <class name="dlg_body" skin="dlg_body" font="0000" crtext="000000" x-margin="4" />
+  <class name="dlg_body" skin="dlg_body" font="0000" crtext="000000" x-margin="4" crbg="FBFCFD"/>
   <class name="dlg_footer" skin="dlg_footer" font="0000" crtext="000000" x-margin="4" />
   <class name="head_text_title" font="0004" crtext="FFFFFF" textmode="8030"/>
   <class name="cmn_imgbtn" cursor="hand"/>
