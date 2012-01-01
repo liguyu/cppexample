@@ -15,6 +15,11 @@
   <png name="dlg_btn_min" src="102" subwidth="31"/>
   <png name="dlg_btn_normal" src="103" subwidth="31"/>
   <png name="dlg_btn_menu" src="110" subwidth="40"/>
+  <png name="dlg_btn_sysconfig" src="111" subwidth="40"/>
+  <png name="dlg_btn_paramedit" src="112" subwidth="40"/>
+  <png name="dlg_btn_paramimport" src="113" subwidth="40"/>
+  <png name="dlg_btn_start" src="114" subwidth="40"/>
+
   <!--</skins-png>-->
 
   <!--</skins-other>-->

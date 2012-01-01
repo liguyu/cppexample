@@ -17,6 +17,12 @@ DEFINE_PNG(IDC_BTN_MAX,						101,	"res\\dlg_btn_max.png")
 DEFINE_PNG(IDC_BTN_MIN,						102,	"res\\dlg_btn_min.png")
 DEFINE_PNG(IDC_BTN_NORMAL,					103,	"res\\dlg_btn_normal.png")
 DEFINE_PNG(IDC_BTN_MENU,					110,	"res\\dlg_btn_menu.png")
+DEFINE_PNG(IDC_BTN_SYSCONFIG,				111,	"res\\dlg_btn_sysconfig.png")
+DEFINE_PNG(IDC_BTN_PARAMEDIT,				112,	"res\\dlg_btn_paramedit.png")
+DEFINE_PNG(IDC_BTN_PARAMIMPORT,				113,	"res\\dlg_btn_paramimport.png")
+DEFINE_PNG(IDC_BTN_START,					114,	"res\\dlg_btn_start.png")
+//DEFINE_PNG(IDP_LOGO_MODULE,					115,	"res\\logo_module.png")
+//DEFINE_PNG(IDB_TAB_MAIN,					116,	"res\\tab_main.png")
 
 
 //////////////////////////////////////////////////////////////////////////
