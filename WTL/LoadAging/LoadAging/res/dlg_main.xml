@@ -20,6 +20,43 @@
 		<imgbtn id="113" pos="200,0" tip="参数导入" skin="dlg_btn_paramimport"/>
 		<imgbtn id="114" pos="265,0" tip="开始测试" skin="dlg_btn_start"/>
     </dlg>
+	<dlg id="10640" pos="3,45,-3,-1">
+		<tabctrl id="10641" cursel="0" tabwidth="40" tabskin="tab" tabspacing="4" tabpos="10" pos="0,10,-0,-0" frameskin="panelgray" framepos="-1" crtext="000000">
+			<tab id="10642" title="A1" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="A2" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="A3" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="A4" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="B1" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="B2" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="B3" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="B4" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="C1" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="C2" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="C3" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="C4" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="D1" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="D2" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10642" title="D3" width="full" height="full" class1="tabpage" >
+			</tab>
+			<tab id="10770" title="D4" width="full" height="full" class1="tabpage" >
+			</tab>
+		</tabctrl>
+	</dlg>
+        
   </body>
 
 </layer>

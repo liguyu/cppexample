@@ -30,4 +30,7 @@ DEFINE_PNG(IDC_BTN_START,					114,	"res\\dlg_btn_start.png")
 
 DEFINE_BMP(IDB_DLG_HEADER,					501,	"res\\dlg_header.bmp")
 DEFINE_BMP(IDB_DLG_BODY,					502,	"res\\dlg_body.bmp")
+DEFINE_BMP(IDB_TAB_NORMAL,                  10006,  "res\\tab_normal.bmp")
+DEFINE_BMP(IDB_FRAME_PANEL_GRAY,			106,	"res\\frame_panel_gray.bmp")
+DEFINE_BMP(IDB_FRAME_PANEL,					107,	"res\\frame_panel.bmp")
 

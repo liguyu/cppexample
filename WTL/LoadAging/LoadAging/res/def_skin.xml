@@ -2,7 +2,10 @@
   <imghorzex name="dlg_header" src="501" left="4"/>
   <imgframe name="dlg_body" src="502" top="4" left="4" crbg="FFFFFF" part="top"/>
   <imgframe name="dlg_footer" src="502" top="4" left="4" crbg="FFFFFF" part="bottom"/>
-  
+  <imgframe name="panelgray" src="106" top="1" left="1" crbg="FBFCFD"/>
+  <imghorzex name="tab" src="10006" mode="mask" subwidth="7" left="3"/>
+  <imgframe name="tabpage" src="107" top="1" left="1" crbg="FBFCFD" part="center"/>
+
   <!--<skins-png>-->
   <png name="little_logo"  src="201"/>
   <png name="big_logo"     src="202"/>
