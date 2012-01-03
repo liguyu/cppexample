@@ -18,8 +18,8 @@ Class6=CTabSheet
 
 ResourceCount=4
 Resource1=IDD_ABOUTBOX
-Resource2=IDD_TABCTRL_DIALOG
-Resource3=IDD_DIALOG1
+Resource2=IDD_DIALOG1
+Resource3=IDD_TABCTRL_DIALOG
 Resource4=IDD_DIALOG2
 
 [CLS:Page1Dlg]
@@ -65,19 +65,16 @@ ImplementationFile=TabSheet.cpp
 [DLG:IDD_DIALOG1]
 Type=1
 Class=Page1Dlg
-ControlCount=4
-Control1=IDOK,button,1342242817
-Control2=IDCANCEL,button,1342242816
-Control3=IDC_EDIT1,edit,1350631552
-Control4=IDC_STATIC,static,1342308352
+ControlCount=2
+Control1=IDC_EDIT_INPUT1,edit,1350631552
+Control2=IDC_STATIC,static,1342308352
 
 [DLG:IDD_DIALOG2]
 Type=1
 Class=Page2Dlg
-ControlCount=3
-Control1=IDOK,button,1342242817
-Control2=IDCANCEL,button,1342242816
-Control3=IDC_STATIC,static,1342308352
+ControlCount=2
+Control1=IDC_STATIC,static,1342308352
+Control2=IDC_EDIT_INPUT2,edit,1350631552
 
 [DLG:IDD_ABOUTBOX]
 Type=1
