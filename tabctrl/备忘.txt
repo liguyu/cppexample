@@ -1,0 +1,5 @@
+用VC6写填加一个Tab control控件的时候，右击添加变量，书上的教程是直接选CTabSheet类型，我查了下，那是自己填的，MFC这里只有CTabCtrl类型。
+现在我把需要的TabSheet.h和TabSheet.cpp都已经添加到工程里面了，也声明了#include"TabSheet.h"但是变量类型里面还是没有
+就是上面的，教材上的CTabCtrl那里是可选CTabSheet类型的,可是我实在不知道怎么将Sheet类型填加到那里了
+
+解决：很简单，把.clw文件删除后，重新用ClassWizard添加变量就看到了。 
