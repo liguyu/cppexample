@@ -172,3 +172,19 @@ HCURSOR CTabctrlDlg::OnQueryDragIcon()
 {
 	return (HCURSOR) m_hIcon;
 }
+
+void CTabctrlDlg::OnOK() 
+{
+	char input1[20]={0};
+	char input2[20]={0};
+	char tmpStr[100]={0};
+	
+	m_page1.GetDlgItemText(IDC_EDIT_INPUT1,input1,20);
+	
+	m_page2.GetDlgItemText(IDC_EDIT_INPUT2,input2,20);
+
+	sprintf(tmpStr,"input1:%s, input2:%s", input1,input2);
+	AfxMessageBox(tmpStr);
+	
+	CDialog::OnOK();
+}

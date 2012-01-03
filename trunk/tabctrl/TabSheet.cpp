@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "lhwy.h"
 #include "TabSheet.h"
 
 #ifdef _DEBUG

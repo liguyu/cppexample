@@ -6,13 +6,24 @@
 --------------------Configuration: tabctrl - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSP4A41.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/tabctrl.res" /d "_DEBUG" /d "_AFXDLL" "D:\cppexample\tabctrl\tabctrl.rc"" 
+Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSPCBCB.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/tabctrl.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\tabctrl\Page1Dlg.cpp"
+"D:\cppexample\tabctrl\Page2Dlg.cpp"
+"D:\cppexample\tabctrl\tabctrl.cpp"
 "D:\cppexample\tabctrl\tabctrlDlg.cpp"
+"D:\cppexample\tabctrl\TabSheet.cpp"
 ]
-Creating command line "cl.exe @C:\Users\lmy\AppData\Local\Temp\RSP4A41.tmp" 
-Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSP4A42.tmp" with contents
+Creating command line "cl.exe @C:\Users\lmy\AppData\Local\Temp\RSPCBCB.tmp" 
+Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSPCBCC.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/tabctrl.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\cppexample\tabctrl\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\lmy\AppData\Local\Temp\RSPCBCC.tmp" 
+Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSPCBCD.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/tabctrl.pdb" /debug /machine:I386 /out:"Debug/tabctrl.exe" /pdbtype:sept 
 .\Debug\Page1Dlg.obj
@@ -20,13 +31,21 @@ Creating temporary file "C:\Users\lmy\AppData\Local\Temp\RSP4A42.tmp" with conte
 .\Debug\StdAfx.obj
 .\Debug\tabctrl.obj
 .\Debug\tabctrlDlg.obj
-.\Debug\tabctrl.res
 .\Debug\TabSheet.obj
+.\Debug\tabctrl.res
 ]
-Creating command line "link.exe @C:\Users\lmy\AppData\Local\Temp\RSP4A42.tmp"
+Creating command line "link.exe @C:\Users\lmy\AppData\Local\Temp\RSPCBCD.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+Page1Dlg.cpp
+Page2Dlg.cpp
+tabctrl.cpp
 tabctrlDlg.cpp
+TabSheet.cpp
+Generating Code...
 Linking...
 Creating command line "bscmake.exe /nologo /o"Debug/tabctrl.bsc"  .\Debug\StdAfx.sbr .\Debug\Page1Dlg.sbr .\Debug\Page2Dlg.sbr .\Debug\tabctrl.sbr .\Debug\tabctrlDlg.sbr .\Debug\TabSheet.sbr"
 Creating browse info file...
