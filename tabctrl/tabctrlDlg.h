@@ -23,6 +23,7 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CTabctrlDlg)
 	enum { IDD = IDD_TABCTRL_DIALOG };
+	CTabCtrl	m_TabCtrlAll;
 	CTabSheet	m_sheet;
 	//}}AFX_DATA
 
