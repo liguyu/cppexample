@@ -74,6 +74,7 @@ void CTabctrlDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTabctrlDlg)
+	DDX_Control(pDX, IDC_TAB_ALL, m_TabCtrlAll);
 	DDX_Control(pDX, IDC_TAB1, m_sheet);
 	//}}AFX_DATA_MAP
 }
@@ -116,6 +117,8 @@ BOOL CTabctrlDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
+	m_TabCtrlAll.InsertItem(0, _T("Tab1"));
+	m_TabCtrlAll.InsertItem(1, _T("Tab2"));
 
 	m_sheet.AddPage("tab1",&m_page1,IDD_DIALOG1);
 	m_sheet.AddPage("tab2",&m_page2,IDD_DIALOG2);

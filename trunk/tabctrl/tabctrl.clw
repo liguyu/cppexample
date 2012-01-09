@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=Page1Dlg
+LastClass=CTabctrlDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "tabctrl.h"
@@ -17,9 +17,9 @@ Class5=CTabctrlDlg
 Class6=CTabSheet
 
 ResourceCount=4
-Resource1=IDD_ABOUTBOX
-Resource2=IDD_DIALOG1
-Resource3=IDD_TABCTRL_DIALOG
+Resource1=IDD_TABCTRL_DIALOG
+Resource2=IDD_ABOUTBOX
+Resource3=IDD_DIALOG1
 Resource4=IDD_DIALOG2
 
 [CLS:Page1Dlg]
@@ -88,8 +88,9 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_TABCTRL_DIALOG]
 Type=1
 Class=CTabctrlDlg
-ControlCount=3
+ControlCount=4
 Control1=IDOK,button,1342242817
 Control2=IDCANCEL,button,1342242816
 Control3=IDC_TAB1,SysTabControl32,1342177280
+Control4=IDC_TAB_ALL,SysTabControl32,1342177280
 
